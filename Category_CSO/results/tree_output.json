@@ -1,0 +1,1112 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-04-15T18:18:22.057044+00:00",
+  "roots": [
+    {
+      "arxiv_primary_category": "cs.AI",
+      "intermediate_nodes": [
+        {
+          "node_id": "cs.AI::large language models::language model",
+          "label": "Language Model",
+          "cfo": {
+            "label_id": "language model",
+            "initial_keywords": [
+              "language model@en .",
+              "language modeling@en .",
+              "language modelling@en .",
+              "language models@en .",
+              "language model adaptation@en .",
+              "n-gram language models@en .",
+              "n-gram models@en .",
+              "relevance models@en .",
+              "statistical language modeling@en .",
+              "statistical language models@en ."
+            ]
+          },
+          "children": [
+            {
+              "paper_id": "2412.03884",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2503.18018",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2505.02781",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2505.07315",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2505.13126",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2506.19420",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2508.15358",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 0.1,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2512.08296",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2602.03249",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2603.28618",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.02022",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05297",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05345",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05394",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05400",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05465",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05468",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05483",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05485",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05533",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05587",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05631",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05663",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05681",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05854",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05875",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05939",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05952",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.06132",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.06392",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.06779",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07070",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07165",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07424",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07455",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07468",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07484",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07559",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07584",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07667",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07720",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07729",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07733",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07745",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07775",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07813",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07897",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07907",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07964",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.08124",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.08169",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.08344",
+              "assignment": {
+                "cfo_label_id": "language model",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            }
+          ],
+          "expanded_from": "large language models"
+        },
+        {
+          "node_id": "cs.AI::large language models::inference",
+          "label": "Inference",
+          "cfo": {
+            "label_id": "inference",
+            "initial_keywords": [
+              "inference@en ."
+            ]
+          },
+          "children": [
+            {
+              "paper_id": "2506.04500",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2511.08409",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2603.04791",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2603.28906",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05333",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05336",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05383",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05396",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05424",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07506",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07725",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.08016",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.08477",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            }
+          ],
+          "expanded_from": "large language models"
+        },
+        {
+          "node_id": "cs.AI::large language models::optimization",
+          "label": "Optimization",
+          "cfo": {
+            "label_id": "optimization",
+            "initial_keywords": [
+              "optimization@en .",
+              "ant colony optimization@en .",
+              "black-box optimization@en .",
+              "combinatorial optimisation@en .",
+              "combinatorial optimization@en .",
+              "combinatorial optimization problems@en .",
+              "optimal control@en .",
+              "particle swarm@en .",
+              "particle swarm algorithm@en ."
+            ]
+          },
+          "children": [
+            {
+              "paper_id": "2511.18387",
+              "assignment": {
+                "cfo_label_id": "optimization",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2603.00680",
+              "assignment": {
+                "cfo_label_id": "optimization",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2603.16365",
+              "assignment": {
+                "cfo_label_id": "optimization",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2603.27765",
+              "assignment": {
+                "cfo_label_id": "optimization",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05514",
+              "assignment": {
+                "cfo_label_id": "optimization",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05530",
+              "assignment": {
+                "cfo_label_id": "optimization",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05547",
+              "assignment": {
+                "cfo_label_id": "optimization",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05965",
+              "assignment": {
+                "cfo_label_id": "optimization",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07791",
+              "assignment": {
+                "cfo_label_id": "optimization",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.08388",
+              "assignment": {
+                "cfo_label_id": "optimization",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            }
+          ],
+          "expanded_from": "large language models"
+        },
+        {
+          "node_id": "cs.AI::language model::large language models",
+          "label": "Large Language Models",
+          "cfo": {
+            "label_id": "large language models",
+            "initial_keywords": [
+              "large language models@en .",
+              "llms@en .",
+              "graphrag@en ."
+            ]
+          },
+          "children": [
+            {
+              "paper_id": "2604.02500",
+              "assignment": {
+                "cfo_label_id": "large language models",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.06277",
+              "assignment": {
+                "cfo_label_id": "large language models",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.06389",
+              "assignment": {
+                "cfo_label_id": "large language models",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07487",
+              "assignment": {
+                "cfo_label_id": "large language models",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07650",
+              "assignment": {
+                "cfo_label_id": "large language models",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07798",
+              "assignment": {
+                "cfo_label_id": "large language models",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.08064",
+              "assignment": {
+                "cfo_label_id": "large language models",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.08425",
+              "assignment": {
+                "cfo_label_id": "large language models",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            }
+          ],
+          "expanded_from": "language model"
+        },
+        {
+          "node_id": "cs.AI::language model::reasoning",
+          "label": "Reasoning",
+          "cfo": {
+            "label_id": "reasoning",
+            "initial_keywords": [
+              "reasoning@en .",
+              "reasoner@en .",
+              "reasoning algorithms@en .",
+              "reasoning problems@en .",
+              "reasoning system@en .",
+              "reasoning tasks@en .",
+              "cross-modal reasoning@en ."
+            ]
+          },
+          "children": [
+            {
+              "paper_id": "2602.13235",
+              "assignment": {
+                "cfo_label_id": "reasoning",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.08369",
+              "assignment": {
+                "cfo_label_id": "reasoning",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.08401",
+              "assignment": {
+                "cfo_label_id": "reasoning",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            }
+          ],
+          "expanded_from": "language model"
+        },
+        {
+          "node_id": "cs.AI::language model::intelligent agents",
+          "label": "Intelligent Agents",
+          "cfo": {
+            "label_id": "intelligent agents",
+            "initial_keywords": [
+              "intelligent agents@en .",
+              "intelligent agent@en .",
+              "agent-based@en .",
+              "agent-based system@en .",
+              "agent-based systems@en .",
+              "agent-oriented@en .",
+              "agent-oriented software engineering@en .",
+              "agent architecture@en .",
+              "agent architectures@en .",
+              "agent based@en ."
+            ]
+          },
+          "children": [
+            {
+              "paper_id": "2604.05172",
+              "assignment": {
+                "cfo_label_id": "intelligent agents",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.05943",
+              "assignment": {
+                "cfo_label_id": "intelligent agents",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.08377",
+              "assignment": {
+                "cfo_label_id": "intelligent agents",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            }
+          ],
+          "expanded_from": "language model"
+        },
+        {
+          "node_id": "cs.AI::reasoning::semantics",
+          "label": "Semantics",
+          "cfo": {
+            "label_id": "semantics",
+            "initial_keywords": [
+              "semantics@en .",
+              "context-aware applications@en .",
+              "context-based@en .",
+              "context aware applications@en .",
+              "document similarity@en .",
+              "image semantics@en .",
+              "knowledge representation@en .",
+              "natural language@en .",
+              "natural languages@en ."
+            ]
+          },
+          "children": [
+            {
+              "paper_id": "2603.09677",
+              "assignment": {
+                "cfo_label_id": "semantics",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.06802",
+              "assignment": {
+                "cfo_label_id": "semantics",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07922",
+              "assignment": {
+                "cfo_label_id": "semantics",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.07973",
+              "assignment": {
+                "cfo_label_id": "semantics",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.08033",
+              "assignment": {
+                "cfo_label_id": "semantics",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            }
+          ],
+          "expanded_from": "reasoning"
+        },
+        {
+          "node_id": "cs.AI::reasoning::inference",
+          "label": "Inference",
+          "cfo": {
+            "label_id": "inference",
+            "initial_keywords": [
+              "inference@en ."
+            ]
+          },
+          "children": [
+            {
+              "paper_id": "2601.21872",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.04344",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.06013",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.06401",
+              "assignment": {
+                "cfo_label_id": "inference",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            }
+          ],
+          "expanded_from": "reasoning"
+        },
+        {
+          "node_id": "cs.AI::reasoning::reinforcement learning",
+          "label": "Reinforcement Learning",
+          "cfo": {
+            "label_id": "reinforcement learning",
+            "initial_keywords": [
+              "reinforcement learning@en .",
+              "reinforcement learning (rl)@en .",
+              "action selection@en .",
+              "action spaces@en .",
+              "actor-critic algorithms@en .",
+              "actor critic@en .",
+              "approximate dynamic programming@en .",
+              "average reward@en .",
+              "continuous state space@en .",
+              "function approximation@en ."
+            ]
+          },
+          "children": [
+            {
+              "paper_id": "2604.06628",
+              "assignment": {
+                "cfo_label_id": "reinforcement learning",
+                "score": 0.9167,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            },
+            {
+              "paper_id": "2604.08232",
+              "assignment": {
+                "cfo_label_id": "reinforcement learning",
+                "score": 1.0,
+                "was_reexpressed": false,
+                "reexpress_iteration": null
+              }
+            }
+          ],
+          "expanded_from": "reasoning"
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "is_valid": true,
+    "errors": [],
+    "warnings": [
+      "Unresolved soft overlaps after 2 iterations: ['2602.03249', '2604.05383']",
+      "Node 'large language models' (75 papers) expanded into 3 sub-nodes: ['language model', 'inference', 'optimization']",
+      "Node 'language model' (14 papers) expanded into 3 sub-nodes: ['large language models', 'reasoning', 'intelligent agents']",
+      "Node 'reasoning' (11 papers) expanded into 3 sub-nodes: ['semantics', 'inference', 'reinforcement learning']"
+    ],
+    "stats": {
+      "num_input_papers": 100,
+      "num_roots": 1,
+      "num_intermediate_nodes": 9,
+      "num_assigned_leaves": 100,
+      "num_reexpressed": 30,
+      "iterations_used": 2
+    }
+  },
+  "provenance": {
+    "cfo_classifier_info": {
+      "name": "CSO Classifier",
+      "version": "4.0.0",
+      "citations": [
+        "Salatino et al., 'The CSO Classifier: Ontology-Driven Detection of Research Topics in Scholarly Articles', TPDL 2019"
+      ]
+    },
+    "assumptions": [
+      "CSO v3.5 ontology used as taxonomy; topic labels derived from superTopicOf hierarchy.",
+      "Network calls disabled unless allow_arxiv_fetch=true.",
+      "root_allowlist defaults to ['cs.AI']."
+    ],
+    "adapter_fallbacks": []
+  }
+}
