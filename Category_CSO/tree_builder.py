@@ -50,7 +50,8 @@ _DEFAULT_RUN_CONFIG = {
     "top_k": 5,
     "ambiguity_margin": 0.08,
     "max_intermediate_nodes_per_root": 3,
-    "subtopic_expansion_threshold": 10,  # expand node if paper count >= this
+    "subtopic_expansion_threshold": 20,  # expand node if paper count >= this
+    "max_expansion_depth": 3,            # maximum recursion depth for subtopic expansion
     "allow_arxiv_fetch": False,
     "root_allowlist": ["cs.AI"],
 }
@@ -958,19 +959,36 @@ def _expand_large_node(
     run_config: dict,
     warnings: list[str],
     root_cat: str,
+    node_path: str | None = None,
+    current_depth: int = 1,
 ) -> list[dict] | None:
     """
     If a node has >= subtopic_expansion_threshold papers, attempt to split it
-    into sub-nodes.
+    into sub-nodes. Recursively expands sub-nodes that still exceed the threshold,
+    up to max_expansion_depth.
 
     classify_results: 이미 1차 분류에서 얻은 결과를 재사용 — CSOClassifier 재호출 없음.
+
+    node_path: 현재 노드까지의 경로 (예: "cs.AI::large language models").
+               None이면 root_cat::label_id로 초기화.
+    current_depth: 현재 expansion 깊이 (1부터 시작).
 
     Returns a list of intermediate node dicts (same structure as the caller
     builds), or None if expansion is not possible / not beneficial.
     """
+    max_depth = run_config.get("max_expansion_depth", 3)
+    if current_depth > max_depth:
+        warnings.append(
+            f"Node '{label_id}' ({len(group_papers)} papers) reached max_expansion_depth={max_depth}; skipping further expansion"
+        )
+        return None
+
     onto = _get_ontology()
     top_k = run_config.get("top_k", 5)
     max_nodes = run_config.get("max_intermediate_nodes_per_root", 3)
+
+    if node_path is None:
+        node_path = f"{root_cat}::{label_id}"
 
     # Normalise label_id to underscore slug (CSO uses underscores)
     slug = label_id.lower().replace(" ", "_")
@@ -1053,15 +1071,35 @@ def _expand_large_node(
         )
         return None
 
-    # 7. Build expanded node list
+    # 7. Build expanded node list (with recursive expansion)
+    expansion_threshold = run_config.get("subtopic_expansion_threshold", 20)
     expanded: list[dict] = []
     for sub_lid in sub_labels:
         sub_papers = sub_groups.get(sub_lid, [])
         if not sub_papers:
             continue
+
+        sub_node_path = f"{node_path}::{sub_lid}"
+
+        # Recursively expand if this sub-node still exceeds the threshold
+        if len(sub_papers) >= expansion_threshold:
+            recursive_expanded = _expand_large_node(
+                label_id=sub_lid,
+                group_papers=sub_papers,
+                classify_results=classify_results,
+                cfo=cfo,
+                run_config=run_config,
+                warnings=warnings,
+                root_cat=root_cat,
+                node_path=sub_node_path,
+                current_depth=current_depth + 1,
+            )
+            if recursive_expanded:
+                expanded.extend(recursive_expanded)
+                continue
+
         kws = cfo.initial_keywords(sub_lid)
         label_text = sub_lid.replace("_", " ").title()
-        node_id = f"{root_cat}::{label_id}::{sub_lid}"
         children = []
         for gp in sorted(sub_papers, key=lambda p: p["paper_id"]):
             pid = gp["paper_id"]
@@ -1077,7 +1115,7 @@ def _expand_large_node(
                 },
             })
         expanded.append({
-            "node_id": node_id,
+            "node_id": sub_node_path,
             "label": label_text,
             "cfo": {"label_id": sub_lid, "initial_keywords": kws},
             "children": children,
@@ -1469,7 +1507,9 @@ class TreeBuilder:
                 if len(group_papers) >= expansion_threshold:
                     expanded = _expand_large_node(
                         label_id, group_papers, classify_results,
-                        self._cfo, run_config, warnings, root_cat
+                        self._cfo, run_config, warnings, root_cat,
+                        node_path=f"{root_cat}::{label_id}",
+                        current_depth=1,
                     )
                     if expanded:
                         for node in expanded:

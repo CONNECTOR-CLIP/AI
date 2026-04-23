@@ -25,6 +25,16 @@ INPUT_SCHEMA: dict = {
                     "maximum": 3,
                     "default": 3,
                 },
+                "subtopic_expansion_threshold": {
+                    "type": "integer",
+                    "minimum": 2,
+                    "default": 20,
+                },
+                "max_expansion_depth": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "default": 3,
+                },
                 "allow_arxiv_fetch": {"type": "boolean", "default": False},
                 "root_allowlist": {
                     "type": ["array", "null"],
