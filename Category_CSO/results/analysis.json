@@ -1,0 +1,876 @@
+{
+  "experiment_time": "2026-04-16T03:18:22.074046",
+  "elapsed_seconds": 30.55,
+  "stats": {
+    "num_input_papers": 100,
+    "num_roots": 1,
+    "num_intermediate_nodes": 9,
+    "num_assigned_leaves": 100,
+    "num_reexpressed": 30,
+    "iterations_used": 2
+  },
+  "is_valid": true,
+  "errors": [],
+  "warnings": [
+    "Unresolved soft overlaps after 2 iterations: ['2602.03249', '2604.05383']",
+    "Node 'large language models' (75 papers) expanded into 3 sub-nodes: ['language model', 'inference', 'optimization']",
+    "Node 'language model' (14 papers) expanded into 3 sub-nodes: ['large language models', 'reasoning', 'intelligent agents']",
+    "Node 'reasoning' (11 papers) expanded into 3 sub-nodes: ['semantics', 'inference', 'reinforcement learning']"
+  ],
+  "provenance": {
+    "cfo_classifier_info": {
+      "name": "CSO Classifier",
+      "version": "4.0.0",
+      "citations": [
+        "Salatino et al., 'The CSO Classifier: Ontology-Driven Detection of Research Topics in Scholarly Articles', TPDL 2019"
+      ]
+    },
+    "assumptions": [
+      "CSO v3.5 ontology used as taxonomy; topic labels derived from superTopicOf hierarchy.",
+      "Network calls disabled unless allow_arxiv_fetch=true.",
+      "root_allowlist defaults to ['cs.AI']."
+    ],
+    "adapter_fallbacks": []
+  },
+  "tree_summary": [
+    {
+      "root": "cs.AI",
+      "intermediate_nodes": [
+        {
+          "node_id": "cs.AI::large language models::language model",
+          "label": "Language Model",
+          "cfo_label_id": "language model",
+          "keywords": [
+            "language model@en .",
+            "language modeling@en .",
+            "language modelling@en .",
+            "language models@en .",
+            "language model adaptation@en ."
+          ],
+          "num_papers": 52,
+          "num_reexpressed": 0,
+          "papers": [
+            {
+              "paper_id": "2412.03884",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "A Unified Framework for Evaluating and Enhancing the Transparency of Explainable AI Methods via Perturbation-Gradient Consensus Attribution"
+            },
+            {
+              "paper_id": "2503.18018",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Lost in Cultural Translation: Do LLMs Struggle with Math Across Cultural Contexts?"
+            },
+            {
+              "paper_id": "2505.02781",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Local Markov Equivalence for PC-style Local Causal Discovery and Identification of Controlled Direct Effects"
+            },
+            {
+              "paper_id": "2505.07315",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "FedIFL: A federated cross-domain diagnostic framework for motor-driven systems with inconsistent fault modes"
+            },
+            {
+              "paper_id": "2505.13126",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Iterative Formalization and Planning in Partially Observable Environments"
+            },
+            {
+              "paper_id": "2506.19420",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Commander-GPT: Dividing and Routing for Multimodal Sarcasm Detection"
+            },
+            {
+              "paper_id": "2508.15358",
+              "score": 0.1,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Planning with Minimal Disruption"
+            },
+            {
+              "paper_id": "2512.08296",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Towards a Science of Scaling Agent Systems"
+            },
+            {
+              "paper_id": "2602.03249",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Accordion-Thinking: Self-Regulated Step Summaries for Efficient and Readable LLM Reasoning"
+            },
+            {
+              "paper_id": "2603.28618",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Seeing with You: Perception-Reasoning Coevolution for Multimodal Reasoning"
+            },
+            {
+              "paper_id": "2604.02022",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "ATBench: A Diverse and Realistic Agent Trajectory Benchmark for Safety Evaluation and Diagnosis"
+            },
+            {
+              "paper_id": "2604.05297",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Breakthrough the Suboptimal Stable Point in Value-Factorization-Based Multi-Agent Reinforcement Learning"
+            },
+            {
+              "paper_id": "2604.05345",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Dynamic Agentic AI Expert Profiler System Architecture for Multidomain Intelligence Modeling"
+            },
+            {
+              "paper_id": "2604.05394",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Neural Assistive Impulses: Synthesizing Exaggerated Motions for Physics-based Characters"
+            },
+            {
+              "paper_id": "2604.05400",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "HYVE: Hybrid Views for LLM Context Engineering over Machine Data"
+            },
+            {
+              "paper_id": "2604.05465",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Adaptive Serverless Resource Management via Slot-Survival Prediction and Event-Driven Lifecycle Control"
+            },
+            {
+              "paper_id": "2604.05468",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "OntoTKGE: Ontology-Enhanced Temporal Knowledge Graph Extrapolation"
+            },
+            {
+              "paper_id": "2604.05483",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Can We Trust a Black-box LLM? LLM Untrustworthy Boundary Detection via Bias-Diffusion and Multi-Agent Reinforcement Learning"
+            },
+            {
+              "paper_id": "2604.05485",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Auditable Agents"
+            },
+            {
+              "paper_id": "2604.05533",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Experience Transfer for Multimodal LLM Agents in Minecraft Game"
+            },
+            {
+              "paper_id": "2604.05587",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "ResearchEVO: An End-to-End Framework for Automated Scientific Discovery and Documentation"
+            },
+            {
+              "paper_id": "2604.05631",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Beyond Behavior: Why AI Evaluation Needs a Cognitive Revolution"
+            },
+            {
+              "paper_id": "2604.05663",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "CuraLight: Debate-Guided Data Curation for LLM-Centered Traffic Signal Control"
+            },
+            {
+              "paper_id": "2604.05681",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "LUDOBENCH: Evaluating LLM Behavioural Decision-Making Through Spot-Based Board Game Scenarios in Ludo"
+            },
+            {
+              "paper_id": "2604.05854",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Deep Researcher Agent: An Autonomous Framework for 24/7 Deep Learning Experimentation with Zero-Cost Monitoring"
+            },
+            {
+              "paper_id": "2604.05875",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Joint Knowledge Base Completion and Question Answering by Combining Large Language Models and Small Language Models"
+            },
+            {
+              "paper_id": "2604.05939",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Context-Value-Action Architecture for Value-Driven Large Language Model Agents"
+            },
+            {
+              "paper_id": "2604.05952",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Towards Trustworthy Report Generation: A Deep Research Agent with Progressive Confidence Estimation and Calibration"
+            },
+            {
+              "paper_id": "2604.06132",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Claw-Eval: Toward Trustworthy Evaluation of Autonomous Agents"
+            },
+            {
+              "paper_id": "2604.06392",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Qualixar OS: A Universal Operating System for AI Agent Orchestration"
+            },
+            {
+              "paper_id": "2604.06779",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "FVD: Inference-Time Alignment of Diffusion Models via Fleming-Viot Resampling"
+            },
+            {
+              "paper_id": "2604.07070",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "EVGeoQA: Benchmarking LLMs on Dynamic, Multi-Objective Geo-Spatial Exploration"
+            },
+            {
+              "paper_id": "2604.07165",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Reason in Chains, Learn in Trees: Self-Rectification and Grafting for Multi-turn Agent Policy Optimization"
+            },
+            {
+              "paper_id": "2604.07424",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "An Analysis of Artificial Intelligence Adoption in NIH-Funded Research"
+            },
+            {
+              "paper_id": "2604.07455",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Munkres' General Topology Autoformalized in Isabelle/HOL"
+            },
+            {
+              "paper_id": "2604.07468",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "M-ArtAgent: Evidence-Based Multimodal Agent for Implicit Art Influence Discovery"
+            },
+            {
+              "paper_id": "2604.07484",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "ConsistRM: Improving Generative Reward Models via Consistency-Aware Self-Training"
+            },
+            {
+              "paper_id": "2604.07559",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Dual-Loop Control in DCVerse: Advancing Reliable Deployment of AI in Data Centers via Digital Twins"
+            },
+            {
+              "paper_id": "2604.07584",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "From Papers to Property Tables: A Priority-Based LLM Workflow for Materials Data Extraction"
+            },
+            {
+              "paper_id": "2604.07667",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "From Debate to Decision: Conformal Social Choice for Safe Multi-Agent Deliberation"
+            },
+            {
+              "paper_id": "2604.07720",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Towards Knowledgeable Deep Research: Framework and Benchmark"
+            },
+            {
+              "paper_id": "2604.07729",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Emotion Concepts and their Function in a Large Language Model"
+            },
+            {
+              "paper_id": "2604.07733",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "CivBench: Progress-Based Evaluation for LLMs' Strategic Decision-Making in Civilization V"
+            },
+            {
+              "paper_id": "2604.07745",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "The Cartesian Cut in Agentic AI"
+            },
+            {
+              "paper_id": "2604.07775",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "ACIArena: Toward Unified Evaluation for Agent Cascading Injection"
+            },
+            {
+              "paper_id": "2604.07813",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Agentivism: a learning theory for the age of artificial intelligence"
+            },
+            {
+              "paper_id": "2604.07897",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Visual Perceptual to Conceptual First-Order Rule Learning Networks"
+            },
+            {
+              "paper_id": "2604.07907",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Capture-Quiet Decomposition: A Verification Theorem for Chess Endgame Tablebases"
+            },
+            {
+              "paper_id": "2604.07964",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Are we still able to recognize pearls? Machine-driven peer review and the risk to creativity: An explainable RAG-XAI detection framework with markers extraction"
+            },
+            {
+              "paper_id": "2604.08124",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Beyond Stochastic Exploration: What Makes Training Data Valuable for Agentic Search"
+            },
+            {
+              "paper_id": "2604.08169",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Activation Steering for Aligned Open-ended Generation without Sacrificing Coherence"
+            },
+            {
+              "paper_id": "2604.08344",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Human-AI Collaboration Reconfigures Group Regulation from Socially Shared to Hybrid Co-Regulation"
+            }
+          ]
+        },
+        {
+          "node_id": "cs.AI::large language models::inference",
+          "label": "Inference",
+          "cfo_label_id": "inference",
+          "keywords": [
+            "inference@en ."
+          ],
+          "num_papers": 13,
+          "num_reexpressed": 0,
+          "papers": [
+            {
+              "paper_id": "2506.04500",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "\"Don't Do That!\": Guiding Embodied Systems through Large Language Model-based Constraint Generation"
+            },
+            {
+              "paper_id": "2511.08409",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Faithful-First Reasoning, Planning, and Acting for Multimodal LLMs"
+            },
+            {
+              "paper_id": "2603.04791",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Timer-S1: A Billion-Scale Time Series Foundation Model with Serial Scaling"
+            },
+            {
+              "paper_id": "2603.28906",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Working Paper: Towards a Category-theoretic Comparative Framework for Artificial General Intelligence"
+            },
+            {
+              "paper_id": "2604.05333",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Graph of Skills: Dependency-Aware Structural Retrieval for Massive Agent Skills"
+            },
+            {
+              "paper_id": "2604.05336",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "TRACE: Capability-Targeted Agentic Training"
+            },
+            {
+              "paper_id": "2604.05383",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Towards Effective In-context Cross-domain Knowledge Transfer via Domain-invariant-neurons-based Retrieval"
+            },
+            {
+              "paper_id": "2604.05396",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Reason Analogically via Cross-domain Prior Knowledge: An Empirical Study of Cross-domain Knowledge Transfer for In-Context Learning"
+            },
+            {
+              "paper_id": "2604.05424",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "PRISM-MCTS: Learning from Reasoning Trajectories with Metacognitive Reflection"
+            },
+            {
+              "paper_id": "2604.07506",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "ReflectRM: Boosting Generative Reward Models via Self-Reflection within a Unified Judgment Framework"
+            },
+            {
+              "paper_id": "2604.07725",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Squeeze Evolve: Unified Multi-Model Orchestration for Verifier-Free Evolution"
+            },
+            {
+              "paper_id": "2604.08016",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Wiring the 'Why': A Unified Taxonomy and Survey of Abductive Reasoning in LLMs"
+            },
+            {
+              "paper_id": "2604.08477",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "SUPERNOVA: Eliciting General Reasoning in LLMs with Reinforcement Learning on Natural Instructions"
+            }
+          ]
+        },
+        {
+          "node_id": "cs.AI::large language models::optimization",
+          "label": "Optimization",
+          "cfo_label_id": "optimization",
+          "keywords": [
+            "optimization@en .",
+            "ant colony optimization@en .",
+            "black-box optimization@en .",
+            "combinatorial optimisation@en .",
+            "combinatorial optimization@en ."
+          ],
+          "num_papers": 10,
+          "num_reexpressed": 0,
+          "papers": [
+            {
+              "paper_id": "2511.18387",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Scaling Implicit Fields via Hypernetwork-Driven Multiscale Coordinate Transformations"
+            },
+            {
+              "paper_id": "2603.00680",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "MemPO: Self-Memory Policy Optimization for Long-Horizon Agents"
+            },
+            {
+              "paper_id": "2603.16365",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "FactorEngine: A Program-level Knowledge-Infused Factor Mining Framework for Quantitative Investment"
+            },
+            {
+              "paper_id": "2603.27765",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Let the Agent Steer: Closed-Loop Ranking Optimization via Influence Exchange"
+            },
+            {
+              "paper_id": "2604.05514",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "OmniDiagram: Advancing Unified Diagram Code Generation via Visual Interrogation Reward"
+            },
+            {
+              "paper_id": "2604.05530",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Inventory of the 12 007 Low-Dimensional Pseudo-Boolean Landscapes Invariant to Rank, Translation, and Rotation"
+            },
+            {
+              "paper_id": "2604.05547",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "COSMO-Agent: Tool-Augmented Agent for Closed-loop Optimization,Simulation,and Modeling Orchestration"
+            },
+            {
+              "paper_id": "2604.05965",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Beyond Compromise: Pareto-Lenient Consensus for Efficient Multi-Preference LLM Alignment"
+            },
+            {
+              "paper_id": "2604.07791",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "SEARL: Joint Optimization of Policy and Tool Graph Memory for Self-Evolving Agents"
+            },
+            {
+              "paper_id": "2604.08388",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Awakening the Sleeping Agent: Lean-Specific Agentic Data Reactivates General Tool Use in Goedel Prover"
+            }
+          ]
+        },
+        {
+          "node_id": "cs.AI::language model::large language models",
+          "label": "Large Language Models",
+          "cfo_label_id": "large language models",
+          "keywords": [
+            "large language models@en .",
+            "llms@en .",
+            "graphrag@en ."
+          ],
+          "num_papers": 8,
+          "num_reexpressed": 0,
+          "papers": [
+            {
+              "paper_id": "2604.02500",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "I must delete the evidence: AI Agents Explicitly Cover up Fraud and Violent Crime"
+            },
+            {
+              "paper_id": "2604.06277",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Weakly Supervised Distillation of Hallucination Signals into Transformer Representations"
+            },
+            {
+              "paper_id": "2604.06389",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "SELFDOUBT: Uncertainty Quantification for Reasoning LLMs via the Hedge-to-Verify Ratio"
+            },
+            {
+              "paper_id": "2604.07487",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "CLEAR: Context Augmentation from Contrastive Learning of Experience via Agentic Reflection"
+            },
+            {
+              "paper_id": "2604.07650",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "How Independent are Large Language Models? A Statistical Framework for Auditing Behavioral Entanglement and Reweighting Verifier Ensembles"
+            },
+            {
+              "paper_id": "2604.07798",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Lightweight LLM Agent Memory with Small Language Models"
+            },
+            {
+              "paper_id": "2604.08064",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "ImplicitMemBench: Measuring Unconscious Behavioral Adaptation in Large Language Models"
+            },
+            {
+              "paper_id": "2604.08425",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Learning Who Disagrees: Demographic Importance Weighting for Modeling Annotator Distributions with DiADEM"
+            }
+          ]
+        },
+        {
+          "node_id": "cs.AI::language model::reasoning",
+          "label": "Reasoning",
+          "cfo_label_id": "reasoning",
+          "keywords": [
+            "reasoning@en .",
+            "reasoner@en .",
+            "reasoning algorithms@en .",
+            "reasoning problems@en .",
+            "reasoning system@en ."
+          ],
+          "num_papers": 3,
+          "num_reexpressed": 0,
+          "papers": [
+            {
+              "paper_id": "2602.13235",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Lang2Act: Fine-Grained Visual Reasoning through Self-Emergent Linguistic Toolchains"
+            },
+            {
+              "paper_id": "2604.08369",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Don't Overthink It: Inter-Rollout Action Agreement as a Free Adaptive-Compute Signal for LLM Agents"
+            },
+            {
+              "paper_id": "2604.08401",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Verify Before You Commit: Towards Faithful Reasoning in LLM Agents via Self-Auditing"
+            }
+          ]
+        },
+        {
+          "node_id": "cs.AI::language model::intelligent agents",
+          "label": "Intelligent Agents",
+          "cfo_label_id": "intelligent agents",
+          "keywords": [
+            "intelligent agents@en .",
+            "intelligent agent@en .",
+            "agent-based@en .",
+            "agent-based system@en .",
+            "agent-based systems@en ."
+          ],
+          "num_papers": 3,
+          "num_reexpressed": 0,
+          "papers": [
+            {
+              "paper_id": "2604.05172",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "ClawsBench: Evaluating Capability and Safety of LLM Productivity Agents in Simulated Workspaces"
+            },
+            {
+              "paper_id": "2604.05943",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "MARL-GPT: Foundation Model for Multi-Agent Reinforcement Learning"
+            },
+            {
+              "paper_id": "2604.08377",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "SkillClaw: Let Skills Evolve Collectively with Agentic Evolver"
+            }
+          ]
+        },
+        {
+          "node_id": "cs.AI::reasoning::semantics",
+          "label": "Semantics",
+          "cfo_label_id": "semantics",
+          "keywords": [
+            "semantics@en .",
+            "context-aware applications@en .",
+            "context-based@en .",
+            "context aware applications@en .",
+            "document similarity@en ."
+          ],
+          "num_papers": 5,
+          "num_reexpressed": 0,
+          "papers": [
+            {
+              "paper_id": "2603.09677",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Logics-Parsing-Omni Technical Report"
+            },
+            {
+              "paper_id": "2604.06802",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Riemann-Bench: A Benchmark for Moonshot Mathematics"
+            },
+            {
+              "paper_id": "2604.07922",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "SAT: Balancing Reasoning Accuracy and Efficiency with Stepwise Adaptive Thinking"
+            },
+            {
+              "paper_id": "2604.07973",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "How Far Are Large Multimodal Models from Human-Level Spatial Action? A Benchmark for Goal-Oriented Embodied Navigation in Urban Airspace"
+            },
+            {
+              "paper_id": "2604.08033",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "IoT-Brain: Grounding LLMs for Semantic-Spatial Sensor Scheduling"
+            }
+          ]
+        },
+        {
+          "node_id": "cs.AI::reasoning::inference",
+          "label": "Inference",
+          "cfo_label_id": "inference",
+          "keywords": [
+            "inference@en ."
+          ],
+          "num_papers": 4,
+          "num_reexpressed": 0,
+          "papers": [
+            {
+              "paper_id": "2601.21872",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "WebArbiter: A Principle-Guided Reasoning Process Reward Model for Web Agents"
+            },
+            {
+              "paper_id": "2604.04344",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Domain-Contextualized Inference: A Computable Graph Architecture for Explicit-Domain Reasoning"
+            },
+            {
+              "paper_id": "2604.06013",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Epistemic Blinding: An Inference-Time Protocol for Auditing Prior Contamination in LLM-Assisted Analysis"
+            },
+            {
+              "paper_id": "2604.06401",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "ProofSketcher: Hybrid LLM + Lightweight Proof Checker for Reliable Math/Logic Reasoning"
+            }
+          ]
+        },
+        {
+          "node_id": "cs.AI::reasoning::reinforcement learning",
+          "label": "Reinforcement Learning",
+          "cfo_label_id": "reinforcement learning",
+          "keywords": [
+            "reinforcement learning@en .",
+            "reinforcement learning (rl)@en .",
+            "action selection@en .",
+            "action spaces@en .",
+            "actor-critic algorithms@en ."
+          ],
+          "num_papers": 2,
+          "num_reexpressed": 0,
+          "papers": [
+            {
+              "paper_id": "2604.06628",
+              "score": 0.9167,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "Rethinking Generalization in Reasoning SFT: A Conditional Analysis on Optimization, Data, and Model Capability"
+            },
+            {
+              "paper_id": "2604.08232",
+              "score": 1.0,
+              "was_reexpressed": false,
+              "reexpress_iteration": null,
+              "title": "HiRO-Nav: Hybrid ReasOning Enables Efficient Embodied Navigation"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
