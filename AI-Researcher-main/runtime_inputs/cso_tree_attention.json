@@ -1,0 +1,982 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-05-14T07:51:17.625387+00:00",
+  "roots": [
+    {
+      "arxiv_primary_category": "cs.CL",
+      "intermediate_nodes": [
+        {
+          "node_id": "cs.CL::abstracting_and_indexing",
+          "label": "Abstracting And Indexing",
+          "cfo": {
+            "label_id": "abstracting_and_indexing",
+            "initial_keywords": [
+              "abstracting and indexing@en .",
+              "subject headings@en ."
+            ]
+          },
+          "children": [
+            {
+              "paper_id": "1803.07724",
+              "title": "Attention on Attention: Architectures for Visual Question Answering (VQA)",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1902.10186",
+              "title": "Attention is not Explanation",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1904.01617",
+              "title": "Attentive Mimicking: Better Word Embeddings by Attending to Informative Contexts",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1906.03731",
+              "title": "Is Attention Interpretable?",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1908.04626",
+              "title": "Attention is not not Explanation",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2002.03405",
+              "title": "Attend to the beginning: A study on using bidirectional attention for extractive summarization",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2111.10157",
+              "title": "Lattention: Lattice-attention in ASR rescoring",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2205.11961",
+              "title": "ATTEMPT: Parameter-Efficient Multi-task Tuning via Attentional Mixtures of Soft Prompts",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2211.03495",
+              "title": "How Much Does Attention Actually Attend? Questioning the Importance of Attention in Pretrained Transformers",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2305.13088",
+              "title": "Should We Attend More or Less? Modulating Attention for Fairness",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2310.11685",
+              "title": "Why Softmax Attention Outperforms Linear Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2311.02262",
+              "title": "Tell Your Model Where to Attend: Post-hoc Attention Steering for LLMs",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2409.03621",
+              "title": "Attend First, Consolidate Later: On the Importance of Attention in Different LLM Layers",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2409.10790",
+              "title": "Model Tells Itself Where to Attend: Faithfulness Meets Automatic Attention Steering",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2503.16428",
+              "title": "XAttention: Block Sparse Attention with Antidiagonal Scoring",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2506.15545",
+              "title": "RATTENTION: Towards the Minimal Sliding Window Size in Local-Global Attention Models",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2603.15031",
+              "title": "Attention Residuals",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2604.04384",
+              "title": "Compressible Softmax-Attended Language under Incompressible Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "arxiv_primary_category": "cs.CV",
+      "intermediate_nodes": [
+        {
+          "node_id": "cs.CV::abstracting_and_indexing",
+          "label": "Abstracting And Indexing",
+          "cfo": {
+            "label_id": "abstracting_and_indexing",
+            "initial_keywords": [
+              "abstracting and indexing@en .",
+              "subject headings@en ."
+            ]
+          },
+          "children": [
+            {
+              "paper_id": "1511.05234",
+              "title": "Ask, Attend and Answer: Exploring Question-Guided Spatial Attention for Visual Question Answering",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1604.03286",
+              "title": "Scan, Attend and Read: End-to-End Handwritten Paragraph Recognition with MDLSTM Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1609.00072",
+              "title": "Attentional Push: Augmenting Salience with Shared Attention Modeling",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1806.06195",
+              "title": "Show, Attend and Translate: Unsupervised Image Translation with Self-Regularization and Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1807.07320",
+              "title": "Attend and Rectify: a Gated Attention Mechanism for Fine-Grained Recovery",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1811.07483",
+              "title": "Show, Attend and Translate: Unpaired Multi-Domain Image-to-Image Translation with Visual Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1811.09789",
+              "title": "Senti-Attend: Image Captioning using Sentiment and Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1811.10014",
+              "title": "Describe and Attend to Track: Learning Natural Language guided Structural Representation and Visual Attention for Object Tracking",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1812.01243",
+              "title": "Efficient Attention: Attention with Linear Complexities",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1908.01259",
+              "title": "Attentive Normalization",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1908.06954",
+              "title": "Attention on Attention for Image Captioning",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1909.02218",
+              "title": "A Better Way to Attend: Attention with Trees for Video Question Answering",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2002.11020",
+              "title": "See, Attend and Brake: An Attention-based Saliency Map Prediction Model for End-to-End Driving",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2004.05234",
+              "title": "Attend and Decode: 4D fMRI Task State Decoding Using Attention Models",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2007.07729",
+              "title": "Attention as Activation",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2007.11548",
+              "title": "Attend and Segment: Attention Guided Active Semantic Segmentation",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2010.03045",
+              "title": "Rotate to Attend: Convolutional Triplet Attention Module",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2103.05930",
+              "title": "AttaNet: Attention-Augmented Network for Fast and Accurate Scene Parsing",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2104.09497",
+              "title": "Attention in Attention Network for Image Super-Resolution",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2106.09003",
+              "title": "Invertible Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2108.11717",
+              "title": "Glimpse-Attend-and-Explore: Self-Attention for Active Visual Exploration",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2110.12183",
+              "title": "Attend and Guide (AG-Net): A Keypoints-driven Attention-based Deep Network for Image Recognition",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2111.12892",
+              "title": "Attend to Who You Are: Supervising Self-Attention for Keypoint Detection and Instance-Aware Association",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2207.01166",
+              "title": "Target-absent Human Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2207.09603",
+              "title": "AiATrack: Attention in Attention for Transformer Visual Tracking",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2209.07484",
+              "title": "Hydra Attention: Efficient Attention with Many Heads",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2210.09071",
+              "title": "Attention Attention Everywhere: Monocular Depth Prediction with Skip Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2210.10914",
+              "title": "Prophet Attention: Predicting Attention with Future Attention for Image Captioning",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2301.13826",
+              "title": "Attend-and-Excite: Attention-Based Semantic Guidance for Text-to-Image Diffusion Models",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2312.08874",
+              "title": "Agent Attention: On the Integration of Softmax and Linear Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2405.06467",
+              "title": "Attend, Distill, Detect: Attention-aware Entropy Distillation for Anomaly Detection",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2410.04801",
+              "title": "Improving Image Clustering with Artifacts Attenuation via Inference-Time Attention Engineering",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2411.13042",
+              "title": "Attentive Contextual Attention for Cloud Removal",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2412.19160",
+              "title": "A Lightweight Transformer with Phase-Only Cross-Attention for Illumination-Invariant Biometric Authentication",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2503.07307",
+              "title": "AttenST: A Training-Free Attention-Driven Style Transfer Framework with Pre-Trained Diffusion Models",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2510.09649",
+              "title": "TinyViT-Batten: Few-Shot Vision Transformer with Explainable Attention for Early Batten-Disease Detection on Pediatric MRI",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2603.12254",
+              "title": "Attend Before Attention: Efficient and Scalable Video Understanding via Autoregressive Gazing",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "arxiv_primary_category": "cs.LG",
+      "intermediate_nodes": [
+        {
+          "node_id": "cs.LG::abstracting_and_indexing",
+          "label": "Abstracting And Indexing",
+          "cfo": {
+            "label_id": "abstracting_and_indexing",
+            "initial_keywords": [
+              "abstracting and indexing@en .",
+              "subject headings@en ."
+            ]
+          },
+          "children": [
+            {
+              "paper_id": "1009.5972",
+              "title": "The Attentive Perceptron",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1502.03044",
+              "title": "Show, Attend and Tell: Neural Image Caption Generation with Visual Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1708.00339",
+              "title": "Attend and Predict: Understanding Gene Regulation by Selective Attention on Chromatin",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1810.10126",
+              "title": "Area Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1811.00181",
+              "title": "A Regularized Attention Mechanism for Graph Attention Networks",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1811.04407",
+              "title": "An initial attempt of combining visual selective attention with deep reinforcement learning",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1904.02874",
+              "title": "An Attentive Survey of Attention Models",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1907.06607",
+              "title": "Agglomerative Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2102.02973",
+              "title": "Show, Attend and Distill:Knowledge Distillation via Attention-based Feature Matching",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2105.14491",
+              "title": "How Attentive are Graph Attention Networks?",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2202.08371",
+              "title": "The Quarks of Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2207.04293",
+              "title": "Attention and Self-Attention in Random Forests",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2210.07715",
+              "title": "Not All Neighbors Are Worth Attending to: Graph Selective Attention Networks for Semi-supervised Learning",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2212.08151",
+              "title": "First De-Trend then Attend: Rethinking Attention for Time-Series Forecasting",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2303.13731",
+              "title": "How Does Attention Work in Vision Transformers? A Visual Analytics Attempt",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2405.13956",
+              "title": "Attention as an RNN",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2406.05816",
+              "title": "Attention as a Hypernetwork",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2406.13770",
+              "title": "Elliptical Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2407.02423",
+              "title": "On the Anatomy of Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2407.18601",
+              "title": "Reorganizing attention-space geometry with expressive attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2409.18747",
+              "title": "Cottention: Linear Transformers With Cosine Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2412.09925",
+              "title": "Simulating Hard Attention Using Soft Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2503.01909",
+              "title": "Attend or Perish: Benchmarking Attention in Algorithmic Reasoning",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2505.11157",
+              "title": "Attention on the Sphere",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2506.12355",
+              "title": "QiMeng-Attention: SOTA Attention Operator is generated by SOTA Attention Algorithm",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2508.20206",
+              "title": "Filter then Attend: Improving attention-based Time Series Forecasting with Spectral Filtering",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2510.05688",
+              "title": "vAttention: Verified Sparse Attention",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2602.07397",
+              "title": "Scout Before You Attend: Sketch-and-Walk Sparse Attention for Efficient LLM Inference",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2603.30033",
+              "title": "Tucker Attention: A generalization of approximate attention mechanisms",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "arxiv_primary_category": "cs.RO",
+      "intermediate_nodes": [
+        {
+          "node_id": "cs.RO::abstracting_and_indexing",
+          "label": "Abstracting And Indexing",
+          "cfo": {
+            "label_id": "abstracting_and_indexing",
+            "initial_keywords": [
+              "abstracting and indexing@en .",
+              "subject headings@en ."
+            ]
+          },
+          "children": [
+            {
+              "paper_id": "1702.08626",
+              "title": "Show, Attend and Interact: Perceivable Human-Robot Social Interaction through Neural Attention Q-Network",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "1710.04689",
+              "title": "Social Attention: Modeling Attention in Human Crowds",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            },
+            {
+              "paper_id": "2011.01153",
+              "title": "Perceive, Attend, and Drive: Learning Spatial Attention for Safe Self-Driving",
+              "assignment": {
+                "cfo_label_id": "abstracting_and_indexing",
+                "score": 0.8,
+                "was_reexpressed": true,
+                "reexpress_iteration": 1
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "is_valid": false,
+    "errors": [
+      "Papers not assigned to any leaf: ['1311.7182', '1510.02879', '1711.03905', '1807.09664', '2002.06205', '2008.05789', '2101.06148', '2102.05628', '2210.16819', '2409.15375', '2410.17421', '2410.21048', '2510.22566']"
+    ],
+    "warnings": [
+      "root_allowlist filtered out categories: ['cs.AI', 'cs.CR', 'cs.CY', 'cs.HC', 'cs.IR', 'cs.MM', 'cs.NE', 'stat.ML']",
+      "Node 'abstracting_and_indexing': expansion produced singleton sub-nodes ['adaptive_critic_designs', 'adaptive_cruise_control']; skipping expansion",
+      "Node 'abstracting_and_indexing': expansion produced singleton sub-nodes ['adaptive_critic_designs', 'adaptive_cruise_control']; skipping expansion"
+    ],
+    "stats": {
+      "num_input_papers": 100,
+      "num_roots": 4,
+      "num_intermediate_nodes": 4,
+      "num_assigned_leaves": 87,
+      "num_reexpressed": 87,
+      "iterations_used": 1
+    }
+  },
+  "provenance": {
+    "cfo_classifier_info": {
+      "name": "CSO (Computer Science Ontology)",
+      "version": "3.5",
+      "citations": [
+        "Salatino et al., 'The Computer Science Ontology', ISWC 2018"
+      ]
+    },
+    "assumptions": [
+      "CSO v3.5 ontology used as taxonomy; topic labels derived from superTopicOf hierarchy.",
+      "Network calls disabled unless allow_arxiv_fetch=true.",
+      "root_allowlist defaults to ['cs.AI']."
+    ],
+    "adapter_fallbacks": []
+  }
+}
