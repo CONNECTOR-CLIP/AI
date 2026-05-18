@@ -6,7 +6,7 @@ from research_agent.inno.tools.file_surfer_tool import (
     page_down_markdown,
     find_on_page_ctrl_f,
     find_next,
-    visualizer,
+    # visualizer, todo: 논문 시각화 기능 추가 시 활성화
     question_answer_on_whole_page
 )
 from research_agent.inno.environment.markdown_browser import RequestsMarkdownBrowser
@@ -75,45 +75,101 @@ WORKFLOW:
    - Select the most promising idea for enhancement
 
 4. Idea Generation/Enhancement:
-   Generate/Enhance into a comprehensive proposal including:
+   Generate/Enhance into a comprehensive proposal covering the points below.
 
-   a) Challenges:
-   - Current technical limitations
-   - Unsolved problems in existing work
-   - Key bottlenecks in the field
+5. Future Work Analysis:
+   Based on the analysis above, identify and describe:
 
-   b) Existing Methods:
-   - Summary of current approaches
-   - Their advantages and limitations
-   - Key techniques and methodologies used
+   a) Research Gaps:
+   - Areas the field has not yet addressed
+   - Cite specific papers that imply these gaps
 
-   c) Motivation:
-   - Why the problem is important
-   - What gaps need to be addressed
-   - Potential impact of the solution
+   b) Paper Weaknesses:
+   - Per-paper limitations found in methodology or experiments
+   - Narrow evaluation scope, unvalidated assumptions, missing comparisons
 
-   d) Proposed Method:
-   - Detailed technical solution
-   - Step-by-step methodology
-   - Mathematical formulations (if applicable)
-   - Key innovations and improvements
-   - Expected advantages over existing methods
-   - Implementation considerations
-   - Potential challenges and solutions
+   c) Follow-up Research Directions:
+   - Logical extensions feasible within 1-2 years
+   - Connect directly to the challenges identified above
 
-   e) Technical Details:
-   - Architectural design
-   - Algorithm specifications
-   - Data flow and processing steps
-   - Performance optimization strategies
+   d) Publishable Topics:
+   - Topics satisfying: novel + feasible + underexplored
+   - For each topic, state: why it is novel, why it is timely,
+     and estimated difficulty (low / medium / high)
 
-   f) Expected Outcomes:
-   - Anticipated improvements
-   - Evaluation metrics
-   - Potential applications
+   CONSTRAINTS:
+   - Every item must be grounded in the analyzed papers -- no hallucination
+   - `publishable_topics` must satisfy: novel + feasible + underexplored
+   - Prioritize topics where existing methods show consistent failure modes
+   - Do NOT include topics already well-covered by recent surveys
 
-5. Knowledge Transfer:
-   After completing analysis and idea development, use `transfer_to_code_survey_agent` for implementation research.
+OUTPUT FORMAT:
+You MUST return a single JSON object. Do NOT include any text outside the JSON block.
+The JSON must strictly follow this schema:
+
+{{
+  "title": "<one-line title of the proposed idea>",
+  "source_papers": ["<paper title 1>", "<paper title 2>"],
+  "challenges": [
+    "<challenge 1>",
+    "<challenge 2>"
+  ],
+  "existing_methods": [
+    {{
+      "method": "<method name>",
+      "advantages": "<advantages>",
+      "limitations": "<limitations>"
+    }}
+  ],
+  "motivation": {{
+    "importance": "<why the problem matters>",
+    "gaps": "<what gaps need to be addressed>",
+    "impact": "<potential impact of the solution>"
+  }},
+  "proposed_method": {{
+    "summary": "<high-level description>",
+    "methodology": ["<step 1>", "<step 2>"],
+    "math_formulations": ["<formula 1 in LaTeX>"],
+    "key_innovations": ["<innovation 1>"],
+    "expected_advantages": ["<advantage 1>"],
+    "implementation_notes": "<considerations>",
+    "potential_challenges": ["<challenge 1>"]
+  }},
+  "technical_details": {{
+    "architecture": "<architectural design>",
+    "algorithm": "<algorithm specification>",
+    "data_flow": "<data flow and processing steps>",
+    "optimization": "<performance optimization strategies>"
+  }},
+  "expected_outcomes": {{
+    "improvements": ["<improvement 1>"],
+    "evaluation_metrics": ["<metric 1>"],
+    "applications": ["<application 1>"]
+  }},
+  "future_work": {{
+    "research_gaps": [
+      {{
+        "gap": "<gap description>",
+        "implied_by": ["<paper title>"]
+      }}
+    ],
+    "paper_weaknesses": [
+      {{
+        "paper": "<paper title>",
+        "weakness": "<limitation description>"
+      }}
+    ],
+    "followup_directions": ["<direction 1>"],
+    "publishable_topics": [
+      {{
+        "topic": "<topic name>",
+        "novelty": "<why it is novel>",
+        "timeliness": "<why it is timely>",
+        "difficulty": "low | medium | high"
+      }}
+    ]
+  }}
+}}
 
 REQUIREMENTS:
 - Be comprehensive in analysis
@@ -138,14 +194,7 @@ Remember: Your output will guide the implementation phase. Be thorough, innovati
         for tool in tool_list
     ]
 
-    # web_tool_list = [
-    #     google_scholar_search,
-    #     download_from_pdf_link,
-    # ]
-    # web_tool_list = [
-    #     with_env_web(web_env)(tool) if "env" in signature(tool).parameters else tool
-    #     for tool in web_tool_list
-    # ]
+    # 추후에 arxiv_source.py의 search_arxiv()함수로 논문 추가 검색 구현
 
     return Agent(
         name="Paper Survey Agent",
