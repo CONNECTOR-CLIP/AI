@@ -156,26 +156,55 @@ Use these to judge whether each proposal is already being researched:
 [GitHub Search Results]
 {github_result}
 
+---
 
-For each proposal, apply these rules STRICTLY:
+For each proposal, determine its novelty status using the criteria below,
+then apply the corresponding action.
 
-NOVEL → Keep as-is. Set "novelty_assessment": "CONFIRMED NOVEL", "novelty_note": brief reason.
+JUDGMENT CRITERIA (apply in order):
 
-PARTIAL → Refine background_and_gap and proposed_direction to a more specific unexplored angle.
-           Set "novelty_assessment": "REFINED", "novelty_note": explain the differentiation.
+  NOVEL     — 0–1 related papers found in arxiv results,
+               OR the papers found use fundamentally different methods
+               from the proposal's core approach.
+               → Keep proposal as-is.
 
-ALREADY DONE → DISCARD this proposal entirely.
-               Using ONLY the paper summaries below, find a completely NEW research gap
-               not covered by the other 4 proposals. Replace all fields with the new proposal.
-               Set "novelty_assessment": "REGENERATED", "novelty_note": explain why original
+  PARTIAL   — 2–4 related papers found, but they only address
+               part of the proposal's core idea; key aspects remain unexplored.
+               → Refine background_and_gap and proposed_direction to focus
+                 on the unexplored angle. Do NOT discard.
+               ※ When in doubt between PARTIAL and ALREADY DONE, choose PARTIAL.
 
-Paper summaries to use for regeneration:
+  ALREADY DONE — 5 or more papers found AND they directly address
+                  the same core method as the proposal.
+                  → Discard entirely. Use ONLY the paper summaries below
+                    to identify a completely new research gap not covered
+                    by the remaining 4 proposals. Replace all fields.
+               ※ Use this judgment sparingly — only when overlap is unmistakable.
+
+---
+
+ACTION per status:
+
+NOVEL       → Set "novelty_assessment": "CONFIRMED NOVEL"
+              Set "novelty_note": brief reason why it is novel.
+
+PARTIAL     → Refine background_and_gap and proposed_direction.
+              Set "novelty_assessment": "REFINED"
+              Set "novelty_note": explain what was differentiated and why.
+
+ALREADY DONE → Replace the entire proposal with a new one.
+               Set "novelty_assessment": "REGENERATED"
+               Set "novelty_note": explain why original was discarded
+               and how the new topic was derived from the paper summaries.
+
+---
+
+Paper summaries to use for regeneration (ALREADY DONE cases only):
 {paper_summaries}
 
 Output ONLY a valid JSON object with exactly 5 proposals, adding "novelty_assessment" and
 "novelty_note" fields to each entry. Keep all other fields from the original schema.
 No markdown, no code fences — raw JSON only.
-
 """
         refine_messages = [{"role": "user", "content": refine_query}]
         final_msgs, context_variables = await self.future_work_agent(
