@@ -19,45 +19,28 @@ def get_paper_scan_agent(model: str, **kwargs):
     assert file_env is not None, "file_env is required"
 
     def instructions(context_variables):
-        paper_list = context_variables.get("paper_list", [])
-        paper_paths = "\n".join(f"- {p}" for p in paper_list)
         return f"""\
-You are a `Paper Scanner Agent`. Your job is to rapidly extract only the research-gap-relevant information from each paper.
+You are a `Paper Scanner Agent`. Your job is to scan ONE paper and extract research-gap-relevant information.
 
-Papers are located in: `{file_env.docker_workplace}/papers/`
+WORKFLOW:
+1. Call `open_local_file` with the paper path provided in the task.
 
-Papers to scan:
-{paper_paths}
-
-WORKFLOW — for EACH paper:
-1. Call `open_local_file` with the paper path to open it.
-   Example: open_local_file(path="workplace/papers/paper_title.tex")
-   
-2. After opening, call `question_answer_on_whole_page` with ONLY a `question` argument.
-   IMPORTANT — .tex files begin with a LaTeX preamble (package imports, \\newcommand, etc.)
-   The actual paper content starts much later. You MUST navigate past the preamble first:
-   
+2. Navigate past the LaTeX preamble:
    Step A: Call find_on_page_ctrl_f(search_string="\\\\begin{{abstract}}")
-           → This jumps directly to the abstract section
-   Step B: If Step A fails (not found), call find_on_page_ctrl_f(search_string="\\\\section{{Introduction}}")
-   Step C: If both fail, call page_down_markdown repeatedly until you see actual sentences
-           (not \\\\usepackage or \\\\newcommand lines)
-   
-   Only AFTER reaching actual content, call question_answer_on_whole_page.
-   The function reads from the current position automatically — do NOT pass a path.
-   
-   Ask these 6 questions one at a time:
-   - question_answer_on_whole_page(question="What is the main claim and central contribution of this paper?")
-   - question_answer_on_whole_page(question="What specific research problems or challenges does the introduction identify?")
-   - question_answer_on_whole_page(question="What method or solution does this paper propose to address the problem?")
-   - question_answer_on_whole_page(question="What limitations or weaknesses does this paper explicitly acknowledge?")
-   - question_answer_on_whole_page(question="Does this paper mention future work or open problems? List them precisely.")
-   - question_answer_on_whole_page(question="What aspects of the methodology or experiments appear limited or not generalizable?")
+   Step B: If not found, call find_on_page_ctrl_f(search_string="\\\\section{{Introduction}}")
+   Step C: If both fail, call page_down_markdown until you see actual sentences
 
-3. Compile the 6 answers into the structured summary format below.
-4. Repeat steps 1-3 for every paper in the list.
+3. After reaching content, ask these 6 questions using question_answer_on_whole_page (one at a time):
+   - "What is the main claim and central contribution of this paper?"
+   - "What specific research problems or challenges does the introduction identify?"
+   - "What method or solution does this paper propose to address the problem?"
+   - "What limitations or weaknesses does this paper explicitly acknowledge?"
+   - "Does this paper mention future work or open problems? List them precisely."
+   - "What aspects of the methodology or experiments appear limited or not generalizable?"
 
-OUTPUT FORMAT — repeat for each paper:
+4. Compile all 6 answers into the OUTPUT FORMAT below and return it as your final text response.
+
+OUTPUT FORMAT:
 === PAPER SUMMARY: [exact paper title] ===
 **Main Claim**: [answer to Q1]
 **Problem Stated**: [answer to Q2]
@@ -68,11 +51,14 @@ OUTPUT FORMAT — repeat for each paper:
 === END SUMMARY ===
 
 RULES:
-- .tex files start with LaTeX preamble — always navigate past it with find_on_page_ctrl_f BEFORE calling question_answer_on_whole_page
-- question_answer_on_whole_page does NOT take a path argument — it reads from the current position automatically
-- Keep each field to 2-5 sentences max
-- Complete ALL papers before finishing
-- If a paper cannot be found, write "NOT FOUND" for that paper
+- question_answer_on_whole_page does NOT take a path argument
+- Keep each field to 2-5 sentences
+- Always return the structured summary as your final text response
+
+After asking all 6 questions, if future work information seems incomplete,
+call find_on_page_ctrl_f(search_string="\\conclusion") or 
+find_on_page_ctrl_f(search_string="\\future") to find the conclusion section,
+then call question_answer_on_whole_page again for Q5 and Q6.
 """
 
     tool_list = [
