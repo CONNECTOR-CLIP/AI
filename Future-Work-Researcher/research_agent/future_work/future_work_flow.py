@@ -13,6 +13,9 @@ from research_agent.constant import CHEEP_MODEL
 from research_agent.future_work.paper_scan_agent import get_paper_scan_agent
 from research_agent.future_work.future_work_agent import get_future_work_agent
 
+import re
+import json
+
 
 def github_search(metadata: dict) -> str:
     github_result = ""
@@ -71,25 +74,42 @@ class FutureWorkFlow(FlowModule):
             "workplace_name": workplace_name,
         })
 
-        # [2단계] 논문 핵심 섹션 스캔 (전체 읽기 대신 targeted questions)
-        # → 각 논문당 question_answer_on_whole_page 6회 호출로 끝냄
-        scan_query = f"""\
-I have downloaded the following {len(paper_titles)} papers in TeX format:
-{download_res}
 
-Paper list:
-{references}
+        # [2단계] 논문별 개별 스캔
+        # download_res에서 각 논문의 실제 경로 추출
+        paper_paths = re.findall(r'The paper is downloaded to path:\s*(\S+\.tex)', download_res)
 
-For EACH paper, open it and use question_answer_on_whole_page to extract:
-- Main claim, problem stated, proposed solution, limitations, future work mentioned, unresolved issues.
+        all_summaries = []
+        for i, title in enumerate(paper_titles):
+            path_hint = paper_paths[i] if i < len(paper_paths) else f"{workplace_name}/papers/"
 
-Return structured summaries for ALL papers using the required format.
-"""
-        scan_messages = [{"role": "user", "content": scan_query}]
-        scan_result_msgs, context_variables = await self.scan_agent(
-            scan_messages, context_variables
-        )
-        paper_summaries = scan_result_msgs[-1]["content"]
+            scan_query = (
+                f'Scan this ONE paper:\n'
+                f'- Title: "{title}"\n'
+                f'- Path: {path_hint}\n\n'
+                f'Open the file, navigate past the LaTeX preamble, '
+                f'ask all 6 questions, and return the structured summary.'
+            )
+            
+            scan_messages = [{"role": "user", "content": scan_query}]
+            scan_result_msgs, context_variables = await self.scan_agent(
+                scan_messages, context_variables
+            )
+
+            # content가 있는 마지막 메시지를 역방향 탐색 (마지막이 null일 수 있음)
+            summary = next(
+                (msg["content"] for msg in reversed(scan_result_msgs) if msg.get("content")),
+                None
+            )
+            all_summaries.append(
+                summary if summary
+                else f"=== PAPER SUMMARY: {title} ===\nFAILED TO EXTRACT\n=== END SUMMARY ==="
+            )
+
+        paper_summaries = "\n\n".join(all_summaries)
+
+        if not paper_summaries.strip():
+            raise ValueError("Paper Scanner Agent가 모든 논문 요약에 실패했습니다.")
 
         # [3단계] 구조화된 요약 → 연구 공백 5개 도출
         fw_query = f"""\
@@ -109,7 +129,6 @@ Distribute proposals across different papers — do not focus on only one paper.
 
 
         # [3.5단계] arxiv novelty check — abstract만 검색, 전체 읽기 없음
-        import json
         from research_agent.future_work.arxiv_novelty_check import format_novelty_check_input
         
         # 모델이 ```json ... ``` 코드 펜스로 감싸는 경우 제거
@@ -156,55 +175,26 @@ Use these to judge whether each proposal is already being researched:
 [GitHub Search Results]
 {github_result}
 
----
 
-For each proposal, determine its novelty status using the criteria below,
-then apply the corresponding action.
+For each proposal, apply these rules STRICTLY:
 
-JUDGMENT CRITERIA (apply in order):
+NOVEL → Keep as-is. Set "novelty_assessment": "CONFIRMED NOVEL", "novelty_note": brief reason.
 
-  NOVEL     — 0–1 related papers found in arxiv results,
-               OR the papers found use fundamentally different methods
-               from the proposal's core approach.
-               → Keep proposal as-is.
+PARTIAL → Refine background_and_gap and proposed_direction to a more specific unexplored angle.
+           Set "novelty_assessment": "REFINED", "novelty_note": explain the differentiation.
 
-  PARTIAL   — 2–4 related papers found, but they only address
-               part of the proposal's core idea; key aspects remain unexplored.
-               → Refine background_and_gap and proposed_direction to focus
-                 on the unexplored angle. Do NOT discard.
-               ※ When in doubt between PARTIAL and ALREADY DONE, choose PARTIAL.
+ALREADY DONE → DISCARD this proposal entirely.
+               Using ONLY the paper summaries below, find a completely NEW research gap
+               not covered by the other 4 proposals. Replace all fields with the new proposal.
+               Set "novelty_assessment": "REGENERATED", "novelty_note": explain why original
 
-  ALREADY DONE — 5 or more papers found AND they directly address
-                  the same core method as the proposal.
-                  → Discard entirely. Use ONLY the paper summaries below
-                    to identify a completely new research gap not covered
-                    by the remaining 4 proposals. Replace all fields.
-               ※ Use this judgment sparingly — only when overlap is unmistakable.
-
----
-
-ACTION per status:
-
-NOVEL       → Set "novelty_assessment": "CONFIRMED NOVEL"
-              Set "novelty_note": brief reason why it is novel.
-
-PARTIAL     → Refine background_and_gap and proposed_direction.
-              Set "novelty_assessment": "REFINED"
-              Set "novelty_note": explain what was differentiated and why.
-
-ALREADY DONE → Replace the entire proposal with a new one.
-               Set "novelty_assessment": "REGENERATED"
-               Set "novelty_note": explain why original was discarded
-               and how the new topic was derived from the paper summaries.
-
----
-
-Paper summaries to use for regeneration (ALREADY DONE cases only):
+Paper summaries to use for regeneration:
 {paper_summaries}
 
 Output ONLY a valid JSON object with exactly 5 proposals, adding "novelty_assessment" and
 "novelty_note" fields to each entry. Keep all other fields from the original schema.
 No markdown, no code fences — raw JSON only.
+
 """
         refine_messages = [{"role": "user", "content": refine_query}]
         final_msgs, context_variables = await self.future_work_agent(
