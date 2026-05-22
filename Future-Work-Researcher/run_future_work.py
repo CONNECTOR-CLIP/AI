@@ -16,7 +16,7 @@ def get_args():
     parser.add_argument(
         "--model",
         type=str,
-        default=os.environ.get("COMPLETION_MODEL", "gemini/gemini-2.5-pro")  # ← 변경
+        default=os.environ.get("COMPLETION_MODEL", "openrouter/google/gemini/gemini-2.5-pro")  # ← 변경
     )
 
     # GitHub 검색 시 이 날짜 이후 생성된 레포지토리만 검색
