@@ -1,0 +1,13 @@
+{
+    "name": "download_arxiv_source_by_title",
+    "args": {
+        "paper_list": [
+            "Positional Attention: Expressivity and Learnability of Algorithmic Computation",
+            "Graph-Assisted Stitching for Offline Hierarchical Reinforcement Learning",
+            "LightGCN: Simplifying and Powering Graph Convolution Network for Recommendation"
+        ],
+        "local_root": "/workspace/Future-Work-Researcher/workplace_future_work",
+        "workplace_name": "workplace"
+    },
+    "result": "Download paper 'Positional Attention: Expressivity and Learnability of Algorithmic Computation' successfully\nMatched arxiv title: 'Positional Attention: Expressivity and Learnability of Algorithmic Computation' (similarity=1.00)\nThe paper is downloaded to path: /workplace/papers/positional_attention_expressivity_and_learnability_of_algorithmic_computation.tex\nDownload paper 'Graph-Assisted Stitching for Offline Hierarchical Reinforcement Learning' successfully\nMatched arxiv title: 'Graph-Assisted Stitching for Offline Hierarchical Reinforcement Learning' (similarity=1.00)\nThe paper is downloaded to path: /workplace/papers/graphassisted_stitching_for_offline_hierarchical_reinforcement_learning.tex\nDownload paper 'LightGCN: Simplifying and Powering Graph Convolution Network for Recommendation' successfully\nMatched arxiv title: 'LightGCN: Simplifying and Powering Graph Convolution Network for Recommendation' (similarity=1.00)\nThe paper is downloaded to path: /workplace/papers/lightgcn_simplifying_and_powering_graph_convolution_network_for_recommendation.tex"
+}
