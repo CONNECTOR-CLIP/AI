@@ -11,6 +11,7 @@ ReDoc:       http://localhost:8000/redoc
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.compat import router as compat_router
 from app.api.search import router as search_router
 
 # ─────────────────────────────────────────────
@@ -53,6 +54,7 @@ app.add_middleware(
 # ─────────────────────────────────────────────
 
 app.include_router(search_router, tags=["search"])
+app.include_router(compat_router, tags=["backend-compat"])
 
 
 # ─────────────────────────────────────────────
