@@ -1,0 +1,18 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+venv/
+
+# Local data & runtime files
+data/
+.env
+run-local.sh
+
+# Future-Work-Researcher runtime artifacts
+../Future-Work-Researcher/cache_future_work/
+../Future-Work-Researcher/workplace_future_work/
+../Future-Work-Researcher/__pycache__/
+../Future-Work-Researcher/research_agent/**/__pycache__/
