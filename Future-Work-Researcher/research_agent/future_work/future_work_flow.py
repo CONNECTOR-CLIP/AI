@@ -55,11 +55,10 @@ class FutureWorkFlow(FlowModule):
         date_limit: str,
         local_root: str,
         workplace_name: str,
+        paper_ids: dict = None,
         *args,
         **kwargs,
     ):
-        references = "\n".join(f"- {t}" for t in paper_titles)
-
         context_variables = {
             "working_dir": workplace_name,
             "date_limit": date_limit,
@@ -72,8 +71,8 @@ class FutureWorkFlow(FlowModule):
             "paper_list": paper_titles,
             "local_root": local_root,
             "workplace_name": workplace_name,
+            "paper_ids": paper_ids or {},
         })
-
 
         # [2단계] 논문별 개별 스캔
         # download_res에서 각 논문의 실제 경로 추출
@@ -90,7 +89,7 @@ class FutureWorkFlow(FlowModule):
                 f'Open the file, navigate past the LaTeX preamble, '
                 f'ask all 6 questions, and return the structured summary.'
             )
-            
+
             scan_messages = [{"role": "user", "content": scan_query}]
             scan_result_msgs, context_variables = await self.scan_agent(
                 scan_messages, context_variables
@@ -155,12 +154,19 @@ Distribute proposals across different papers — do not focus on only one paper.
         )
 
 
-        # [4단계] GitHub 검색 — novelty 검증
-        metadata = {
-            "source_papers": [{"reference": t} for t in paper_titles],
-            "date_limit": date_limit,
-        }
-        github_result = self.git_search({"metadata": metadata})
+        # [4단계] GitHub 검색 — novelty 검증 (토큰 없으면 건너뜀)
+        from research_agent.constant import GITHUB_AI_TOKEN
+        if GITHUB_AI_TOKEN:
+            try:
+                metadata = {
+                    "source_papers": [{"reference": t} for t in paper_titles],
+                    "date_limit": date_limit,
+                }
+                github_result = self.git_search({"metadata": metadata})
+            except Exception:
+                github_result = "GitHub search skipped (API error)."
+        else:
+            github_result = "GitHub search skipped (no token configured)."
 
         # [5단계] GitHub 결과 반영 → 최종 정제
         refine_query = f"""\

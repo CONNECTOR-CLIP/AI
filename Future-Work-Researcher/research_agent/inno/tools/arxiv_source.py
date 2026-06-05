@@ -168,26 +168,41 @@ def _title_similarity(a: str, b: str) -> float:
 
 
 
-def download_arxiv_source_by_title(paper_list: List[str], local_root: str, workplace_name: str):
+def download_arxiv_source_by_title(paper_list: List[str], local_root: str, workplace_name: str, paper_ids: dict = None):
     """
-    download arxiv paper source file by title
-    
-    Args:
-        title: paper title
-        paper_dir: paper directory
+    download arxiv paper source file.
+    If paper_ids dict is provided (title -> arxiv_id), uses direct ID download (faster, accurate).
+    Falls back to title search when no ID is available.
     """
     ret_msg = []
+    paper_ids = paper_ids or {}
+
     for title in paper_list:
-        papers = search_arxiv(title, max_results=5)  # 논문을 5개 검색해서
+        arxiv_id = paper_ids.get(title)
+
+        if arxiv_id:
+            # arxiv ID로 직접 다운로드 (제목 검색 불필요)
+            arxiv_url = f"http://arxiv.org/abs/{arxiv_id}"
+            download_info = download_arxiv_source(arxiv_url, local_root, workplace_name, title)
+            if download_info["status"] == -1:
+                ret_msg.append(download_info["message"])
+            else:
+                ret_msg.append(
+                    download_info["message"]
+                    + f"\nArXiv ID: {arxiv_id}"
+                    + f"\nThe paper is downloaded to path: {download_info['path']}"
+                )
+            continue
+
+        # arxiv ID 없음 → 제목으로 검색 fallback
+        papers = search_arxiv(title, max_results=5)
         if len(papers) == 0:
             ret_msg.append(f"Cannot find the paper '{title}' in arxiv")
             continue
-        
-        # Pick the result whose title best matches the requested title
+
         best_paper = max(papers, key=lambda p: _title_similarity(p['title'], title))
         similarity = _title_similarity(best_paper['title'], title)
 
-        # 완전 다른 논문. 다운로드 안함, 경고만 출력
         if similarity < 0.3:
             ret_msg.append(
                 f"WARNING: Could not find a close match for '{title}' in arxiv. "
@@ -196,7 +211,6 @@ def download_arxiv_source_by_title(paper_list: List[str], local_root: str, workp
             )
             continue
 
-        # 애매함. 일단 다운로드 하되 경고 출력
         if similarity < 0.6:
             ret_msg.append(
                 f"WARNING: Weak title match for '{title}'. "
@@ -204,19 +218,16 @@ def download_arxiv_source_by_title(paper_list: List[str], local_root: str, workp
                 f"Proceeding with download but please verify."
             )
 
-        # 정상 다운로드
         download_info = download_arxiv_source(best_paper['url'], local_root, workplace_name, title)
 
-        # 다운로드 결과 메시지에 매칭 정보 추가
         if download_info["status"] == -1:
             ret_msg.append(download_info["message"])
         else:
-            msg = (
+            ret_msg.append(
                 download_info["message"]
                 + f"\nMatched arxiv title: '{best_paper['title']}' (similarity={similarity:.2f})"
                 + f"\nThe paper is downloaded to path: {download_info['path']}"
             )
-            ret_msg.append(msg)
 
     return "\n".join(ret_msg)
     

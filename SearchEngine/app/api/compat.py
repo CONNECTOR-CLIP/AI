@@ -226,11 +226,17 @@ async def analyze_gap(payload: PapersRequest) -> dict[str, Any]:
     if not titles:
         raise HTTPException(status_code=422, detail="papers with title or id are required")
 
+    paper_ids = {
+        str(p.get("title") or _paper_id(p)): str(p.get("arxiv_id") or p.get("arxivId") or p.get("paper_id") or "")
+        for p in payload.papers
+        if (p.get("title") or _paper_id(p)) and (p.get("arxiv_id") or p.get("arxivId") or p.get("paper_id"))
+    }
+
     try:
         from research_agent.future_work.future_work_flow import FutureWorkFlow
         from research_agent.inno.environment.markdown_browser import RequestsMarkdownBrowser
 
-        local_root = os.path.join(FUTURE_WORK_DIR, "workplace_future_work")
+        local_root = os.getenv("FUTURE_WORK_ROOT", "/tmp/clip_future_work")
         workplace_name = os.getenv("FUTURE_WORKPLACE_NAME", "workplace")
         file_env = RequestsMarkdownBrowser(
             viewport_size=1024 * 4,
@@ -239,7 +245,7 @@ async def analyze_gap(payload: PapersRequest) -> dict[str, Any]:
             downloads_folder=os.path.join(local_root, workplace_name, "downloads"),
         )
         flow = FutureWorkFlow(
-            cache_path=os.path.join(FUTURE_WORK_DIR, "cache_future_work"),
+            cache_path=os.path.join(local_root, "cache"),
             model=os.getenv("COMPLETION_MODEL", "openrouter/google/gemini/gemini-2.5-pro"),
             file_env=file_env,
         )
@@ -248,8 +254,11 @@ async def analyze_gap(payload: PapersRequest) -> dict[str, Any]:
             date_limit=os.getenv("FUTURE_WORK_DATE_LIMIT", "2010-01-01"),
             local_root=local_root,
             workplace_name=workplace_name,
+            paper_ids=paper_ids,
         )
     except Exception as exc:
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=502, detail=f"future work analysis failed: {exc}") from exc
 
     try:
