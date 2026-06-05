@@ -60,7 +60,7 @@ Return only the Python list, nothing else."""
     return [k.strip().strip('"').strip("'") for k in raw.strip("[]").split(",")]
 
 
-def search_arxiv_abstracts(keywords: List[str], max_results: int = 8) -> List[Dict]:
+def search_arxiv_abstracts(keywords: List[str], max_results: int = 5) -> List[Dict]:
     """
     arxiv에서 키워드로 검색 후 title + abstract만 반환.
     전체 논문 다운로드 없음.
@@ -71,14 +71,23 @@ def search_arxiv_abstracts(keywords: List[str], max_results: int = 8) -> List[Di
         max_results=max_results,
         sort_by=arxiv.SortCriterion.Relevance,
     )
+    client = arxiv.Client(delay_seconds=3.0, num_retries=3)
     results = []
-    for paper in search.results():
-        results.append({
-            "title": paper.title,
-            "abstract": paper.summary,
-            "year": paper.published.year,
-            "url": paper.entry_id,
-        })
+    for attempt in range(3):
+        try:
+            for paper in client.results(search):
+                results.append({
+                    "title": paper.title,
+                    "abstract": paper.summary,
+                    "year": paper.published.year,
+                    "url": paper.entry_id,
+                })
+            break
+        except Exception:
+            if attempt < 2:
+                time.sleep(10 * (attempt + 1))
+            else:
+                pass
     return results
 
 
@@ -93,8 +102,10 @@ def format_novelty_check_input(
     report_parts = []
 
     for i, fw_text in enumerate(future_works, 1):
+        if i > 1:
+            time.sleep(5)
         keywords = extract_keywords_for_search(fw_text, model)
-        arxiv_results = search_arxiv_abstracts(keywords, max_results=8)
+        arxiv_results = search_arxiv_abstracts(keywords, max_results=5)
 
         section = f"=== Novelty Check for Future Work Idea {i} ===\n"
         section += f"Search keywords: {keywords}\n\n"
