@@ -1,0 +1,19 @@
+#!/bin/bash
+# AI 서버 로컬 실행 스크립트
+# 사용법: cp run-local.sh.example run-local.sh  →  내 키 입력  →  bash run-local.sh
+
+# 사용할 모델 (변경 불필요)
+export COMPLETION_MODEL=openrouter/google/gemini-2.5-flash
+export CHEEP_MODEL=openrouter/google/gemini-2.5-flash
+
+# OpenRouter API 키 (https://openrouter.ai 에서 발급)
+export OPENROUTER_API_KEY=sk-or-v1-여기에_본인_키_입력
+
+export OPENROUTER_API_BASE=https://openrouter.ai/api/v1
+
+# GitHub Personal Access Token (없으면 GitHub 검색 스킵됨 — 없어도 동작함)
+# https://github.com/settings/tokens 에서 public_repo 권한으로 발급
+export GITHUB_AI_TOKEN=ghp_여기에_본인_토큰_입력
+
+source venv/bin/activate
+uvicorn app.main:app --reload --port 8000
