@@ -46,6 +46,11 @@ class PapersRequest(BaseModel):
     papers: list[dict[str, Any]]
 
 
+class DraftRequest(BaseModel):
+    proposal: dict[str, Any]
+    workplace_name: str | None = None
+
+
 def _normalise_page(page: int) -> int:
     return max(1, page)
 
@@ -261,27 +266,48 @@ async def analyze_gap(payload: PapersRequest) -> dict[str, Any]:
         traceback.print_exc()
         raise HTTPException(status_code=502, detail=f"future work analysis failed: {exc}") from exc
 
-    # flow()가 dict {"future_work": ..., "paper_draft": ...} 반환
-    if isinstance(raw, dict):
-        future_work_raw = raw.get("future_work", "")
-        paper_draft = raw.get("paper_draft", "")
-    else:
-        future_work_raw = str(raw)
-        paper_draft = ""
-
     try:
-        parsed = json.loads(future_work_raw)
+        parsed = json.loads(raw)
     except Exception:
         parsed = None
 
-    # paper_draft를 gap_content JSON에 포함시켜 DB 스키마 변경 없이 전달
-    combined: dict = dict(parsed) if isinstance(parsed, dict) else {}
-    combined["paper_draft"] = paper_draft
-    combined_raw = json.dumps(combined, ensure_ascii=False)
-
     return {
-        "gap_content": combined_raw,
+        "gap_content": raw,
         "future_work": parsed,
-        "paper_draft": paper_draft,
         "papers": titles,
     }
+
+
+@router.post("/gap/draft")
+async def generate_paper_draft(payload: DraftRequest) -> dict[str, Any]:
+    """사용자가 선택한 퓨처워크 제안 하나로 논문 초안 생성."""
+    if not payload.proposal:
+        raise HTTPException(status_code=422, detail="proposal is required")
+
+    try:
+        from research_agent.future_work.future_work_flow import FutureWorkFlow
+        from research_agent.inno.environment.markdown_browser import RequestsMarkdownBrowser
+
+        local_root = os.getenv("FUTURE_WORK_ROOT", "/tmp/clip_future_work")
+        workplace_name = payload.workplace_name or os.getenv("FUTURE_WORKPLACE_NAME", "workplace")
+        file_env = RequestsMarkdownBrowser(
+            viewport_size=1024 * 4,
+            local_root=local_root,
+            workplace_name=workplace_name,
+            downloads_folder=os.path.join(local_root, workplace_name, "downloads"),
+        )
+        flow = FutureWorkFlow(
+            cache_path=os.path.join(local_root, "cache"),
+            model=os.getenv("COMPLETION_MODEL", "openrouter/google/gemini-2.5-flash"),
+            file_env=file_env,
+        )
+        draft = await flow.generate_paper_draft(
+            proposal=payload.proposal,
+            workplace_name=workplace_name,
+        )
+    except Exception as exc:
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=502, detail=f"paper draft generation failed: {exc}") from exc
+
+    return {"paper_draft": draft}
