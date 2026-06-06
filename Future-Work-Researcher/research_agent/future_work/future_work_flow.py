@@ -215,20 +215,26 @@ No markdown, no code fences — raw JSON only.
         )
         result = final_msgs[-1]["content"]
         print(result)
+        return result
 
-        # [6단계] 가장 유망한 제안 선택 → 논문 초안 생성
-        result_text = result.strip()
-        if "```" in result_text:
-            result_text = result_text.split("```")[1]
-            if "\n" in result_text:
-                result_text = result_text.split("\n", 1)[1]
-            result_text = result_text.strip()
-
+    async def generate_paper_draft(
+        self,
+        proposal: dict,
+        workplace_name: str,
+    ) -> str:
+        """사용자가 선택한 제안 하나로 논문 초안 생성."""
+        context_variables = {"working_dir": workplace_name, "notes": []}
         idea_query = f"""\
-You are given 5 validated future work proposals from {len(paper_titles)} research papers.
+Generate a comprehensive paper draft outline for the following research proposal.
+Use the paper files at {workplace_name}/papers/ to ground your writing.
 
-Select the SINGLE most promising proposal and generate a comprehensive paper draft outline:
+Proposal:
+- Background & Gap: {proposal.get('background_and_gap', '')}
+- Proposed Direction: {proposal.get('proposed_direction', '')}
+- Expected Contribution: {proposal.get('expected_contribution', '')}
+- Reference Papers: {', '.join(proposal.get('reference_papers', []))}
 
+Include:
 1. Suggested paper title
 2. Abstract (150-200 words)
 3. Introduction: motivation, problem statement, key contributions
@@ -236,19 +242,12 @@ Select the SINGLE most promising proposal and generate a comprehensive paper dra
 5. Proposed Methodology: technical approach with details
 6. Experiments & Evaluation: metrics, datasets, baselines
 7. Expected Contributions
-
-Use the paper files at {workplace_name}/papers/ to ground your writing.
-
-Proposals:
-{result_text}
 """
         idea_messages = [{"role": "user", "content": idea_query}]
         idea_msgs, context_variables = await self.idea_agent(
             idea_messages, context_variables
         )
-        paper_draft = next(
+        return next(
             (msg["content"] for msg in reversed(idea_msgs) if msg.get("content")),
-            None
-        ) or ""
-
-        return {"future_work": result, "paper_draft": paper_draft}
+            ""
+        )
