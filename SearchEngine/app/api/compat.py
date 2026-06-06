@@ -261,13 +261,27 @@ async def analyze_gap(payload: PapersRequest) -> dict[str, Any]:
         traceback.print_exc()
         raise HTTPException(status_code=502, detail=f"future work analysis failed: {exc}") from exc
 
+    # flow()가 dict {"future_work": ..., "paper_draft": ...} 반환
+    if isinstance(raw, dict):
+        future_work_raw = raw.get("future_work", "")
+        paper_draft = raw.get("paper_draft", "")
+    else:
+        future_work_raw = str(raw)
+        paper_draft = ""
+
     try:
-        parsed = json.loads(raw)
+        parsed = json.loads(future_work_raw)
     except Exception:
         parsed = None
 
+    # paper_draft를 gap_content JSON에 포함시켜 DB 스키마 변경 없이 전달
+    combined: dict = dict(parsed) if isinstance(parsed, dict) else {}
+    combined["paper_draft"] = paper_draft
+    combined_raw = json.dumps(combined, ensure_ascii=False)
+
     return {
-        "gap_content": raw,
+        "gap_content": combined_raw,
         "future_work": parsed,
+        "paper_draft": paper_draft,
         "papers": titles,
     }
