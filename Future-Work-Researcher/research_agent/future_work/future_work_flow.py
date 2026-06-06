@@ -12,6 +12,7 @@ from research_agent.constant import CHEEP_MODEL
 
 from research_agent.future_work.paper_scan_agent import get_paper_scan_agent
 from research_agent.future_work.future_work_agent import get_future_work_agent
+from research_agent.agents.inno_agent.idea_agent import get_idea_agent
 
 import re
 import json
@@ -45,6 +46,12 @@ class FutureWorkFlow(FlowModule):
         # future_work_agent: 연구 공백 분석 (고성능 모델 사용)
         self.future_work_agent = AgentModule(
             get_future_work_agent(model=model),
+            self.client,
+            cache_path,
+        )
+        # idea_agent: 가장 유망한 공백 선택 후 논문 초안 생성
+        self.idea_agent = AgentModule(
+            get_idea_agent(model=model, file_env=file_env),
             self.client,
             cache_path,
         )
@@ -208,4 +215,40 @@ No markdown, no code fences — raw JSON only.
         )
         result = final_msgs[-1]["content"]
         print(result)
-        return result
+
+        # [6단계] 가장 유망한 제안 선택 → 논문 초안 생성
+        result_text = result.strip()
+        if "```" in result_text:
+            result_text = result_text.split("```")[1]
+            if "\n" in result_text:
+                result_text = result_text.split("\n", 1)[1]
+            result_text = result_text.strip()
+
+        idea_query = f"""\
+You are given 5 validated future work proposals from {len(paper_titles)} research papers.
+
+Select the SINGLE most promising proposal and generate a comprehensive paper draft outline:
+
+1. Suggested paper title
+2. Abstract (150-200 words)
+3. Introduction: motivation, problem statement, key contributions
+4. Related Work: key research areas to survey
+5. Proposed Methodology: technical approach with details
+6. Experiments & Evaluation: metrics, datasets, baselines
+7. Expected Contributions
+
+Use the paper files at {workplace_name}/papers/ to ground your writing.
+
+Proposals:
+{result_text}
+"""
+        idea_messages = [{"role": "user", "content": idea_query}]
+        idea_msgs, context_variables = await self.idea_agent(
+            idea_messages, context_variables
+        )
+        paper_draft = next(
+            (msg["content"] for msg in reversed(idea_msgs) if msg.get("content")),
+            None
+        ) or ""
+
+        return {"future_work": result, "paper_draft": paper_draft}
