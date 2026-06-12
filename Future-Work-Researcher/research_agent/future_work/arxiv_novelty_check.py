@@ -60,7 +60,7 @@ Return only the Python list, nothing else."""
     return [k.strip().strip('"').strip("'") for k in raw.strip("[]").split(",")]
 
 
-def search_arxiv_abstracts(keywords: List[str], max_results: int = 5) -> List[Dict]:
+def search_arxiv_abstracts(keywords: List[str], max_results: int = 8) -> List[Dict]:
     """
     arxiv에서 키워드로 검색 후 title + abstract만 반환.
     전체 논문 다운로드 없음.
@@ -71,41 +71,32 @@ def search_arxiv_abstracts(keywords: List[str], max_results: int = 5) -> List[Di
         max_results=max_results,
         sort_by=arxiv.SortCriterion.Relevance,
     )
-    client = arxiv.Client(delay_seconds=3.0, num_retries=3)
     results = []
-    for attempt in range(3):
-        try:
-            for paper in client.results(search):
-                results.append({
-                    "title": paper.title,
-                    "abstract": paper.summary,
-                    "year": paper.published.year,
-                    "url": paper.entry_id,
-                })
-            break
-        except Exception:
-            if attempt < 2:
-                time.sleep(10 * (attempt + 1))
-            else:
-                pass
+    for paper in search.results():
+        results.append({
+            "title": paper.title,
+            "abstract": paper.summary,
+            "year": paper.published.year,
+            "url": paper.entry_id,
+        })
     return results
 
 
+
+
 def format_novelty_check_input(
-    future_works: List[str],
-    model: str,
+    keywords_list: List[List[str]],
 ) -> str:
+
     """
     퓨쳐워크 5개 각각에 대해 arxiv 검색 수행 후
     'future_work_agent'에게 넘길 novelty check 결과 텍스트 생성.
     """
-    report_parts = []
 
-    for i, fw_text in enumerate(future_works, 1):
-        if i > 1:
-            time.sleep(5)
-        keywords = extract_keywords_for_search(fw_text, model)
+    report_parts = []
+    for i, keywords in enumerate(keywords_list, 1):
         arxiv_results = search_arxiv_abstracts(keywords, max_results=5)
+        ...
 
         section = f"=== Novelty Check for Future Work Idea {i} ===\n"
         section += f"Search keywords: {keywords}\n\n"
@@ -203,3 +194,17 @@ def fetch_arxiv_introduction(paper_url: str) -> str:
         return ""
     except Exception:
         return ""
+
+
+
+def extract_keywords_for_proposals(future_works: List[str], model: str) -> List[List[str]]:
+    """
+    퓨쳐워크 제안 각각에 대해 검색 키워드를 추출.
+    ArXiv 신규성 체크와 GitHub 실현 가능성 체크에서 공통으로 재사용한다.
+    """
+    keywords_list = []
+    for i, fw_text in enumerate(future_works, 1):
+        if i > 1:
+            time.sleep(5)
+        keywords_list.append(extract_keywords_for_search(fw_text, model))
+    return keywords_list
