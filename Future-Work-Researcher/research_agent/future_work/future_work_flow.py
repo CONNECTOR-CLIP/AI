@@ -13,15 +13,19 @@ from research_agent.constant import CHEEP_MODEL
 from research_agent.future_work.paper_scan_agent import get_paper_scan_agent
 from research_agent.future_work.future_work_agent import get_future_work_agent
 from research_agent.agents.inno_agent.idea_agent import get_idea_agent
+from research_agent.future_work.arxiv_novelty_check import extract_keywords_for_proposals, format_novelty_check_input
 
 import re
 import json
 
 
+# 퓨쳐워크 제안 키워드로 깃허브 검색
 def github_search(metadata: dict) -> str:
     github_result = ""
-    for source_paper in tqdm(metadata["source_papers"]):
-        github_result += search_github_repos(metadata, source_paper["reference"], 10)
+    for proposal in tqdm(metadata["proposals"]):
+        query = " ".join(proposal["keywords"])
+        github_result += f"=== GitHub search for Future Work Idea {proposal['id']} (keywords: {proposal['keywords']}) ===\n"
+        github_result += search_github_repos(metadata, query, 10)
         github_result += "*" * 30 + "\n"
     return github_result
 
@@ -135,8 +139,7 @@ Distribute proposals across different papers — do not focus on only one paper.
 
 
         # [3.5단계] arxiv novelty check — abstract만 검색, 전체 읽기 없음
-        from research_agent.future_work.arxiv_novelty_check import format_novelty_check_input
-        
+
         # 모델이 ```json ... ``` 코드 펜스로 감싸는 경우 제거
         draft_text = draft_future_works.strip()
         if "```" in draft_text:
@@ -144,7 +147,7 @@ Distribute proposals across different papers — do not focus on only one paper.
             if "\n" in draft_text:
                 draft_text = draft_text.split("\n", 1)[1]  # 첫 줄(언어 식별자) 제거
             draft_text = draft_text.strip()
-            
+
         # JSON 출력에서 각 제안의 텍스트를 추출하여 키워드 검색에 사용
         try:
             draft_json = json.loads(draft_text)
@@ -155,18 +158,23 @@ Distribute proposals across different papers — do not focus on only one paper.
         except (json.JSONDecodeError, KeyError):
             draft_proposals = [draft_future_works]
 
+        # 제안별 키워드를 한 번만 추출해서 arxiv + github 검색에 공통으로 사용
+        proposal_keywords = extract_keywords_for_proposals(draft_proposals, model=CHEEP_MODEL)
+
         arxiv_novelty_report = format_novelty_check_input(
-                future_works=draft_proposals,
-                model=CHEEP_MODEL,   # 키워드 추출은 저렴한 모델
+                keywords_list=proposal_keywords,
         )
 
 
-        # [4단계] GitHub 검색 — novelty 검증 (토큰 없으면 건너뜀)
+        # [4단계] GitHub 검색 — 새로 뽑은 퓨처워크 제안의 실현 가능성(이미 구현됐는지) 검증
         from research_agent.constant import GITHUB_AI_TOKEN
         if GITHUB_AI_TOKEN:
             try:
                 metadata = {
-                    "source_papers": [{"reference": t} for t in paper_titles],
+                    "proposals": [
+                        {"id": i + 1, "keywords": kws}
+                        for i, kws in enumerate(proposal_keywords)
+                    ],
                     "date_limit": date_limit,
                 }
                 github_result = self.git_search({"metadata": metadata})
