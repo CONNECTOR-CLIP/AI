@@ -1,0 +1,13 @@
+{
+  "owner": "hud",
+  "pid": 4612,
+  "cwd": "/mnt/d/NEW_HARNESS_INNOVATION",
+  "heartbeat_at": "2026-07-07T09:03:08.917Z",
+  "cooldown_ms": 5000,
+  "jitter_ms": 248,
+  "skip_count": 508,
+  "last_status": "spawned",
+  "last_reason": "spawned",
+  "last_spawn_at": "2026-07-07T09:03:08.917Z",
+  "next_allowed_at": "2026-07-07T09:03:14.165Z"
+}

@@ -1,0 +1,18 @@
+{
+  "artifacts": [
+    "draft.md",
+    "revisions/auto_edit-0934767e98a9.json"
+  ],
+  "error": null,
+  "metadata": {
+    "files_changed": [
+      "draft.md"
+    ],
+    "mode": "auto_edit",
+    "record_path": "revisions/auto_edit-0934767e98a9.json",
+    "selected_candidate_id": "cand-r1-1"
+  },
+  "run_dir": "D:\\NEW_HARNESS_INNOVATION\\experiment_work_search_engine_light\\run_root\\runs\\exp-openrouter-search-engine-light-20260707",
+  "run_id": "exp-openrouter-search-engine-light-20260707",
+  "status": "success"
+}

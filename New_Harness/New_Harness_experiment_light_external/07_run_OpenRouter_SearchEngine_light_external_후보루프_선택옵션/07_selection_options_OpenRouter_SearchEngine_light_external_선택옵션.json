@@ -1,0 +1,82 @@
+{
+  "candidate_summaries": [
+    {
+      "candidate_id": "cand-r1-1",
+      "critic_verdict": "pass",
+      "evidence_score": 0.877,
+      "expected_contribution": "A reproducible benchmark add-on that turns broad future-work limitations into measurable evaluation slices for deterministic methods.",
+      "feasibility_score": 1.0,
+      "gap_statement": "The evidence cards consistently indicate deterministic methods with benchmark evaluations and experiment signals, while also noting that each paper highlights an unspecified limitation for future work. This leaves a gap: the current benchmark signals may not isolate which conditions trigger the reported limitations.",
+      "novelty_risk": "low",
+      "source_paths": {
+        "candidate": "candidates/candidates_round_1.json",
+        "candidate_loop": "candidate_loop.json",
+        "critic_report": "critic_reports/critic_reports_round_1.json"
+      },
+      "supporting_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2312.13010",
+        "2312.10997",
+        "2502.05957"
+      ],
+      "title": "Limitation-Targeted Stress Benchmark for Deterministic Methods"
+    },
+    {
+      "candidate_id": "cand-r1-2",
+      "critic_verdict": "pass",
+      "evidence_score": 0.8899999999999999,
+      "expected_contribution": "A reproducible robustness layer for deterministic methods that operationalizes future-work limitations as detectable conditions and controlled fallback behavior.",
+      "feasibility_score": 1.0,
+      "gap_statement": "Multiple papers describe deterministic methods and report experiment signals, but the evidence cards also state that each approach has a limitation left for future work. A natural gap is that deterministic pipelines may lack mechanisms for detecting when their own assumptions are no longer appropriate.",
+      "novelty_risk": "low",
+      "source_paths": {
+        "candidate": "candidates/candidates_round_1.json",
+        "candidate_loop": "candidate_loop.json",
+        "critic_report": "critic_reports/critic_reports_round_1.json"
+      },
+      "supporting_evidence_refs": [
+        "2505.18705",
+        "2312.13010",
+        "2502.05957"
+      ],
+      "title": "Hybrid Deterministic Pipeline with Adaptive Limitation Handling"
+    },
+    {
+      "candidate_id": "cand-r1-3",
+      "critic_verdict": "pass",
+      "evidence_score": 0.877,
+      "expected_contribution": "A practical evidence-capture framework that converts high-level statements about deterministic methods, benchmarks, experiment signals, and future work into comparable research-planning artifacts.",
+      "feasibility_score": 1.0,
+      "gap_statement": "The evidence cards mention benchmark evaluations, experiment signals, limitations, and future-work directions across several deterministic-method papers, but the metadata is too coarse to compare the limitations or signals directly. This suggests a reporting gap rather than only a modeling gap.",
+      "novelty_risk": "unknown",
+      "source_paths": {
+        "candidate": "candidates/candidates_round_1.json",
+        "candidate_loop": "candidate_loop.json",
+        "critic_report": "critic_reports/critic_reports_round_1.json"
+      },
+      "supporting_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2312.13010",
+        "2312.10997",
+        "2502.05957"
+      ],
+      "title": "Cross-Paper Reporting Template for Deterministic Benchmark Signals"
+    }
+  ],
+  "pass_candidate_ids": [
+    "cand-r1-1",
+    "cand-r1-2",
+    "cand-r1-3"
+  ],
+  "run_id": "exp-openrouter-search-engine-light-20260707",
+  "schema_version": 1,
+  "selection_command_template": "select --run-id exp-openrouter-search-engine-light-20260707 --candidate-id <candidate_id>",
+  "source_paths": {
+    "candidate": "candidates/candidates_round_1.json",
+    "candidate_loop": "candidate_loop.json",
+    "critic_report": "critic_reports/critic_reports_round_1.json"
+  },
+  "status": "selection_required"
+}

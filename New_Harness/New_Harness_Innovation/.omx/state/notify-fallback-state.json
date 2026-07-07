@@ -1,0 +1,88 @@
+{
+  "pid": 4578,
+  "parent_pid": 4560,
+  "started_at": "2026-07-07T06:23:15.568Z",
+  "cwd": "/mnt/d/NEW_HARNESS_INNOVATION",
+  "notify_script": "/home/user/.nvm/versions/node/v24.15.0/lib/node_modules/oh-my-codex/dist/scripts/notify-hook.js",
+  "authority_only": false,
+  "poll_ms": 250,
+  "effective_poll_ms": 1000,
+  "idle_max_poll_ms": 1000,
+  "pid_file": "/mnt/d/NEW_HARNESS_INNOVATION/.omx/state/notify-fallback.pid",
+  "max_lifetime_ms": 21600000,
+  "tracked_files": 1,
+  "seen_turns": 12,
+  "dispatch_drain": {
+    "enabled": true,
+    "max_per_tick": 5,
+    "run_count": 7471,
+    "leader_only": true,
+    "last_tick_at": "2026-07-07T09:03:08.762Z",
+    "last_result": {
+      "processed": 0,
+      "skipped": 0,
+      "failed": 0
+    },
+    "last_error": null
+  },
+  "leader_nudge": {
+    "enabled": true,
+    "leader_only": true,
+    "stale_threshold_ms": 180000,
+    "precomputed_leader_stale": false,
+    "last_tick_at": "2026-07-07T09:03:08.768Z",
+    "last_error": null,
+    "run_count": 7471
+  },
+  "ralph_continue_steer": {
+    "enabled": true,
+    "cadence_ms": 60000,
+    "message": "Ralph loop active continue",
+    "active": false,
+    "last_state_check_at": "2026-07-07T09:03:08.794Z",
+    "last_sent_at": "",
+    "cooldown_anchor_at": "",
+    "last_reason": "cleared",
+    "last_error": null,
+    "state_path": "",
+    "pane_id": "",
+    "pane_current_command": "",
+    "current_phase": "",
+    "subagent_session_id": "",
+    "active_subagent_thread_ids": [],
+    "shared_timestamp_path": "/mnt/d/NEW_HARNESS_INNOVATION/.omx/state/ralph-last-steer-at",
+    "shared_last_sent_at": "",
+    "singleton_lock_path": "/mnt/d/NEW_HARNESS_INNOVATION/.omx/state/ralph-continue-steer.lock"
+  },
+  "fallback_auto_nudge": {
+    "enabled": true,
+    "stall_ms": 5000,
+    "last_tick_at": "2026-07-07T09:03:08.787Z",
+    "last_turn_at": "2026-07-07T08:16:35.131Z",
+    "last_turn_count": 14,
+    "last_message": "완료했습니다.\n\n## 결과 폴더\n\n```text\nD:/새로운하네스실험_selected_only\nD:/새로운하네스실험_strong_external\n```\n\n`D:/새로운하네스실험_s",
+    "last_reason": "hud_state_missing",
+    "last_error": null,
+    "last_nudged_signature": "",
+    "last_nudged_at": ""
+  },
+  "authority_backoff": {
+    "active": false,
+    "reason": "",
+    "primary_pid": null,
+    "primary_last_tick_at": "",
+    "freshness_ms": null,
+    "threshold_ms": null
+  },
+  "adaptive_poll": {
+    "enabled": true,
+    "base_ms": 250,
+    "max_ms": 1000,
+    "current_ms": 1000,
+    "idle_streak": 2120,
+    "last_tick_at": "2026-07-07T09:03:08.796Z",
+    "last_activity_at": "2026-07-07T08:16:35.233Z",
+    "last_activity_reason": "hud_state_missing"
+  },
+  "last_cycle_activity": "hud_state_missing"
+}

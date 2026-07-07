@@ -1,0 +1,406 @@
+{
+  "fail_candidate_ids": [],
+  "pass_candidate_ids": [
+    "cand-r1-1",
+    "cand-r1-2",
+    "cand-r1-3"
+  ],
+  "report_count": 3,
+  "reports": [
+    {
+      "candidate_id": "cand-r1-1",
+      "confidence": 0.95,
+      "evidence_score": 0.8999999999999999,
+      "feasibility_score": 1.0,
+      "metadata": {
+        "evidence_pass_threshold": 0.65,
+        "external_check_path": "external_checks/round_1/cand-r1-1.json",
+        "external_check_report": {
+          "checked_at": "2026-07-07T08:06:24.430498+00:00",
+          "degraded_reason": null,
+          "duplicate_risk": "low",
+          "matches": [
+            {
+              "abstract": "Maximization of submodular functions under various constraints is a fundamental problem that has been studied extensively. A powerful technique that has emerged and has been shown to be extremely effective for such problems is the following. First, a continues relaxation of the p",
+              "authors": [
+                "Niv Buchbinder",
+                "Moran Feldman"
+              ],
+              "categories": [
+                "cs.DS",
+                "cs.DM"
+              ],
+              "paper_id": "2409.14325",
+              "published": "2024-09-22",
+              "score": 49.22098,
+              "similarity": 0.133,
+              "title": "Extending the Extension: Deterministic Algorithm for Non-monotone Submodular Maximization"
+            },
+            {
+              "abstract": "Extended regular expressions with counting and interleaving are widely used in practice. However the related theoretical studies for this kind of expressions currently cannot meet the need of practical work. This paper develops syntax definitions for extended deterministic expres",
+              "authors": [
+                "Xiaoying Mou",
+                "Haiming Chen"
+              ],
+              "categories": [
+                "cs.CL"
+              ],
+              "paper_id": "2301.01621",
+              "published": "2023-02-02",
+              "score": 48.105366,
+              "similarity": 0.167,
+              "title": "Grammar construction methods for extended deterministic expressions"
+            },
+            {
+              "abstract": "We present some extensions to the limited memory steepest descent method based on spectral properties and cyclic iterations. Our aim is to show that it is possible to combine sweep and delayed strategies for improving the performance of gradient methods. Numerical results are rep",
+              "authors": [
+                "Qinmeng Zou",
+                "Frederic Magoules"
+              ],
+              "categories": [
+                "math.NA",
+                "cs.NA"
+              ],
+              "paper_id": "1912.01222",
+              "published": "2019-12-03",
+              "score": 47.454227,
+              "similarity": 0.107,
+              "title": "On Extensions of Limited Memory Steepest Descent Method"
+            },
+            {
+              "abstract": "We present Simitate --- a hybrid benchmarking suite targeting the evaluation of approaches for imitation learning. A dataset containing 1938 sequences where humans perform daily activities in a realistic environment is presented. The dataset is strongly coupled with an integratio",
+              "authors": [
+                "Raphael Memmesheimer",
+                "Ivanna Mykhalchyshyna",
+                "Viktor Seib",
+                "Dietrich Paulus"
+              ],
+              "categories": [
+                "cs.LG",
+                "cs.RO",
+                "stat.ML"
+              ],
+              "paper_id": "1905.06002",
+              "published": "2019-05-15",
+              "score": 44.098312,
+              "similarity": 0.091,
+              "title": "Simitate: A Hybrid Imitation Learning Benchmark"
+            },
+            {
+              "abstract": "Research in derivative-free global optimization is under active development, and many solution techniques are available today. Therefore, the experimental comparison of previous and emerging algorithms must be kept up to date. This paper considers the solution to the bound-constr",
+              "authors": [
+                "Linas Stripinis",
+                "Remigijus PaulaviÄius"
+              ],
+              "categories": [
+                "math.OC",
+                "cs.NA",
+                "math.NA"
+              ],
+              "paper_id": "2209.05759",
+              "published": "2022-09-13",
+              "score": 40.7774,
+              "similarity": 0.167,
+              "title": "An extensive numerical benchmark study of deterministic vs. stochastic derivative-free global optimization algorithms"
+            }
+          ],
+          "novelty_notes": [
+            "Local SearchEngine /search metadata check completed.",
+            "total=10000"
+          ],
+          "query": "Limitation-Targeted Extension of Deterministic Benchmark Methods",
+          "source": "search_engine"
+        },
+        "external_verification_depth": "strong_external",
+        "feasibility_pass_threshold": 0.65,
+        "resolved_evidence_refs": [
+          "2401.14196",
+          "2505.18705",
+          "2312.13010"
+        ],
+        "supporting_evidence_refs": [
+          "2401.14196",
+          "2505.18705",
+          "2312.13010"
+        ]
+      },
+      "near_pass": false,
+      "novelty_risk": "low",
+      "rationale": "Balanced critic scored evidence=0.90 and feasibility=1.00; novelty_risk=unknown; verdict=pass. External metadata check completed via search_engine; duplicate_risk=low.",
+      "required_fixes": [],
+      "verdict": "pass",
+      "verification_status": "checked",
+      "weaknesses": []
+    },
+    {
+      "candidate_id": "cand-r1-2",
+      "confidence": 0.94,
+      "evidence_score": 0.8799999999999999,
+      "feasibility_score": 1.0,
+      "metadata": {
+        "evidence_pass_threshold": 0.65,
+        "external_check_path": "external_checks/round_1/cand-r1-2.json",
+        "external_check_report": {
+          "checked_at": "2026-07-07T08:06:28.732978+00:00",
+          "degraded_reason": null,
+          "duplicate_risk": "low",
+          "matches": [
+            {
+              "abstract": "Decomposing images of document pages into high-level semantic regions (e.g., figures, tables, paragraphs), document object detection (DOD) is fundamental for downstream tasks like intelligent document editing and understanding. DOD remains a challenging problem as document object",
+              "authors": [
+                "Kai Li",
+                "Curtis Wigington",
+                "Chris Tensmeyer",
+                "Handong Zhao",
+                "Nikolaos Barmpalios",
+                "Vlad I. Morariu",
+                "Varun Manjunatha",
+                "Tong Sun",
+                "Yun Fu"
+              ],
+              "categories": [
+                "cs.CV"
+              ],
+              "paper_id": "2003.13197",
+              "published": "2020-03-30",
+              "score": 60.598244,
+              "similarity": 0.176,
+              "title": "Cross-Domain Document Object Detection: Benchmark Suite and Method"
+            },
+            {
+              "abstract": "Generalizing control policies to novel embodiments remains a fundamental challenge in enabling scalable and transferable learning in robotics. While prior works have explored this in locomotion, a systematic study in the context of manipulation tasks remains limited, partly due t",
+              "authors": [
+                "Meenal Parakh",
+                "Alexandre Kirchmeyer",
+                "Beining Han",
+                "Jia Deng"
+              ],
+              "categories": [
+                "cs.RO",
+                "cs.LG"
+              ],
+              "paper_id": "2505.14986",
+              "published": "2025-05-21",
+              "score": 55.440235,
+              "similarity": 0.267,
+              "title": "AnyBody: A Benchmark Suite for Cross-Embodiment Manipulation"
+            },
+            {
+              "abstract": "We introduce the Stress-Guided Lightweight Design Benchmark (SGLDBench), a comprehensive benchmark suite for applying and evaluating material layout strategies to generate stiff, lightweight designs in 3D domains. SGLDBench provides a seamlessly integrated simulation and analysis",
+              "authors": [
+                "Junpeng Wang",
+                "Dennis R. Bukenberger",
+                "Simon Niedermayr",
+                "Christoph Neuhauser",
+                "Jun Wu",
+                "RÃ¼diger Westermann"
+              ],
+              "categories": [
+                "cs.CE"
+              ],
+              "paper_id": "2501.03068",
+              "published": "2025-05-22",
+              "score": 52.454716,
+              "similarity": 0.235,
+              "title": "SGLDBench: A Benchmark Suite for Stress-Guided Lightweight 3D Designs"
+            },
+            {
+              "abstract": "RDF streaming has been explored by the Semantic Web community from many angles, resulting in multiple task formulations and streaming methods. However, for many existing formulations of the problem, reliably benchmarking streaming solutions has been challenging due to the lack of",
+              "authors": [
+                "Piotr Sowinski",
+                "Maria Ganzha",
+                "Marcin Paprzycki"
+              ],
+              "categories": [
+                "cs.DB"
+              ],
+              "paper_id": "2305.06226",
+              "published": "2023-11-27",
+              "score": 52.230602,
+              "similarity": 0.125,
+              "title": "RiverBench: an Open RDF Streaming Benchmark Suite"
+            },
+            {
+              "abstract": "In this technical report, we present the Zamba2 series -- a suite of 1.2B, 2.7B, and 7.4B parameter hybrid Mamba2-transformer models that achieve state of the art performance against the leading open-weights models of their class, while achieving substantial gains in inference la",
+              "authors": [
+                "Paolo Glorioso",
+                "Quentin Anthony",
+                "Yury Tokpanov",
+                "Anna Golubeva",
+                "Vasudev Shyam",
+                "James Whittington",
+                "Jonathan Pilault",
+                "Beren Millidge"
+              ],
+              "categories": [
+                "cs.LG",
+                "cs.AI",
+                "cs.CL"
+              ],
+              "paper_id": "2411.15242",
+              "published": "2024-11-22",
+              "score": 50.005722,
+              "similarity": 0.093,
+              "title": "The Zamba2 Suite: Technical Report"
+            }
+          ],
+          "novelty_notes": [
+            "Local SearchEngine /search metadata check completed.",
+            "total=10000"
+          ],
+          "query": "Cross-Paper Benchmark Stress Suite for Deterministic Methods with Reported Limitations",
+          "source": "search_engine"
+        },
+        "external_verification_depth": "strong_external",
+        "feasibility_pass_threshold": 0.65,
+        "resolved_evidence_refs": [
+          "2312.13010",
+          "2312.10997",
+          "2502.05957"
+        ],
+        "supporting_evidence_refs": [
+          "2312.13010",
+          "2312.10997",
+          "2502.05957"
+        ]
+      },
+      "near_pass": false,
+      "novelty_risk": "low",
+      "rationale": "Balanced critic scored evidence=0.88 and feasibility=1.00; novelty_risk=unknown; verdict=pass. External metadata check completed via search_engine; duplicate_risk=low.",
+      "required_fixes": [],
+      "verdict": "pass",
+      "verification_status": "checked",
+      "weaknesses": []
+    },
+    {
+      "candidate_id": "cand-r1-3",
+      "confidence": 0.943,
+      "evidence_score": 0.8859999999999999,
+      "feasibility_score": 1.0,
+      "metadata": {
+        "evidence_pass_threshold": 0.65,
+        "external_check_path": "external_checks/round_1/cand-r1-3.json",
+        "external_check_report": {
+          "checked_at": "2026-07-07T08:06:30.298442+00:00",
+          "degraded_reason": null,
+          "duplicate_risk": "low",
+          "matches": [
+            {
+              "abstract": "Work must be reshaped in the upcoming new era characterized by new challenges and the presence of new technologies and computational tools. Over-automation seems to be the driver of the digitalization process. Substitution is the paradigm leading Artificial Intelligence and robot",
+              "authors": [
+                "David Pastor-Escuredo"
+              ],
+              "categories": [
+                "cs.CY",
+                "cs.AI",
+                "cs.HC",
+                "econ.GN",
+                "q-fin.EC"
+              ],
+              "paper_id": "2104.02580",
+              "published": "2021-04-06",
+              "score": 44.85414,
+              "similarity": 0.2,
+              "title": "Future of work: ethics"
+            },
+            {
+              "abstract": "The disruption caused by the pandemic has called into question industrial norms and created an opportunity to reimagine the future of work. We discuss how this period of opportunity may be leveraged to bring about a future in which the workforce thrives rather than survives. Any ",
+              "authors": [
+                "Ashitha Ganapathy",
+                "Michael Timothy Bennett"
+              ],
+              "categories": [
+                "cs.CY"
+              ],
+              "paper_id": "2105.07870",
+              "published": "2021-05-17",
+              "score": 44.85414,
+              "similarity": 0.167,
+              "title": "Cybernetics and the Future of Work"
+            },
+            {
+              "abstract": "This paper presents a benchmarking methodology for evaluating end-to-end performance of deterministic signal-processing pipelines expressed using CNN-compatible primitives. The benchmark targets phased-array workloads such as ultrasound imaging and evaluates complete RF-to-image ",
+              "authors": [
+                "Christiaan Boerkamp",
+                "Akhil John Thomas"
+              ],
+              "categories": [
+                "cs.PF"
+              ],
+              "paper_id": "2602.06216",
+              "published": "2026-02-05",
+              "score": 44.403248,
+              "similarity": 0.111,
+              "title": "End-to-End Throughput Benchmarking of Portable Deterministic CNN-Based Signal Processing Pipelines"
+            },
+            {
+              "abstract": "Substance use, substance use disorder, and overdoses related to substance use are major public health problems globally and in the United States. A key aspect of addressing these problems from a public health standpoint is improved surveillance. Traditional surveillance systems a",
+              "authors": [
+                "Abeed Sarker"
+              ],
+              "categories": [
+                "cs.CL",
+                "cs.AI"
+              ],
+              "paper_id": "2211.10443",
+              "published": "2023-09-02",
+              "score": 43.75038,
+              "similarity": 0.15,
+              "title": "Social media mining for toxicovigilance of prescription medications: End-to-end pipeline, challenges and future work"
+            },
+            {
+              "abstract": "Pipeline parallelism is widely used to train large language models (LLMs). However, increasing heterogeneity in model architectures exacerbates pipeline bubbles, thereby reducing training efficiency. Existing approaches overlook the co-optimization of model partition, model place",
+              "authors": [
+                "Jihu Guo",
+                "Tenghui Ma",
+                "Wei Gao",
+                "Peng Sun",
+                "Jiaxing Li",
+                "Xun Chen",
+                "Yuyang Jin",
+                "Dahua Lin"
+              ],
+              "categories": [
+                "cs.DC",
+                "cs.AI"
+              ],
+              "paper_id": "2509.23722",
+              "published": "2025-09-28",
+              "score": 43.235138,
+              "similarity": 0.084,
+              "title": "AdaPtis: Reducing Pipeline Bubbles with Adaptive Pipeline Parallelism on Heterogeneous Models"
+            }
+          ],
+          "novelty_notes": [
+            "Local SearchEngine /search metadata check completed.",
+            "total=10000"
+          ],
+          "query": "Benchmark-Preserving Future-Work Adapter for Deterministic Pipelines",
+          "source": "search_engine"
+        },
+        "external_verification_depth": "strong_external",
+        "feasibility_pass_threshold": 0.65,
+        "resolved_evidence_refs": [
+          "2401.14196",
+          "2505.18705",
+          "2502.05957"
+        ],
+        "supporting_evidence_refs": [
+          "2401.14196",
+          "2505.18705",
+          "2502.05957"
+        ]
+      },
+      "near_pass": false,
+      "novelty_risk": "low",
+      "rationale": "Balanced critic scored evidence=0.89 and feasibility=1.00; novelty_risk=unknown; verdict=pass. External metadata check completed via search_engine; duplicate_risk=low.",
+      "required_fixes": [],
+      "verdict": "pass",
+      "verification_status": "checked",
+      "weaknesses": []
+    }
+  ],
+  "revise_candidate_ids": [],
+  "round_index": 1,
+  "schema_version": 1
+}

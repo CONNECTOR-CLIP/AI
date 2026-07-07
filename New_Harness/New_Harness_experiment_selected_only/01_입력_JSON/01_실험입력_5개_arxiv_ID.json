@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "selected_papers": [
+    {
+      "source": "2401.14196",
+      "title": "arXiv 2401.14196"
+    },
+    {
+      "source": "2505.18705",
+      "title": "arXiv 2505.18705"
+    },
+    {
+      "source": "2312.13010",
+      "title": "arXiv 2312.13010"
+    },
+    {
+      "source": "2312.10997",
+      "title": "arXiv 2312.10997"
+    },
+    {
+      "source": "2502.05957",
+      "title": "arXiv 2502.05957"
+    }
+  ],
+  "user_draft": {
+    "schema_version": 1,
+    "memo_text": "제공된 5개 arXiv 논문을 바탕으로 후속 연구 아이디어를 만들고 싶다. 평가 계획, novelty risk, claim/evidence 연결, 한계와 보강 방향을 특히 확인하고 싶다."
+  }
+}

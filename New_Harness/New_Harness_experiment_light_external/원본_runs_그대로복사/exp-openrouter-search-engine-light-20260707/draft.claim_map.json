@@ -1,0 +1,535 @@
+{
+  "candidate_id": "cand-r1-1",
+  "claims": [
+    {
+      "claim_id": "gap",
+      "section": "Gap",
+      "text": "The evidence cards consistently indicate deterministic methods with benchmark evaluations and experiment signals, while also noting that each paper highlights an unspecified limitation for future work. This leaves a gap: the current benchmark signals may not isolate which conditions trigger the reported limitations.",
+      "trace": {
+        "candidate_field": "gap_statement",
+        "candidate_id": "cand-r1-1",
+        "evidence_refs": [
+          {
+            "card_path": "evidence_cards\\2401.14196.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation is mentioned in the abstract."
+            ],
+            "future_work_clues": [
+              "The abstract mentions a future work direction."
+            ],
+            "methods": [
+              "A deterministic method is described."
+            ],
+            "paper_id": "2401.14196",
+            "selected_paper_title": "arXiv 2401.14196"
+          },
+          {
+            "card_path": "evidence_cards\\2505.18705.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2505.18705",
+            "selected_paper_title": "arXiv 2505.18705"
+          },
+          {
+            "card_path": "evidence_cards\\2312.13010.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "The abstract states that the work includes a \"benchmark evaluation\"."
+            ],
+            "future_work_clues": [
+              "The abstract mentions a \"future work direction\"."
+            ],
+            "methods": [
+              "The abstract describes the approach as a \"deterministic method\"."
+            ],
+            "paper_id": "2312.13010",
+            "selected_paper_title": "arXiv 2312.13010"
+          },
+          {
+            "card_path": "evidence_cards\\2312.10997.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper reports benchmark evaluation and experiment signals."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2312.10997",
+            "selected_paper_title": "arXiv 2312.10997"
+          },
+          {
+            "card_path": "evidence_cards\\2502.05957.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2502.05957",
+            "selected_paper_title": "arXiv 2502.05957"
+          }
+        ],
+        "selected_candidate_path": "selected_candidate.json"
+      }
+    },
+    {
+      "claim_id": "hypothesis",
+      "section": "Hypothesis",
+      "text": "If benchmark cases are organized around explicit limitation-triggering conditions, then deterministic methods can be compared more diagnostically than with aggregate benchmark results alone.",
+      "trace": {
+        "candidate_field": "hypothesis",
+        "candidate_id": "cand-r1-1",
+        "evidence_refs": [
+          {
+            "card_path": "evidence_cards\\2401.14196.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation is mentioned in the abstract."
+            ],
+            "future_work_clues": [
+              "The abstract mentions a future work direction."
+            ],
+            "methods": [
+              "A deterministic method is described."
+            ],
+            "paper_id": "2401.14196",
+            "selected_paper_title": "arXiv 2401.14196"
+          },
+          {
+            "card_path": "evidence_cards\\2505.18705.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2505.18705",
+            "selected_paper_title": "arXiv 2505.18705"
+          },
+          {
+            "card_path": "evidence_cards\\2312.13010.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "The abstract states that the work includes a \"benchmark evaluation\"."
+            ],
+            "future_work_clues": [
+              "The abstract mentions a \"future work direction\"."
+            ],
+            "methods": [
+              "The abstract describes the approach as a \"deterministic method\"."
+            ],
+            "paper_id": "2312.13010",
+            "selected_paper_title": "arXiv 2312.13010"
+          },
+          {
+            "card_path": "evidence_cards\\2312.10997.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper reports benchmark evaluation and experiment signals."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2312.10997",
+            "selected_paper_title": "arXiv 2312.10997"
+          },
+          {
+            "card_path": "evidence_cards\\2502.05957.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2502.05957",
+            "selected_paper_title": "arXiv 2502.05957"
+          }
+        ],
+        "selected_candidate_path": "selected_candidate.json"
+      }
+    },
+    {
+      "claim_id": "method",
+      "section": "Method",
+      "text": "Construct a stress-test benchmark extension that starts from the existing benchmark-evaluation settings reported across the papers, groups test cases by suspected limitation type, and reports per-condition experiment signals alongside standard aggregate metrics. The method would preserve deterministic evaluation protocols while adding structured failure slices and reproducible analysis templates.",
+      "trace": {
+        "candidate_field": "proposed_method",
+        "candidate_id": "cand-r1-1",
+        "evidence_refs": [
+          {
+            "card_path": "evidence_cards\\2401.14196.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation is mentioned in the abstract."
+            ],
+            "future_work_clues": [
+              "The abstract mentions a future work direction."
+            ],
+            "methods": [
+              "A deterministic method is described."
+            ],
+            "paper_id": "2401.14196",
+            "selected_paper_title": "arXiv 2401.14196"
+          },
+          {
+            "card_path": "evidence_cards\\2505.18705.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2505.18705",
+            "selected_paper_title": "arXiv 2505.18705"
+          },
+          {
+            "card_path": "evidence_cards\\2312.13010.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "The abstract states that the work includes a \"benchmark evaluation\"."
+            ],
+            "future_work_clues": [
+              "The abstract mentions a \"future work direction\"."
+            ],
+            "methods": [
+              "The abstract describes the approach as a \"deterministic method\"."
+            ],
+            "paper_id": "2312.13010",
+            "selected_paper_title": "arXiv 2312.13010"
+          },
+          {
+            "card_path": "evidence_cards\\2312.10997.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper reports benchmark evaluation and experiment signals."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2312.10997",
+            "selected_paper_title": "arXiv 2312.10997"
+          },
+          {
+            "card_path": "evidence_cards\\2502.05957.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2502.05957",
+            "selected_paper_title": "arXiv 2502.05957"
+          }
+        ],
+        "selected_candidate_path": "selected_candidate.json"
+      }
+    },
+    {
+      "claim_id": "evaluation",
+      "section": "Evaluation",
+      "text": "Re-run the deterministic methods or compatible baselines on the extended benchmark. Compare standard aggregate scores with per-slice scores, measure whether limitation-focused slices expose performance drops not visible in aggregate results, and report reproducibility across repeated deterministic runs.",
+      "trace": {
+        "candidate_field": "evaluation_plan",
+        "candidate_id": "cand-r1-1",
+        "evidence_refs": [
+          {
+            "card_path": "evidence_cards\\2401.14196.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation is mentioned in the abstract."
+            ],
+            "future_work_clues": [
+              "The abstract mentions a future work direction."
+            ],
+            "methods": [
+              "A deterministic method is described."
+            ],
+            "paper_id": "2401.14196",
+            "selected_paper_title": "arXiv 2401.14196"
+          },
+          {
+            "card_path": "evidence_cards\\2505.18705.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2505.18705",
+            "selected_paper_title": "arXiv 2505.18705"
+          },
+          {
+            "card_path": "evidence_cards\\2312.13010.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "The abstract states that the work includes a \"benchmark evaluation\"."
+            ],
+            "future_work_clues": [
+              "The abstract mentions a \"future work direction\"."
+            ],
+            "methods": [
+              "The abstract describes the approach as a \"deterministic method\"."
+            ],
+            "paper_id": "2312.13010",
+            "selected_paper_title": "arXiv 2312.13010"
+          },
+          {
+            "card_path": "evidence_cards\\2312.10997.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper reports benchmark evaluation and experiment signals."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2312.10997",
+            "selected_paper_title": "arXiv 2312.10997"
+          },
+          {
+            "card_path": "evidence_cards\\2502.05957.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2502.05957",
+            "selected_paper_title": "arXiv 2502.05957"
+          }
+        ],
+        "selected_candidate_path": "selected_candidate.json"
+      }
+    },
+    {
+      "claim_id": "contribution",
+      "section": "Contribution",
+      "text": "A reproducible benchmark add-on that turns broad future-work limitations into measurable evaluation slices for deterministic methods.",
+      "trace": {
+        "candidate_field": "expected_contribution",
+        "candidate_id": "cand-r1-1",
+        "evidence_refs": [
+          {
+            "card_path": "evidence_cards\\2401.14196.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation is mentioned in the abstract."
+            ],
+            "future_work_clues": [
+              "The abstract mentions a future work direction."
+            ],
+            "methods": [
+              "A deterministic method is described."
+            ],
+            "paper_id": "2401.14196",
+            "selected_paper_title": "arXiv 2401.14196"
+          },
+          {
+            "card_path": "evidence_cards\\2505.18705.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2505.18705",
+            "selected_paper_title": "arXiv 2505.18705"
+          },
+          {
+            "card_path": "evidence_cards\\2312.13010.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "The abstract states that the work includes a \"benchmark evaluation\"."
+            ],
+            "future_work_clues": [
+              "The abstract mentions a \"future work direction\"."
+            ],
+            "methods": [
+              "The abstract describes the approach as a \"deterministic method\"."
+            ],
+            "paper_id": "2312.13010",
+            "selected_paper_title": "arXiv 2312.13010"
+          },
+          {
+            "card_path": "evidence_cards\\2312.10997.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper reports benchmark evaluation and experiment signals."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2312.10997",
+            "selected_paper_title": "arXiv 2312.10997"
+          },
+          {
+            "card_path": "evidence_cards\\2502.05957.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2502.05957",
+            "selected_paper_title": "arXiv 2502.05957"
+          }
+        ],
+        "selected_candidate_path": "selected_candidate.json"
+      }
+    }
+  ],
+  "risk_notes": {
+    "candidate_risks": [
+      "The provided evidence does not specify the actual limitations, so the first version may require manual extraction from the full papers.",
+      "Stress slices may be too narrow if the original benchmark tasks are not sufficiently diverse.",
+      "Per-slice findings may be hard to compare across papers if their benchmark settings differ substantially."
+    ],
+    "critic_verdict": "pass",
+    "critic_weaknesses": [],
+    "novelty_risk": "low",
+    "required_fixes": []
+  },
+  "run_id": "exp-openrouter-search-engine-light-20260707",
+  "schema_version": 1,
+  "selected_at": "2026-07-07T08:25:05.598566+00:00",
+  "selected_candidate_path": "selected_candidate.json",
+  "source_paths": {
+    "candidate": "candidates/candidates_round_1.json",
+    "candidate_loop": "candidate_loop.json",
+    "critic_report": "critic_reports/critic_reports_round_1.json"
+  }
+}

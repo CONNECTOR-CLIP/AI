@@ -1,0 +1,78 @@
+{
+  "candidate_summaries": [
+    {
+      "candidate_id": "cand-r1-1",
+      "critic_verdict": "pass",
+      "evidence_score": 0.8999999999999999,
+      "expected_contribution": "A reproducible framework for converting a paper-identified future-work limitation into a concrete deterministic method extension and paired evaluation protocol.",
+      "feasibility_score": 1.0,
+      "gap_statement": "Several evidence cards describe deterministic methods with benchmark evaluations and experiment signals, but the highlighted limitations are not specified in the available metadata. This creates a gap around how to systematically turn such unspecified-but-addressable limitations into testable future-work extensions.",
+      "novelty_risk": "low",
+      "source_paths": {
+        "candidate": "candidates/candidates_round_1.json",
+        "candidate_loop": "candidate_loop.json",
+        "critic_report": "critic_reports/critic_reports_round_1.json"
+      },
+      "supporting_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2312.13010"
+      ],
+      "title": "Limitation-Targeted Extension of Deterministic Benchmark Methods"
+    },
+    {
+      "candidate_id": "cand-r1-2",
+      "critic_verdict": "pass",
+      "evidence_score": 0.8799999999999999,
+      "expected_contribution": "A shared evaluation artifact that complements existing benchmark evaluations by making paper-identified limitations empirically testable across deterministic methods.",
+      "feasibility_score": 1.0,
+      "gap_statement": "The evidence cards consistently report deterministic methods, benchmark evaluations, experiment signals, and addressable limitations, but the limitation descriptions are absent from the provided metadata. A comparative stress-suite could help reveal whether the methods share recurring failure modes beyond their original benchmarks.",
+      "novelty_risk": "low",
+      "source_paths": {
+        "candidate": "candidates/candidates_round_1.json",
+        "candidate_loop": "candidate_loop.json",
+        "critic_report": "critic_reports/critic_reports_round_1.json"
+      },
+      "supporting_evidence_refs": [
+        "2312.13010",
+        "2312.10997",
+        "2502.05957"
+      ],
+      "title": "Cross-Paper Benchmark Stress Suite for Deterministic Methods with Reported Limitations"
+    },
+    {
+      "candidate_id": "cand-r1-3",
+      "critic_verdict": "pass",
+      "evidence_score": 0.8859999999999999,
+      "expected_contribution": "A low-intrusion method for exploring future-work directions in deterministic systems while protecting comparability with previously reported benchmark results.",
+      "feasibility_score": 1.0,
+      "gap_statement": "The referenced papers report deterministic methods with benchmark evaluations and experimental signals, and each indicates at least one limitation that future work could address. However, without explicit limitation details in the metadata, there is a need for a conservative adapter approach that can be evaluated for whether it addresses a recovered limitation without disrupting the original deterministic pipeline.",
+      "novelty_risk": "low",
+      "source_paths": {
+        "candidate": "candidates/candidates_round_1.json",
+        "candidate_loop": "candidate_loop.json",
+        "critic_report": "critic_reports/critic_reports_round_1.json"
+      },
+      "supporting_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2502.05957"
+      ],
+      "title": "Benchmark-Preserving Future-Work Adapter for Deterministic Pipelines"
+    }
+  ],
+  "pass_candidate_ids": [
+    "cand-r1-1",
+    "cand-r1-2",
+    "cand-r1-3"
+  ],
+  "run_id": "exp-openrouter-search-engine-strong-20260707",
+  "schema_version": 1,
+  "selection_command_template": "select --run-id exp-openrouter-search-engine-strong-20260707 --candidate-id <candidate_id>",
+  "source_paths": {
+    "candidate": "candidates/candidates_round_1.json",
+    "candidate_loop": "candidate_loop.json",
+    "critic_report": "critic_reports/critic_reports_round_1.json"
+  },
+  "status": "selection_required"
+}

@@ -1,0 +1,30 @@
+{
+  "best_revise_candidate_ids": [],
+  "blocker": null,
+  "last_round_critic_report": "critic_reports/critic_reports_round_1.json",
+  "max_candidate_rounds": 2,
+  "pass_candidate_ids": [
+    "cand-r1-1",
+    "cand-r1-2",
+    "cand-r1-3"
+  ],
+  "round_summaries": [
+    {
+      "candidate_count": 3,
+      "critic_path": "critic_reports/critic_reports_round_1.json",
+      "critic_status": "success",
+      "generation_path": "candidates/candidates_round_1.json",
+      "pass_candidate_ids": [
+        "cand-r1-1",
+        "cand-r1-2",
+        "cand-r1-3"
+      ],
+      "revise_candidate_ids": [],
+      "round_index": 1
+    }
+  ],
+  "rounds_completed": 1,
+  "schema_version": 1,
+  "status": "selection_required",
+  "summary": "Pass candidates found in round 1; proceed to selection."
+}

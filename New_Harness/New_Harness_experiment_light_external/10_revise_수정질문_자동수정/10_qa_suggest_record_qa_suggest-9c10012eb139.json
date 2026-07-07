@@ -1,0 +1,20 @@
+{
+  "answer_or_diff_summary": "Suggested response for request: 이 초안에서 가장 약한 claim과 보강 방법을 알려줘.. Candidate cand-r1-1 remains grounded in evidence refs 2401.14196, 2505.18705, 2312.13010, 2312.10997, 2502.05957. Primary risk: The provided evidence does not specify the actual limitations, so the first version may require manual extraction from the full papers.. Next revision focus: Retain the current evidence boundaries from the claim map..",
+  "claim_map_path": "draft.claim_map.json",
+  "created_at": "2026-07-07T08:25:30.459290+00:00",
+  "draft_path": "draft.md",
+  "evidence_refs": [
+    "2401.14196",
+    "2505.18705",
+    "2312.13010",
+    "2312.10997",
+    "2502.05957"
+  ],
+  "files_changed": [],
+  "mode": "qa_suggest",
+  "run_id": "exp-openrouter-search-engine-light-20260707",
+  "schema_version": 1,
+  "selected_candidate_id": "cand-r1-1",
+  "selected_candidate_path": "selected_candidate.json",
+  "user_request": "이 초안에서 가장 약한 claim과 보강 방법을 알려줘."
+}

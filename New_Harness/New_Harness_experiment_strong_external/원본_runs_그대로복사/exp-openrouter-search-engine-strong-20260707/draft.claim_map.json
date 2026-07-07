@@ -1,0 +1,355 @@
+{
+  "candidate_id": "cand-r1-1",
+  "claims": [
+    {
+      "claim_id": "gap",
+      "section": "Gap",
+      "text": "Several evidence cards describe deterministic methods with benchmark evaluations and experiment signals, but the highlighted limitations are not specified in the available metadata. This creates a gap around how to systematically turn such unspecified-but-addressable limitations into testable future-work extensions.",
+      "trace": {
+        "candidate_field": "gap_statement",
+        "candidate_id": "cand-r1-1",
+        "evidence_refs": [
+          {
+            "card_path": "evidence_cards\\2401.14196.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "A future work direction is mentioned."
+            ],
+            "methods": [
+              "Deterministic method"
+            ],
+            "paper_id": "2401.14196",
+            "selected_paper_title": "arXiv 2401.14196"
+          },
+          {
+            "card_path": "evidence_cards\\2505.18705.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation is reported."
+            ],
+            "future_work_clues": [
+              "A limitation is identified as something future work can address."
+            ],
+            "methods": [
+              "Deterministic method."
+            ],
+            "paper_id": "2505.18705",
+            "selected_paper_title": "arXiv 2505.18705"
+          },
+          {
+            "card_path": "evidence_cards\\2312.13010.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2312.13010",
+            "selected_paper_title": "arXiv 2312.13010"
+          }
+        ],
+        "selected_candidate_path": "selected_candidate.json"
+      }
+    },
+    {
+      "claim_id": "hypothesis",
+      "section": "Hypothesis",
+      "text": "If the reported limitation in a deterministic benchmarked method can be operationalized as a measurable failure mode, then a targeted extension of the method should improve performance on stress-test cases while preserving benchmark performance on the original evaluation suite.",
+      "trace": {
+        "candidate_field": "hypothesis",
+        "candidate_id": "cand-r1-1",
+        "evidence_refs": [
+          {
+            "card_path": "evidence_cards\\2401.14196.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "A future work direction is mentioned."
+            ],
+            "methods": [
+              "Deterministic method"
+            ],
+            "paper_id": "2401.14196",
+            "selected_paper_title": "arXiv 2401.14196"
+          },
+          {
+            "card_path": "evidence_cards\\2505.18705.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation is reported."
+            ],
+            "future_work_clues": [
+              "A limitation is identified as something future work can address."
+            ],
+            "methods": [
+              "Deterministic method."
+            ],
+            "paper_id": "2505.18705",
+            "selected_paper_title": "arXiv 2505.18705"
+          },
+          {
+            "card_path": "evidence_cards\\2312.13010.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2312.13010",
+            "selected_paper_title": "arXiv 2312.13010"
+          }
+        ],
+        "selected_candidate_path": "selected_candidate.json"
+      }
+    },
+    {
+      "claim_id": "method",
+      "section": "Method",
+      "text": "Select one deterministic method from the referenced papers, extract or reconstruct the stated limitation from the full paper, define measurable failure cases linked to that limitation, and implement a minimal deterministic extension aimed specifically at those cases. Compare the original and extended methods on the original benchmark plus a newly constructed limitation-focused stress set.",
+      "trace": {
+        "candidate_field": "proposed_method",
+        "candidate_id": "cand-r1-1",
+        "evidence_refs": [
+          {
+            "card_path": "evidence_cards\\2401.14196.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "A future work direction is mentioned."
+            ],
+            "methods": [
+              "Deterministic method"
+            ],
+            "paper_id": "2401.14196",
+            "selected_paper_title": "arXiv 2401.14196"
+          },
+          {
+            "card_path": "evidence_cards\\2505.18705.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation is reported."
+            ],
+            "future_work_clues": [
+              "A limitation is identified as something future work can address."
+            ],
+            "methods": [
+              "Deterministic method."
+            ],
+            "paper_id": "2505.18705",
+            "selected_paper_title": "arXiv 2505.18705"
+          },
+          {
+            "card_path": "evidence_cards\\2312.13010.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2312.13010",
+            "selected_paper_title": "arXiv 2312.13010"
+          }
+        ],
+        "selected_candidate_path": "selected_candidate.json"
+      }
+    },
+    {
+      "claim_id": "evaluation",
+      "section": "Evaluation",
+      "text": "Evaluate using the paper's original benchmark protocol where available, then add stress tests derived from the identified limitation. Report changes in primary benchmark metrics, stress-test metrics, runtime or resource cost, and cases where the extension degrades baseline behavior. Use ablations to separate the effect of the targeted extension from implementation changes.",
+      "trace": {
+        "candidate_field": "evaluation_plan",
+        "candidate_id": "cand-r1-1",
+        "evidence_refs": [
+          {
+            "card_path": "evidence_cards\\2401.14196.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "A future work direction is mentioned."
+            ],
+            "methods": [
+              "Deterministic method"
+            ],
+            "paper_id": "2401.14196",
+            "selected_paper_title": "arXiv 2401.14196"
+          },
+          {
+            "card_path": "evidence_cards\\2505.18705.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation is reported."
+            ],
+            "future_work_clues": [
+              "A limitation is identified as something future work can address."
+            ],
+            "methods": [
+              "Deterministic method."
+            ],
+            "paper_id": "2505.18705",
+            "selected_paper_title": "arXiv 2505.18705"
+          },
+          {
+            "card_path": "evidence_cards\\2312.13010.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2312.13010",
+            "selected_paper_title": "arXiv 2312.13010"
+          }
+        ],
+        "selected_candidate_path": "selected_candidate.json"
+      }
+    },
+    {
+      "claim_id": "contribution",
+      "section": "Contribution",
+      "text": "A reproducible framework for converting a paper-identified future-work limitation into a concrete deterministic method extension and paired evaluation protocol.",
+      "trace": {
+        "candidate_field": "expected_contribution",
+        "candidate_id": "cand-r1-1",
+        "evidence_refs": [
+          {
+            "card_path": "evidence_cards\\2401.14196.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "A future work direction is mentioned."
+            ],
+            "methods": [
+              "Deterministic method"
+            ],
+            "paper_id": "2401.14196",
+            "selected_paper_title": "arXiv 2401.14196"
+          },
+          {
+            "card_path": "evidence_cards\\2505.18705.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "Benchmark evaluation is reported."
+            ],
+            "future_work_clues": [
+              "A limitation is identified as something future work can address."
+            ],
+            "methods": [
+              "Deterministic method."
+            ],
+            "paper_id": "2505.18705",
+            "selected_paper_title": "arXiv 2505.18705"
+          },
+          {
+            "card_path": "evidence_cards\\2312.13010.json",
+            "claims": [
+              "The paper describes a deterministic method.",
+              "The paper includes a benchmark evaluation."
+            ],
+            "evaluation_signals": [
+              "benchmark evaluation"
+            ],
+            "future_work_clues": [
+              "future work direction"
+            ],
+            "methods": [
+              "deterministic method"
+            ],
+            "paper_id": "2312.13010",
+            "selected_paper_title": "arXiv 2312.13010"
+          }
+        ],
+        "selected_candidate_path": "selected_candidate.json"
+      }
+    }
+  ],
+  "risk_notes": {
+    "candidate_risks": [
+      "The actual limitation may be too vague or not recoverable from the full paper.",
+      "The extension may improve stress-test behavior while harming original benchmark performance.",
+      "Benchmark details may be insufficient to reproduce the original evaluation exactly."
+    ],
+    "critic_verdict": "pass",
+    "critic_weaknesses": [],
+    "novelty_risk": "low",
+    "required_fixes": []
+  },
+  "run_id": "exp-openrouter-search-engine-strong-20260707",
+  "schema_version": 1,
+  "selected_at": "2026-07-07T08:08:13.002342+00:00",
+  "selected_candidate_path": "selected_candidate.json",
+  "source_paths": {
+    "candidate": "candidates/candidates_round_1.json",
+    "candidate_loop": "candidate_loop.json",
+    "critic_report": "critic_reports/critic_reports_round_1.json"
+  }
+}

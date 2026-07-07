@@ -1,0 +1,68 @@
+{
+  "candidate_count": 3,
+  "candidates": [
+    {
+      "candidate_id": "cand-r1-1",
+      "evaluation_plan": "Re-run the deterministic methods or compatible baselines on the extended benchmark. Compare standard aggregate scores with per-slice scores, measure whether limitation-focused slices expose performance drops not visible in aggregate results, and report reproducibility across repeated deterministic runs.",
+      "expected_contribution": "A reproducible benchmark add-on that turns broad future-work limitations into measurable evaluation slices for deterministic methods.",
+      "gap_statement": "The evidence cards consistently indicate deterministic methods with benchmark evaluations and experiment signals, while also noting that each paper highlights an unspecified limitation for future work. This leaves a gap: the current benchmark signals may not isolate which conditions trigger the reported limitations.",
+      "hypothesis": "If benchmark cases are organized around explicit limitation-triggering conditions, then deterministic methods can be compared more diagnostically than with aggregate benchmark results alone.",
+      "proposed_method": "Construct a stress-test benchmark extension that starts from the existing benchmark-evaluation settings reported across the papers, groups test cases by suspected limitation type, and reports per-condition experiment signals alongside standard aggregate metrics. The method would preserve deterministic evaluation protocols while adding structured failure slices and reproducible analysis templates.",
+      "risks": [
+        "The provided evidence does not specify the actual limitations, so the first version may require manual extraction from the full papers.",
+        "Stress slices may be too narrow if the original benchmark tasks are not sufficiently diverse.",
+        "Per-slice findings may be hard to compare across papers if their benchmark settings differ substantially."
+      ],
+      "supporting_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2312.13010",
+        "2312.10997",
+        "2502.05957"
+      ],
+      "title": "Limitation-Targeted Stress Benchmark for Deterministic Methods"
+    },
+    {
+      "candidate_id": "cand-r1-2",
+      "evaluation_plan": "Evaluate the base deterministic method and the wrapped version on the original benchmark plus a limitation-focused subset. Report changes in benchmark performance, flagged-case accuracy or error rate, abstention or fallback frequency, and deterministic reproducibility across repeated runs.",
+      "expected_contribution": "A reproducible robustness layer for deterministic methods that operationalizes future-work limitations as detectable conditions and controlled fallback behavior.",
+      "gap_statement": "Multiple papers describe deterministic methods and report experiment signals, but the evidence cards also state that each approach has a limitation left for future work. A natural gap is that deterministic pipelines may lack mechanisms for detecting when their own assumptions are no longer appropriate.",
+      "hypothesis": "Adding an explicit limitation detector and fallback policy to a deterministic method can improve robustness on cases associated with known weaknesses while retaining reproducibility on standard cases.",
+      "proposed_method": "Design a wrapper around a deterministic method that monitors predefined experiment signals, flags inputs or intermediate states associated with the known limitation, and routes those cases to an alternate deterministic subroutine, abstention path, or human-review queue. The core method remains deterministic, but its execution path becomes condition-aware.",
+      "risks": [
+        "Because the evidence cards do not identify the specific limitations, detector design depends on further paper-level review.",
+        "Fallback policies may reduce coverage or increase computational cost.",
+        "If experiment signals are weakly correlated with failure modes, the wrapper may over-flag or under-flag cases."
+      ],
+      "supporting_evidence_refs": [
+        "2505.18705",
+        "2312.13010",
+        "2502.05957"
+      ],
+      "title": "Hybrid Deterministic Pipeline with Adaptive Limitation Handling"
+    },
+    {
+      "candidate_id": "cand-r1-3",
+      "evaluation_plan": "Assess the template by coding the included papers, measuring inter-annotator agreement for extracted fields, counting how often limitations and future-work clues can be mapped to measurable benchmark conditions, and surveying whether the template improves reproducibility planning for new experiments.",
+      "expected_contribution": "A practical evidence-capture framework that converts high-level statements about deterministic methods, benchmarks, experiment signals, and future work into comparable research-planning artifacts.",
+      "gap_statement": "The evidence cards mention benchmark evaluations, experiment signals, limitations, and future-work directions across several deterministic-method papers, but the metadata is too coarse to compare the limitations or signals directly. This suggests a reporting gap rather than only a modeling gap.",
+      "hypothesis": "A standardized reporting template for deterministic-method experiments will make limitations, benchmark conditions, and experiment signals easier to compare and reuse in follow-on work.",
+      "proposed_method": "Create a structured reporting framework that requires authors to document deterministic assumptions, benchmark setup, experiment signals, observed limitation cases, and proposed future-work targets. Apply the template retrospectively to the provided papers and use the resulting matrix to identify recurring evaluation gaps and missing diagnostics.",
+      "risks": [
+        "The current evidence cards provide only abstract-level snippets, so full-text access may be required for reliable coding.",
+        "A template may be perceived as administrative unless it clearly improves reproducibility or follow-on evaluation.",
+        "Different benchmark domains may require domain-specific extensions to the common fields."
+      ],
+      "supporting_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2312.13010",
+        "2312.10997",
+        "2502.05957"
+      ],
+      "title": "Cross-Paper Reporting Template for Deterministic Benchmark Signals"
+    }
+  ],
+  "round_index": 1,
+  "schema_version": 1
+}

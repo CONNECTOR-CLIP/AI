@@ -1,0 +1,74 @@
+{
+  "candidate": {
+    "candidate_id": "cand-r1-1",
+    "evaluation_plan": "Evaluate the protocol by applying it to the deterministic methods associated with the referenced benchmark evaluations. Compare standard benchmark scores with limitation-targeted scores, report whether the added tests expose different experiment signals, and measure reproducibility across repeated deterministic runs.",
+    "expected_contribution": "A practical framework for turning vague future-work limitations into concrete benchmark dimensions, helping future studies report not only aggregate performance but also limitation-specific behavior.",
+    "gap_statement": "The evidence cards consistently indicate deterministic methods with benchmark evaluations and reported experiment signals, but the cited limitations are only described as future-work-addressable and are not specified in the supplied metadata. This creates a gap between benchmark performance and actionable understanding of where deterministic approaches fail.",
+    "hypothesis": "If benchmark suites are extended with explicit limitation-targeted stress tests and failure-mode labels, then future deterministic methods can be evaluated more transparently against the kinds of weaknesses that current papers identify only at a high level.",
+    "proposed_method": "Create a benchmark-extension protocol for deterministic methods: collect the limitation statements from the referenced works, convert each into a measurable stress condition when possible, define failure-mode labels, and run the original deterministic method alongside controlled variants. Where the supplied papers do not specify the limitation, the protocol would require authors to operationalize it before inclusion rather than infer it externally.",
+    "risks": [
+      "The supplied metadata does not specify the actual limitations, so the first phase may depend on access to full papers or author-provided clarifications.",
+      "Stress tests may be too paper-specific to generalize across all deterministic methods.",
+      "Additional benchmark dimensions may increase evaluation cost without changing conclusions for some methods."
+    ],
+    "supporting_evidence_refs": [
+      "2401.14196",
+      "2505.18705",
+      "2312.13010",
+      "2312.10997",
+      "2502.05957"
+    ],
+    "title": "Limitation-targeted benchmark extension for deterministic methods"
+  },
+  "candidate_id": "cand-r1-1",
+  "critic_report": {
+    "candidate_id": "cand-r1-1",
+    "confidence": 0.9253,
+    "evidence_score": 0.8505999999999999,
+    "feasibility_score": 1.0,
+    "metadata": {
+      "evidence_pass_threshold": 0.65,
+      "external_verification_depth": "selected_only",
+      "feasibility_pass_threshold": 0.65,
+      "resolved_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2312.13010",
+        "2312.10997",
+        "2502.05957"
+      ],
+      "supporting_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2312.13010",
+        "2312.10997",
+        "2502.05957"
+      ]
+    },
+    "near_pass": true,
+    "novelty_risk": "unknown",
+    "rationale": "Balanced critic scored evidence=0.85 and feasibility=1.00; novelty_risk=unknown; verdict=pass.",
+    "required_fixes": [
+      "Run light_external or strong_external verification before selection if novelty must be verified."
+    ],
+    "verdict": "pass",
+    "verification_status": "selected_only",
+    "weaknesses": [
+      "External novelty verification intentionally deferred by selected_only policy."
+    ]
+  },
+  "pass_candidate_ids": [
+    "cand-r1-1",
+    "cand-r1-2",
+    "cand-r1-3"
+  ],
+  "run_id": "exp-openrouter-5papers-20260707",
+  "schema_version": 1,
+  "selected_at": "2026-07-07T06:48:49.848891+00:00",
+  "source_paths": {
+    "candidate": "candidates/candidates_round_1.json",
+    "candidate_loop": "candidate_loop.json",
+    "critic_report": "critic_reports/critic_reports_round_1.json"
+  },
+  "status": "selected"
+}

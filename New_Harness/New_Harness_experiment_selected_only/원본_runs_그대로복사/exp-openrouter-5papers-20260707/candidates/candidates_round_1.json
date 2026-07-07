@@ -1,0 +1,66 @@
+{
+  "candidate_count": 3,
+  "candidates": [
+    {
+      "candidate_id": "cand-r1-1",
+      "evaluation_plan": "Evaluate the protocol by applying it to the deterministic methods associated with the referenced benchmark evaluations. Compare standard benchmark scores with limitation-targeted scores, report whether the added tests expose different experiment signals, and measure reproducibility across repeated deterministic runs.",
+      "expected_contribution": "A practical framework for turning vague future-work limitations into concrete benchmark dimensions, helping future studies report not only aggregate performance but also limitation-specific behavior.",
+      "gap_statement": "The evidence cards consistently indicate deterministic methods with benchmark evaluations and reported experiment signals, but the cited limitations are only described as future-work-addressable and are not specified in the supplied metadata. This creates a gap between benchmark performance and actionable understanding of where deterministic approaches fail.",
+      "hypothesis": "If benchmark suites are extended with explicit limitation-targeted stress tests and failure-mode labels, then future deterministic methods can be evaluated more transparently against the kinds of weaknesses that current papers identify only at a high level.",
+      "proposed_method": "Create a benchmark-extension protocol for deterministic methods: collect the limitation statements from the referenced works, convert each into a measurable stress condition when possible, define failure-mode labels, and run the original deterministic method alongside controlled variants. Where the supplied papers do not specify the limitation, the protocol would require authors to operationalize it before inclusion rather than infer it externally.",
+      "risks": [
+        "The supplied metadata does not specify the actual limitations, so the first phase may depend on access to full papers or author-provided clarifications.",
+        "Stress tests may be too paper-specific to generalize across all deterministic methods.",
+        "Additional benchmark dimensions may increase evaluation cost without changing conclusions for some methods."
+      ],
+      "supporting_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2312.13010",
+        "2312.10997",
+        "2502.05957"
+      ],
+      "title": "Limitation-targeted benchmark extension for deterministic methods"
+    },
+    {
+      "candidate_id": "cand-r1-2",
+      "evaluation_plan": "Run the harness on benchmark tasks used by the referenced works or compatible reproduced benchmarks. Assess whether the harness produces consistent records across repeated deterministic runs, whether diagnostic reports help identify conditions associated with weaker performance, and whether the added reporting burden is acceptable.",
+      "expected_contribution": "A reusable evaluation layer for deterministic approaches that improves traceability from benchmark results to future-work-relevant limitations without requiring the core method to become stochastic or opaque.",
+      "gap_statement": "Several evidence cards report deterministic methods, benchmark evaluations, and experiment signals, but the available summaries do not describe a standardized way to connect those signals to the highlighted future-work limitations.",
+      "hypothesis": "A shared diagnostic audit harness can make experiment signals more interpretable by linking benchmark outcomes, deterministic execution traces, and limitation-oriented diagnostics in a consistent format.",
+      "proposed_method": "Develop an audit harness that wraps deterministic methods during evaluation, records inputs, outputs, intermediate deterministic decisions where available, benchmark metrics, and experiment signals, then generates a limitation-diagnostic report. The harness would avoid changing the underlying methods and would focus on standardized evidence capture and post-hoc analysis.",
+      "risks": [
+        "Intermediate decision traces may not be exposed by all methods.",
+        "If limitations remain unspecified, diagnostics may be broad rather than targeted.",
+        "The harness could add engineering complexity while providing limited benefit for simple deterministic pipelines."
+      ],
+      "supporting_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2312.13010"
+      ],
+      "title": "Deterministic method audit harness with experiment-signal diagnostics"
+    },
+    {
+      "candidate_id": "cand-r1-3",
+      "evaluation_plan": "Apply the protocol to methods from the referenced papers where implementations or sufficient descriptions are available. Compare original benchmark results with robustness profiles, quantify score variance across benchmark variants, and document cases where deterministic behavior yields stable versus brittle outcomes.",
+      "expected_contribution": "A robustness-oriented evaluation candidate that complements existing benchmark evaluations and helps prioritize future-work directions based on observed sensitivity patterns.",
+      "gap_statement": "The referenced papers are described as including benchmark evaluations and future-work directions, but the supplied evidence does not establish whether their deterministic methods are robust across benchmark variants, dataset shifts, or alternative evaluation settings.",
+      "hypothesis": "Testing deterministic methods across systematically varied benchmark conditions will reveal whether reported experiment signals are stable or sensitive to evaluation design choices, thereby clarifying which limitations are most important for future work.",
+      "proposed_method": "Design a cross-benchmark robustness protocol that evaluates each deterministic method under controlled benchmark variants such as input perturbations, task subsets, metric alternatives, and configuration-preserving reruns. The protocol would report stability profiles rather than only single benchmark scores.",
+      "risks": [
+        "Original implementations or benchmark details may not be available.",
+        "Benchmark variants may not reflect the true limitation intended by each paper.",
+        "Robustness profiles could be difficult to compare if the underlying tasks differ substantially."
+      ],
+      "supporting_evidence_refs": [
+        "2312.13010",
+        "2312.10997",
+        "2502.05957"
+      ],
+      "title": "Cross-benchmark robustness protocol for deterministic approaches"
+    }
+  ],
+  "round_index": 1,
+  "schema_version": 1
+}

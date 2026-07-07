@@ -1,0 +1,29 @@
+{
+  "claims": [
+    "The paper describes a deterministic method.",
+    "The paper includes a benchmark evaluation.",
+    "The paper reports experiment signals.",
+    "The paper highlights a limitation that future work can address."
+  ],
+  "confidence": 0.43,
+  "evaluation_signals": [
+    "Benchmark evaluation is mentioned in the abstract.",
+    "Experiment signals are reported according to the abstract."
+  ],
+  "future_work_clues": [
+    "The abstract mentions a future work direction.",
+    "The abstract says one limitation can be addressed by future work."
+  ],
+  "limitations": [
+    "One limitation is highlighted, but the provided metadata does not specify what it is."
+  ],
+  "methods": [
+    "A deterministic method is described."
+  ],
+  "paper_id": "2401.14196",
+  "quotes_or_snippets": [
+    "arXiv 2401.14196 describes a deterministic method, benchmark evaluation, and future work direction for 2401.14196.",
+    "The approach reports experiment signals and highlights one limitation that future work can address."
+  ],
+  "schema_version": 1
+}

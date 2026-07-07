@@ -1,0 +1,19 @@
+{
+  "artifacts": [
+    "candidate_loop.json",
+    "selection_options.json",
+    "selection_options.md"
+  ],
+  "error": null,
+  "metadata": {
+    "pass_candidate_ids": [
+      "cand-r1-1",
+      "cand-r1-2",
+      "cand-r1-3"
+    ],
+    "rounds_completed": 1
+  },
+  "run_dir": "D:\\NEW_HARNESS_INNOVATION\\experiment_work_search_engine_light\\run_root\\runs\\exp-openrouter-search-engine-light-20260707",
+  "run_id": "exp-openrouter-search-engine-light-20260707",
+  "status": "selection_required"
+}

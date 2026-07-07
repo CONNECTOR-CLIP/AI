@@ -1,0 +1,161 @@
+{
+  "candidate": {
+    "candidate_id": "cand-r1-1",
+    "evaluation_plan": "Evaluate using the paper's original benchmark protocol where available, then add stress tests derived from the identified limitation. Report changes in primary benchmark metrics, stress-test metrics, runtime or resource cost, and cases where the extension degrades baseline behavior. Use ablations to separate the effect of the targeted extension from implementation changes.",
+    "expected_contribution": "A reproducible framework for converting a paper-identified future-work limitation into a concrete deterministic method extension and paired evaluation protocol.",
+    "gap_statement": "Several evidence cards describe deterministic methods with benchmark evaluations and experiment signals, but the highlighted limitations are not specified in the available metadata. This creates a gap around how to systematically turn such unspecified-but-addressable limitations into testable future-work extensions.",
+    "hypothesis": "If the reported limitation in a deterministic benchmarked method can be operationalized as a measurable failure mode, then a targeted extension of the method should improve performance on stress-test cases while preserving benchmark performance on the original evaluation suite.",
+    "proposed_method": "Select one deterministic method from the referenced papers, extract or reconstruct the stated limitation from the full paper, define measurable failure cases linked to that limitation, and implement a minimal deterministic extension aimed specifically at those cases. Compare the original and extended methods on the original benchmark plus a newly constructed limitation-focused stress set.",
+    "risks": [
+      "The actual limitation may be too vague or not recoverable from the full paper.",
+      "The extension may improve stress-test behavior while harming original benchmark performance.",
+      "Benchmark details may be insufficient to reproduce the original evaluation exactly."
+    ],
+    "supporting_evidence_refs": [
+      "2401.14196",
+      "2505.18705",
+      "2312.13010"
+    ],
+    "title": "Limitation-Targeted Extension of Deterministic Benchmark Methods"
+  },
+  "candidate_id": "cand-r1-1",
+  "critic_report": {
+    "candidate_id": "cand-r1-1",
+    "confidence": 0.95,
+    "evidence_score": 0.8999999999999999,
+    "feasibility_score": 1.0,
+    "metadata": {
+      "evidence_pass_threshold": 0.65,
+      "external_check_path": "external_checks/round_1/cand-r1-1.json",
+      "external_check_report": {
+        "checked_at": "2026-07-07T08:06:24.430498+00:00",
+        "degraded_reason": null,
+        "duplicate_risk": "low",
+        "matches": [
+          {
+            "abstract": "Maximization of submodular functions under various constraints is a fundamental problem that has been studied extensively. A powerful technique that has emerged and has been shown to be extremely effective for such problems is the following. First, a continues relaxation of the p",
+            "authors": [
+              "Niv Buchbinder",
+              "Moran Feldman"
+            ],
+            "categories": [
+              "cs.DS",
+              "cs.DM"
+            ],
+            "paper_id": "2409.14325",
+            "published": "2024-09-22",
+            "score": 49.22098,
+            "similarity": 0.133,
+            "title": "Extending the Extension: Deterministic Algorithm for Non-monotone Submodular Maximization"
+          },
+          {
+            "abstract": "Extended regular expressions with counting and interleaving are widely used in practice. However the related theoretical studies for this kind of expressions currently cannot meet the need of practical work. This paper develops syntax definitions for extended deterministic expres",
+            "authors": [
+              "Xiaoying Mou",
+              "Haiming Chen"
+            ],
+            "categories": [
+              "cs.CL"
+            ],
+            "paper_id": "2301.01621",
+            "published": "2023-02-02",
+            "score": 48.105366,
+            "similarity": 0.167,
+            "title": "Grammar construction methods for extended deterministic expressions"
+          },
+          {
+            "abstract": "We present some extensions to the limited memory steepest descent method based on spectral properties and cyclic iterations. Our aim is to show that it is possible to combine sweep and delayed strategies for improving the performance of gradient methods. Numerical results are rep",
+            "authors": [
+              "Qinmeng Zou",
+              "Frederic Magoules"
+            ],
+            "categories": [
+              "math.NA",
+              "cs.NA"
+            ],
+            "paper_id": "1912.01222",
+            "published": "2019-12-03",
+            "score": 47.454227,
+            "similarity": 0.107,
+            "title": "On Extensions of Limited Memory Steepest Descent Method"
+          },
+          {
+            "abstract": "We present Simitate --- a hybrid benchmarking suite targeting the evaluation of approaches for imitation learning. A dataset containing 1938 sequences where humans perform daily activities in a realistic environment is presented. The dataset is strongly coupled with an integratio",
+            "authors": [
+              "Raphael Memmesheimer",
+              "Ivanna Mykhalchyshyna",
+              "Viktor Seib",
+              "Dietrich Paulus"
+            ],
+            "categories": [
+              "cs.LG",
+              "cs.RO",
+              "stat.ML"
+            ],
+            "paper_id": "1905.06002",
+            "published": "2019-05-15",
+            "score": 44.098312,
+            "similarity": 0.091,
+            "title": "Simitate: A Hybrid Imitation Learning Benchmark"
+          },
+          {
+            "abstract": "Research in derivative-free global optimization is under active development, and many solution techniques are available today. Therefore, the experimental comparison of previous and emerging algorithms must be kept up to date. This paper considers the solution to the bound-constr",
+            "authors": [
+              "Linas Stripinis",
+              "Remigijus PaulaviÄius"
+            ],
+            "categories": [
+              "math.OC",
+              "cs.NA",
+              "math.NA"
+            ],
+            "paper_id": "2209.05759",
+            "published": "2022-09-13",
+            "score": 40.7774,
+            "similarity": 0.167,
+            "title": "An extensive numerical benchmark study of deterministic vs. stochastic derivative-free global optimization algorithms"
+          }
+        ],
+        "novelty_notes": [
+          "Local SearchEngine /search metadata check completed.",
+          "total=10000"
+        ],
+        "query": "Limitation-Targeted Extension of Deterministic Benchmark Methods",
+        "source": "search_engine"
+      },
+      "external_verification_depth": "strong_external",
+      "feasibility_pass_threshold": 0.65,
+      "resolved_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2312.13010"
+      ],
+      "supporting_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2312.13010"
+      ]
+    },
+    "near_pass": false,
+    "novelty_risk": "low",
+    "rationale": "Balanced critic scored evidence=0.90 and feasibility=1.00; novelty_risk=unknown; verdict=pass. External metadata check completed via search_engine; duplicate_risk=low.",
+    "required_fixes": [],
+    "verdict": "pass",
+    "verification_status": "checked",
+    "weaknesses": []
+  },
+  "pass_candidate_ids": [
+    "cand-r1-1",
+    "cand-r1-2",
+    "cand-r1-3"
+  ],
+  "run_id": "exp-openrouter-search-engine-strong-20260707",
+  "schema_version": 1,
+  "selected_at": "2026-07-07T08:08:13.002342+00:00",
+  "source_paths": {
+    "candidate": "candidates/candidates_round_1.json",
+    "candidate_loop": "candidate_loop.json",
+    "critic_report": "critic_reports/critic_reports_round_1.json"
+  },
+  "status": "selected"
+}

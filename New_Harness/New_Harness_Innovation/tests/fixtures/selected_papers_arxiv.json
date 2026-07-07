@@ -1,0 +1,25 @@
+{
+  "selected_papers": [
+    {
+      "source": "2401.14196",
+      "title": "Direct ID example"
+    },
+    {
+      "source": "arXiv:2401.14196"
+    },
+    {
+      "source": "https://arxiv.org/abs/2401.14196"
+    },
+    {
+      "source": "https://arxiv.org/pdf/2401.14196.pdf"
+    },
+    {
+      "source": "cs/9901001",
+      "title": "Old arXiv ID example"
+    }
+  ],
+  "user_draft": {
+    "draft_text": "This is optional draft text for the harness input.",
+    "memo_text": "This is optional memo text."
+  }
+}

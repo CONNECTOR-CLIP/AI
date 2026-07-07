@@ -1,0 +1,323 @@
+{
+  "fail_candidate_ids": [],
+  "pass_candidate_ids": [
+    "cand-r1-1",
+    "cand-r1-2",
+    "cand-r1-3"
+  ],
+  "report_count": 3,
+  "reports": [
+    {
+      "candidate_id": "cand-r1-1",
+      "confidence": 0.9385,
+      "evidence_score": 0.877,
+      "feasibility_score": 1.0,
+      "metadata": {
+        "evidence_pass_threshold": 0.65,
+        "external_check_path": "external_checks/round_1/cand-r1-1.json",
+        "external_check_report": {
+          "checked_at": "2026-07-07T08:24:34.260402+00:00",
+          "degraded_reason": null,
+          "duplicate_risk": "low",
+          "matches": [
+            {
+              "abstract": "We present Simitate --- a hybrid benchmarking suite targeting the evaluation of approaches for imitation learning. A dataset containing 1938 sequences where humans perform daily activities in a realistic environment is presented. The dataset is strongly coupled with an integratio",
+              "authors": [
+                "Raphael Memmesheimer",
+                "Ivanna Mykhalchyshyna",
+                "Viktor Seib",
+                "Dietrich Paulus"
+              ],
+              "categories": [
+                "cs.LG",
+                "cs.RO",
+                "stat.ML"
+              ],
+              "paper_id": "1905.06002",
+              "published": "2019-05-15",
+              "score": 44.098312,
+              "similarity": 0.083,
+              "title": "Simitate: A Hybrid Imitation Learning Benchmark"
+            },
+            {
+              "abstract": "A pseudo-deterministic algorithm is a (randomized) algorithm which, when run multiple times on the same input, with high probability outputs the same result on all executions. Classic streaming algorithms, such as those for finding heavy hitters, approximate counting, $\\ell_2$ ap",
+              "authors": [
+                "Shafi Goldwasser",
+                "Ofer Grossman",
+                "Sidhanth Mohanty",
+                "David P. Woodruff"
+              ],
+              "categories": [
+                "cs.CC",
+                "cs.DS"
+              ],
+              "paper_id": "1911.11368",
+              "published": "2019-11-26",
+              "score": 39.490913,
+              "similarity": 0.111,
+              "title": "Pseudo-deterministic Streaming"
+            },
+            {
+              "abstract": "The aim of this study was to check how efficient can be smoothed finite element method (FEM) for solution of the linear fracture mechanics problems. Accuracy of stress intensity factor (SIF) computation were investigated using three types of smoothed FEM (namely ES-FEM, NS-FEM an",
+              "authors": [
+                "I. V. Rokach"
+              ],
+              "categories": [
+                "cs.CE",
+                "cs.NA"
+              ],
+              "paper_id": "1903.11401",
+              "published": "2019-03-26",
+              "score": 38.592724,
+              "similarity": 0.118,
+              "title": "Smoothed finite element method for stress intensity factor estimation: benefits and limitations"
+            },
+            {
+              "abstract": "Controller synthesis for general linear temporal logic (LTL) objectives is a challenging task. The standard approach involves translating the LTL objective into a deterministic parity automaton (DPA) by means of the Safra-Piterman construction. One of the challenges is the size o",
+              "authors": [
+                "Javier Esparza",
+                "Jan KÅetÃ­nskÃ½",
+                "Jean-FranÃ§ois Raskin",
+                "Salomon Sickert"
+              ],
+              "categories": [
+                "cs.LO",
+                "cs.FL"
+              ],
+              "paper_id": "1701.06103",
+              "published": "2017-01-21",
+              "score": 38.35088,
+              "similarity": 0.117,
+              "title": "From LTL and Limit-Deterministic BÃ¼chi Automata to Deterministic Parity Automata"
+            },
+            {
+              "abstract": "This paper is devoted to the analysis of the angular resolution limit (ARL), an important performance measure in the directions-of-arrival estimation theory. The main fruit of our endeavor takes the form of an explicit, analytical expression of this resolution limit, w.r.t. the a",
+              "authors": [
+                "Xin Zhang",
+                "Mohammed Nabil El Korso",
+                "Marius Pesavento"
+              ],
+              "categories": [
+                "cs.IT",
+                "math.IT"
+              ],
+              "paper_id": "1304.0859",
+              "published": "2013-04-03",
+              "score": 38.26614,
+              "similarity": 0.167,
+              "title": "Angular resolution limit for deterministic correlated sources"
+            }
+          ],
+          "novelty_notes": [
+            "Local SearchEngine /search metadata check completed.",
+            "total=10000"
+          ],
+          "query": "Limitation-Targeted Stress Benchmark for Deterministic Methods",
+          "source": "search_engine"
+        },
+        "external_verification_depth": "light_external",
+        "feasibility_pass_threshold": 0.65,
+        "resolved_evidence_refs": [
+          "2401.14196",
+          "2505.18705",
+          "2312.13010",
+          "2312.10997",
+          "2502.05957"
+        ],
+        "supporting_evidence_refs": [
+          "2401.14196",
+          "2505.18705",
+          "2312.13010",
+          "2312.10997",
+          "2502.05957"
+        ]
+      },
+      "near_pass": false,
+      "novelty_risk": "low",
+      "rationale": "Balanced critic scored evidence=0.88 and feasibility=1.00; novelty_risk=unknown; verdict=pass. External metadata check completed via search_engine; duplicate_risk=low.",
+      "required_fixes": [],
+      "verdict": "pass",
+      "verification_status": "checked",
+      "weaknesses": []
+    },
+    {
+      "candidate_id": "cand-r1-2",
+      "confidence": 0.945,
+      "evidence_score": 0.8899999999999999,
+      "feasibility_score": 1.0,
+      "metadata": {
+        "evidence_pass_threshold": 0.65,
+        "external_check_path": "external_checks/round_1/cand-r1-2.json",
+        "external_check_report": {
+          "checked_at": "2026-07-07T08:24:35.127307+00:00",
+          "degraded_reason": null,
+          "duplicate_risk": "low",
+          "matches": [
+            {
+              "abstract": "In this paper, we tackle the problem of trajectory planning and control of a vehicle under locally varying traction limitations, in the presence of suddenly appearing obstacles. We employ concepts from adaptive model predictive control for run-time adaptation of tire force constr",
+              "authors": [
+                "Lars Svensson",
+                "Monimoy Bujarbaruah",
+                "Nitin Kapania",
+                "Martin TÃ¶rngren"
+              ],
+              "categories": [
+                "cs.RO"
+              ],
+              "paper_id": "1903.04240",
+              "published": "2019-12-10",
+              "score": 49.922596,
+              "similarity": 0.143,
+              "title": "Adaptive Trajectory Planning and Optimization at Limits of Handling"
+            },
+            {
+              "abstract": "In this paper, we address the problem of motion planning and control at the limits of handling, under locally varying traction conditions. We propose a novel solution method where traction variations over the prediction horizon are represented by time-varying tire force constrain",
+              "authors": [
+                "Lars Svensson",
+                "Monimoy Bujarbaruah",
+                "Arpit Karsolia",
+                "Christian Berger",
+                "Martin TÃ¶rngren"
+              ],
+              "categories": [
+                "cs.RO",
+                "cs.SY",
+                "eess.SY"
+              ],
+              "paper_id": "2009.04180",
+              "published": "2021-11-18",
+              "score": 49.922596,
+              "similarity": 0.143,
+              "title": "Traction Adaptive Motion Planning at the Limits of Handling"
+            },
+            {
+              "abstract": "We present Simitate --- a hybrid benchmarking suite targeting the evaluation of approaches for imitation learning. A dataset containing 1938 sequences where humans perform daily activities in a realistic environment is presented. The dataset is strongly coupled with an integratio",
+              "authors": [
+                "Raphael Memmesheimer",
+                "Ivanna Mykhalchyshyna",
+                "Viktor Seib",
+                "Dietrich Paulus"
+              ],
+              "categories": [
+                "cs.LG",
+                "cs.RO",
+                "stat.ML"
+              ],
+              "paper_id": "1905.06002",
+              "published": "2019-05-15",
+              "score": 45.14961,
+              "similarity": 0.083,
+              "title": "Simitate: A Hybrid Imitation Learning Benchmark"
+            },
+            {
+              "abstract": "Training large Deep Neural Network (DNN) models at scale often encounters straggler issues, mostly in communications due to network congestion, RNIC/switch defects, or topological asymmetry. Under advanced pipeline parallelism, even minor communication delays can induce significa",
+              "authors": [
+                "Tianyuan Wu",
+                "Lunxi Cao",
+                "Hanfeng Lu",
+                "Xiaoxiao Jiang",
+                "Yinghao Yu",
+                "Siran Yang",
+                "Guodong Yang",
+                "Jiamang Wang",
+                "Lin Qu",
+                "Liping Zhang",
+                "Wei Wang"
+              ],
+              "categories": [
+                "cs.DC"
+              ],
+              "paper_id": "2504.19232",
+              "published": "2025-04-27",
+              "score": 43.811188,
+              "similarity": 0.231,
+              "title": "Adaptra: Straggler-Resilient Hybrid-Parallel Training with Pipeline Adaptation"
+            },
+            {
+              "abstract": "Pipeline parallelism is widely used to train large language models (LLMs). However, increasing heterogeneity in model architectures exacerbates pipeline bubbles, thereby reducing training efficiency. Existing approaches overlook the co-optimization of model partition, model place",
+              "authors": [
+                "Jihu Guo",
+                "Tenghui Ma",
+                "Wei Gao",
+                "Peng Sun",
+                "Jiaxing Li",
+                "Xun Chen",
+                "Yuyang Jin",
+                "Dahua Lin"
+              ],
+              "categories": [
+                "cs.DC",
+                "cs.AI"
+              ],
+              "paper_id": "2509.23722",
+              "published": "2025-09-28",
+              "score": 43.235138,
+              "similarity": 0.214,
+              "title": "AdaPtis: Reducing Pipeline Bubbles with Adaptive Pipeline Parallelism on Heterogeneous Models"
+            }
+          ],
+          "novelty_notes": [
+            "Local SearchEngine /search metadata check completed.",
+            "total=10000"
+          ],
+          "query": "Hybrid Deterministic Pipeline with Adaptive Limitation Handling",
+          "source": "search_engine"
+        },
+        "external_verification_depth": "light_external",
+        "feasibility_pass_threshold": 0.65,
+        "resolved_evidence_refs": [
+          "2505.18705",
+          "2312.13010",
+          "2502.05957"
+        ],
+        "supporting_evidence_refs": [
+          "2505.18705",
+          "2312.13010",
+          "2502.05957"
+        ]
+      },
+      "near_pass": false,
+      "novelty_risk": "low",
+      "rationale": "Balanced critic scored evidence=0.89 and feasibility=1.00; novelty_risk=unknown; verdict=pass. External metadata check completed via search_engine; duplicate_risk=low.",
+      "required_fixes": [],
+      "verdict": "pass",
+      "verification_status": "checked",
+      "weaknesses": []
+    },
+    {
+      "candidate_id": "cand-r1-3",
+      "confidence": 0.9385,
+      "evidence_score": 0.877,
+      "feasibility_score": 1.0,
+      "metadata": {
+        "evidence_pass_threshold": 0.65,
+        "external_verification_depth": "light_external",
+        "feasibility_pass_threshold": 0.65,
+        "resolved_evidence_refs": [
+          "2401.14196",
+          "2505.18705",
+          "2312.13010",
+          "2312.10997",
+          "2502.05957"
+        ],
+        "supporting_evidence_refs": [
+          "2401.14196",
+          "2505.18705",
+          "2312.13010",
+          "2312.10997",
+          "2502.05957"
+        ]
+      },
+      "near_pass": true,
+      "novelty_risk": "unknown",
+      "rationale": "Balanced critic scored evidence=0.88 and feasibility=1.00; novelty_risk=unknown; verdict=pass.",
+      "required_fixes": [],
+      "verdict": "pass",
+      "verification_status": "light_external_skipped",
+      "weaknesses": []
+    }
+  ],
+  "revise_candidate_ids": [],
+  "round_index": 1,
+  "schema_version": 1
+}

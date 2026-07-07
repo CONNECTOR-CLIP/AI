@@ -1,0 +1,64 @@
+{
+  "candidate_count": 3,
+  "candidates": [
+    {
+      "candidate_id": "cand-r1-1",
+      "evaluation_plan": "Evaluate using the paper's original benchmark protocol where available, then add stress tests derived from the identified limitation. Report changes in primary benchmark metrics, stress-test metrics, runtime or resource cost, and cases where the extension degrades baseline behavior. Use ablations to separate the effect of the targeted extension from implementation changes.",
+      "expected_contribution": "A reproducible framework for converting a paper-identified future-work limitation into a concrete deterministic method extension and paired evaluation protocol.",
+      "gap_statement": "Several evidence cards describe deterministic methods with benchmark evaluations and experiment signals, but the highlighted limitations are not specified in the available metadata. This creates a gap around how to systematically turn such unspecified-but-addressable limitations into testable future-work extensions.",
+      "hypothesis": "If the reported limitation in a deterministic benchmarked method can be operationalized as a measurable failure mode, then a targeted extension of the method should improve performance on stress-test cases while preserving benchmark performance on the original evaluation suite.",
+      "proposed_method": "Select one deterministic method from the referenced papers, extract or reconstruct the stated limitation from the full paper, define measurable failure cases linked to that limitation, and implement a minimal deterministic extension aimed specifically at those cases. Compare the original and extended methods on the original benchmark plus a newly constructed limitation-focused stress set.",
+      "risks": [
+        "The actual limitation may be too vague or not recoverable from the full paper.",
+        "The extension may improve stress-test behavior while harming original benchmark performance.",
+        "Benchmark details may be insufficient to reproduce the original evaluation exactly."
+      ],
+      "supporting_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2312.13010"
+      ],
+      "title": "Limitation-Targeted Extension of Deterministic Benchmark Methods"
+    },
+    {
+      "candidate_id": "cand-r1-2",
+      "evaluation_plan": "Compare original benchmark results against stress-suite results, measuring rank changes, failure-mode-specific metrics, and sensitivity to input perturbations or edge cases defined by the limitation taxonomy. Include qualitative error analysis for cases where experiment signals diverge from original benchmark trends.",
+      "expected_contribution": "A shared evaluation artifact that complements existing benchmark evaluations by making paper-identified limitations empirically testable across deterministic methods.",
+      "gap_statement": "The evidence cards consistently report deterministic methods, benchmark evaluations, experiment signals, and addressable limitations, but the limitation descriptions are absent from the provided metadata. A comparative stress-suite could help reveal whether the methods share recurring failure modes beyond their original benchmarks.",
+      "hypothesis": "A benchmark extension built from limitation categories across multiple deterministic-method papers will expose performance differences that are not visible from the original benchmark evaluations alone.",
+      "proposed_method": "Collect the full limitation and future-work statements from the referenced deterministic-method papers, map them into a small taxonomy of failure modes, and construct benchmark add-ons for each category. Run each available method on its original benchmark and on the shared stress-suite where applicable, using deterministic execution settings to reduce run-to-run variance.",
+      "risks": [
+        "Methods from different papers may target incompatible tasks, limiting direct comparison.",
+        "The limitation taxonomy may be incomplete if full papers provide only brief future-work discussion.",
+        "Stress-suite construction may introduce biases not present in the original benchmarks."
+      ],
+      "supporting_evidence_refs": [
+        "2312.13010",
+        "2312.10997",
+        "2502.05957"
+      ],
+      "title": "Cross-Paper Benchmark Stress Suite for Deterministic Methods with Reported Limitations"
+    },
+    {
+      "candidate_id": "cand-r1-3",
+      "evaluation_plan": "Run the original method and adapter-augmented method on the original benchmark and on limitation-specific test cases. Measure benchmark retention, limitation-case improvement, determinism across repeated runs, and added computational overhead. Include an ablation comparing adapter placements such as pre-processing versus post-processing when feasible.",
+      "expected_contribution": "A low-intrusion method for exploring future-work directions in deterministic systems while protecting comparability with previously reported benchmark results.",
+      "gap_statement": "The referenced papers report deterministic methods with benchmark evaluations and experimental signals, and each indicates at least one limitation that future work could address. However, without explicit limitation details in the metadata, there is a need for a conservative adapter approach that can be evaluated for whether it addresses a recovered limitation without disrupting the original deterministic pipeline.",
+      "hypothesis": "A modular adapter placed around, rather than inside, an existing deterministic method can address a specific recovered limitation while preserving reproducibility and maintaining most of the original benchmark performance.",
+      "proposed_method": "For one or more referenced papers, recover the limitation from the full text and design a pre-processing, post-processing, or decision-routing adapter that targets the limitation while leaving the core deterministic method unchanged. Keep the adapter deterministic and configurable so it can be disabled for direct baseline comparison.",
+      "risks": [
+        "A modular adapter may be insufficient if the limitation requires changing the core algorithm.",
+        "The original benchmark may not contain enough cases related to the recovered limitation.",
+        "Added adapter logic could reduce interpretability or increase computational cost."
+      ],
+      "supporting_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2502.05957"
+      ],
+      "title": "Benchmark-Preserving Future-Work Adapter for Deterministic Pipelines"
+    }
+  ],
+  "round_index": 1,
+  "schema_version": 1
+}

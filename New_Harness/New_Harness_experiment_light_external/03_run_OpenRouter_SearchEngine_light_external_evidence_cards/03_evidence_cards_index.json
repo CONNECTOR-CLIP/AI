@@ -1,0 +1,31 @@
+{
+  "card_count": 5,
+  "cards": [
+    {
+      "card_path": "evidence_cards\\2401.14196.json",
+      "confidence": 0.43,
+      "paper_id": "2401.14196"
+    },
+    {
+      "card_path": "evidence_cards\\2505.18705.json",
+      "confidence": 0.54,
+      "paper_id": "2505.18705"
+    },
+    {
+      "card_path": "evidence_cards\\2312.13010.json",
+      "confidence": 0.64,
+      "paper_id": "2312.13010"
+    },
+    {
+      "card_path": "evidence_cards\\2312.10997.json",
+      "confidence": 0.62,
+      "paper_id": "2312.10997"
+    },
+    {
+      "card_path": "evidence_cards\\2502.05957.json",
+      "confidence": 0.72,
+      "paper_id": "2502.05957"
+    }
+  ],
+  "schema_version": 1
+}

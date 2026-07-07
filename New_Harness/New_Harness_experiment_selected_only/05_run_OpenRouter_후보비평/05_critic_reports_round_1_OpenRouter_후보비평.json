@@ -1,0 +1,114 @@
+{
+  "fail_candidate_ids": [],
+  "pass_candidate_ids": [
+    "cand-r1-1",
+    "cand-r1-2",
+    "cand-r1-3"
+  ],
+  "report_count": 3,
+  "reports": [
+    {
+      "candidate_id": "cand-r1-1",
+      "confidence": 0.9253,
+      "evidence_score": 0.8505999999999999,
+      "feasibility_score": 1.0,
+      "metadata": {
+        "evidence_pass_threshold": 0.65,
+        "external_verification_depth": "selected_only",
+        "feasibility_pass_threshold": 0.65,
+        "resolved_evidence_refs": [
+          "2401.14196",
+          "2505.18705",
+          "2312.13010",
+          "2312.10997",
+          "2502.05957"
+        ],
+        "supporting_evidence_refs": [
+          "2401.14196",
+          "2505.18705",
+          "2312.13010",
+          "2312.10997",
+          "2502.05957"
+        ]
+      },
+      "near_pass": true,
+      "novelty_risk": "unknown",
+      "rationale": "Balanced critic scored evidence=0.85 and feasibility=1.00; novelty_risk=unknown; verdict=pass.",
+      "required_fixes": [
+        "Run light_external or strong_external verification before selection if novelty must be verified."
+      ],
+      "verdict": "pass",
+      "verification_status": "selected_only",
+      "weaknesses": [
+        "External novelty verification intentionally deferred by selected_only policy."
+      ]
+    },
+    {
+      "candidate_id": "cand-r1-2",
+      "confidence": 0.927,
+      "evidence_score": 0.854,
+      "feasibility_score": 1.0,
+      "metadata": {
+        "evidence_pass_threshold": 0.65,
+        "external_verification_depth": "selected_only",
+        "feasibility_pass_threshold": 0.65,
+        "resolved_evidence_refs": [
+          "2401.14196",
+          "2505.18705",
+          "2312.13010"
+        ],
+        "supporting_evidence_refs": [
+          "2401.14196",
+          "2505.18705",
+          "2312.13010"
+        ]
+      },
+      "near_pass": true,
+      "novelty_risk": "unknown",
+      "rationale": "Balanced critic scored evidence=0.85 and feasibility=1.00; novelty_risk=unknown; verdict=pass.",
+      "required_fixes": [
+        "Run light_external or strong_external verification before selection if novelty must be verified."
+      ],
+      "verdict": "pass",
+      "verification_status": "selected_only",
+      "weaknesses": [
+        "External novelty verification intentionally deferred by selected_only policy."
+      ]
+    },
+    {
+      "candidate_id": "cand-r1-3",
+      "confidence": 0.9245,
+      "evidence_score": 0.849,
+      "feasibility_score": 1.0,
+      "metadata": {
+        "evidence_pass_threshold": 0.65,
+        "external_verification_depth": "selected_only",
+        "feasibility_pass_threshold": 0.65,
+        "resolved_evidence_refs": [
+          "2312.13010",
+          "2312.10997",
+          "2502.05957"
+        ],
+        "supporting_evidence_refs": [
+          "2312.13010",
+          "2312.10997",
+          "2502.05957"
+        ]
+      },
+      "near_pass": true,
+      "novelty_risk": "unknown",
+      "rationale": "Balanced critic scored evidence=0.85 and feasibility=1.00; novelty_risk=unknown; verdict=pass.",
+      "required_fixes": [
+        "Run light_external or strong_external verification before selection if novelty must be verified."
+      ],
+      "verdict": "pass",
+      "verification_status": "selected_only",
+      "weaknesses": [
+        "External novelty verification intentionally deferred by selected_only policy."
+      ]
+    }
+  ],
+  "revise_candidate_ids": [],
+  "round_index": 1,
+  "schema_version": 1
+}

@@ -1,0 +1,29 @@
+{
+  "claims": [
+    "The paper describes a deterministic method.",
+    "The paper reports benchmark evaluation and experiment signals.",
+    "The paper highlights a limitation and a future work direction."
+  ],
+  "confidence": 0.62,
+  "evaluation_signals": [
+    "benchmark evaluation",
+    "experiment signals"
+  ],
+  "future_work_clues": [
+    "future work direction",
+    "one limitation that future work can address"
+  ],
+  "limitations": [
+    "The abstract states that the approach highlights one limitation, but does not specify what the limitation is."
+  ],
+  "methods": [
+    "deterministic method"
+  ],
+  "paper_id": "2312.10997",
+  "quotes_or_snippets": [
+    "describes a deterministic method, benchmark evaluation, and future work direction",
+    "reports experiment signals",
+    "highlights one limitation that future work can address"
+  ],
+  "schema_version": 1
+}

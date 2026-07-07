@@ -1,0 +1,72 @@
+test_event_logging_writes_jsonl_with_run_and_stage_metadata (test_artifacts.RunArtifactsTests.test_event_logging_writes_jsonl_with_run_and_stage_metadata) ... ok
+test_write_json_persists_schema_version_one (test_artifacts.RunArtifactsTests.test_write_json_persists_schema_version_one) ... ok
+test_candidate_generation_reads_evidence_cards_and_writes_n_cards (test_candidate_loop.CandidateLoopTests.test_candidate_generation_reads_evidence_cards_and_writes_n_cards) ... ok
+test_candidate_loop_propagates_critic_failure (test_candidate_loop.CandidateLoopTests.test_candidate_loop_propagates_critic_failure) ... ok
+test_candidate_loop_propagates_generation_failure (test_candidate_loop.CandidateLoopTests.test_candidate_loop_propagates_generation_failure) ... ok
+test_critic_passes_grounded_candidate_and_fails_or_revises_weaker_ones (test_candidate_loop.CandidateLoopTests.test_critic_passes_grounded_candidate_and_fails_or_revises_weaker_ones) ... ok
+test_near_pass_heuristic_is_controlled_by_config_thresholds_and_margin (test_candidate_loop.CandidateLoopTests.test_near_pass_heuristic_is_controlled_by_config_thresholds_and_margin) ... ok
+test_no_pass_loop_regenerates_bounded_rounds_and_reports_blocked (test_candidate_loop.CandidateLoopTests.test_no_pass_loop_regenerates_bounded_rounds_and_reports_blocked) ... ok
+test_pass_loop_stops_early_and_returns_selection_required (test_candidate_loop.CandidateLoopTests.test_pass_loop_stops_early_and_returns_selection_required) ... ok
+test_candidate_and_critic_schema_round_trip (test_candidate_loop.SchemaExtensionTests.test_candidate_and_critic_schema_round_trip) ... ok
+test_cli_run_rejects_web_external_checker_without_url (test_cli_smoke.CliSmokeTests.test_cli_run_rejects_web_external_checker_without_url) ... ok
+test_cli_run_returns_parseable_json_failure_on_bad_input (test_cli_smoke.CliSmokeTests.test_cli_run_returns_parseable_json_failure_on_bad_input) ... ok
+test_cli_run_returns_parseable_json_when_openrouter_key_missing (test_cli_smoke.CliSmokeTests.test_cli_run_returns_parseable_json_when_openrouter_key_missing) ... ok
+test_cli_run_select_draft_revise_happy_path (test_cli_smoke.CliSmokeTests.test_cli_run_select_draft_revise_happy_path) ... ok
+test_evidence_stage_creates_one_card_per_selected_paper_and_index (test_evidence.EvidenceStageTests.test_evidence_stage_creates_one_card_per_selected_paper_and_index) ... FAIL
+test_evidence_stage_skips_on_rerun_when_existing_artifacts_are_valid (test_evidence.EvidenceStageTests.test_evidence_stage_skips_on_rerun_when_existing_artifacts_are_valid) ... ok
+test_checker_failure_marks_degraded_status_without_clearing_novelty (test_external_check.CandidateExternalVerificationTests.test_checker_failure_marks_degraded_status_without_clearing_novelty) ... ok
+test_light_external_checks_only_pass_or_near_pass_and_respects_top_k (test_external_check.CandidateExternalVerificationTests.test_light_external_checks_only_pass_or_near_pass_and_respects_top_k) ... ok
+test_selected_only_does_not_call_checker_and_marks_selected_only_status (test_external_check.CandidateExternalVerificationTests.test_selected_only_does_not_call_checker_and_marks_selected_only_status) ... ok
+test_strong_external_checks_every_candidate_and_downgrades_high_duplicate_risk (test_external_check.CandidateExternalVerificationTests.test_strong_external_checks_every_candidate_and_downgrades_high_duplicate_risk) ... ok
+test_arxiv_search_checker_builds_metadata_query_and_parses_atom (test_external_check.CheckerImplementationTests.test_arxiv_search_checker_builds_metadata_query_and_parses_atom) ... ok
+test_arxiv_search_checker_degrades_on_failing_opener (test_external_check.CheckerImplementationTests.test_arxiv_search_checker_degrades_on_failing_opener) ... ok
+test_local_arxiv_db_checker_detects_duplicate_risk_from_metadata (test_external_check.CheckerImplementationTests.test_local_arxiv_db_checker_detects_duplicate_risk_from_metadata) ... ok
+test_search_engine_checker_parses_local_search_api_results (test_external_check.CheckerImplementationTests.test_search_engine_checker_parses_local_search_api_results) ... ok
+test_web_search_checker_parses_generic_json_results (test_external_check.CheckerImplementationTests.test_web_search_checker_parses_generic_json_results) ... ok
+test_ingest_normalizes_selected_papers_from_json_path (test_ingest.IngestStageTests.test_ingest_normalizes_selected_papers_from_json_path) ... ok
+test_ingest_persists_optional_user_draft_without_file_paths (test_ingest.IngestStageTests.test_ingest_persists_optional_user_draft_without_file_paths) ... ok
+test_generate_candidate_cards_uses_expected_ids_and_validates_count (test_openrouter_provider.OpenRouterProviderTests.test_generate_candidate_cards_uses_expected_ids_and_validates_count) ... ok
+test_generate_evidence_card_posts_chat_completion_and_parses_json (test_openrouter_provider.OpenRouterProviderTests.test_generate_evidence_card_posts_chat_completion_and_parses_json) ... ok
+test_http_error_raises_actionable_provider_error (test_openrouter_provider.OpenRouterProviderTests.test_http_error_raises_actionable_provider_error) ... ok
+test_invalid_json_response_raises_provider_error (test_openrouter_provider.OpenRouterProviderTests.test_invalid_json_response_raises_provider_error) ... ok
+test_missing_key_raises_actionable_error (test_openrouter_provider.OpenRouterProviderTests.test_missing_key_raises_actionable_error) ... ok
+test_non_json_openrouter_response_body_raises_provider_error (test_openrouter_provider.OpenRouterProviderTests.test_non_json_openrouter_response_body_raises_provider_error) ... ok
+test_read_timeout_raises_provider_error (test_openrouter_provider.OpenRouterProviderTests.test_read_timeout_raises_provider_error) ... ok
+test_repeated_identical_requests_write_distinct_revision_records (test_revision_modes.RevisionStageTests.test_repeated_identical_requests_write_distinct_revision_records) ... ok
+test_repeated_request_record_path_never_overwrites_existing_suffix (test_revision_modes.RevisionStageTests.test_repeated_request_record_path_never_overwrites_existing_suffix) ... ok
+test_revision_auto_edit_modifies_draft_and_logs_record (test_revision_modes.RevisionStageTests.test_revision_auto_edit_modifies_draft_and_logs_record) ... ok
+test_revision_qa_suggest_does_not_modify_draft_and_writes_record (test_revision_modes.RevisionStageTests.test_revision_qa_suggest_does_not_modify_draft_and_writes_record) ... ok
+test_revision_rejects_mismatched_run_id_or_missing_artifacts (test_revision_modes.RevisionStageTests.test_revision_rejects_mismatched_run_id_or_missing_artifacts) ... ok
+test_sequential_auto_edit_preserves_prior_revision_sections (test_revision_modes.RevisionStageTests.test_sequential_auto_edit_preserves_prior_revision_sections) ... ok
+test_exception_preserves_partial_outputs_and_returns_failed_result (test_runner.StageRunnerTests.test_exception_preserves_partial_outputs_and_returns_failed_result) ... ok
+test_force_true_reruns_even_when_output_is_valid (test_runner.StageRunnerTests.test_force_true_reruns_even_when_output_is_valid) ... ok
+test_invalid_or_missing_output_reruns_stage (test_runner.StageRunnerTests.test_invalid_or_missing_output_reruns_stage) ... ok
+test_skips_only_when_existing_output_is_valid (test_runner.StageRunnerTests.test_skips_only_when_existing_output_is_valid) ... ok
+test_rejects_non_arxiv_urls (test_schemas.ArxivReferenceTests.test_rejects_non_arxiv_urls) ... ok
+test_valid_references_normalize_to_abs_and_pdf_urls (test_schemas.ArxivReferenceTests.test_valid_references_normalize_to_abs_and_pdf_urls) ... ok
+test_fixture_loads_selected_papers_and_optional_user_draft (test_schemas.SchemaInputTests.test_fixture_loads_selected_papers_and_optional_user_draft) ... ok
+test_optional_user_draft_accepts_draft_or_memo_text (test_schemas.SchemaInputTests.test_optional_user_draft_accepts_draft_or_memo_text) ... ok
+test_rejects_unsupported_schema_version (test_schemas.SchemaInputTests.test_rejects_unsupported_schema_version) ... ok
+test_schema_version_defaults_to_one (test_schemas.SchemaInputTests.test_schema_version_defaults_to_one) ... ok
+test_draft_generation_writes_markdown_and_claim_map_with_risk_notes (test_selection_and_draft.DraftGenerationStageTests.test_draft_generation_writes_markdown_and_claim_map_with_risk_notes) ... ok
+test_selection_accepts_only_pass_candidate_for_matching_run (test_selection_and_draft.SelectionStageTests.test_selection_accepts_only_pass_candidate_for_matching_run) ... ok
+test_selection_rejects_run_id_mismatch (test_selection_and_draft.SelectionStageTests.test_selection_rejects_run_id_mismatch) ... ok
+test_selection_rejects_unknown_or_non_pass_candidate (test_selection_and_draft.SelectionStageTests.test_selection_rejects_unknown_or_non_pass_candidate) ... ok
+
+======================================================================
+FAIL: test_evidence_stage_creates_one_card_per_selected_paper_and_index (test_evidence.EvidenceStageTests.test_evidence_stage_creates_one_card_per_selected_paper_and_index)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\NEW_HARNESS_INNOVATION\tests\test_evidence.py", line 71, in test_evidence_stage_creates_one_card_per_selected_paper_and_index
+    self.assertEqual(index_payload["cards"][0]["card_path"], "evidence_cards/2401.14196.json")
+AssertionError: 'evidence_cards\\2401.14196.json' != 'evidence_cards/2401.14196.json'
+- evidence_cards\2401.14196.json
+?               ^
++ evidence_cards/2401.14196.json
+?               ^
+
+
+----------------------------------------------------------------------
+Ran 54 tests in 4.184s
+
+FAILED (failures=1)

@@ -1,0 +1,101 @@
+{
+  "checked_at": "2026-07-07T08:24:34.260402+00:00",
+  "degraded_reason": null,
+  "duplicate_risk": "low",
+  "matches": [
+    {
+      "abstract": "We present Simitate --- a hybrid benchmarking suite targeting the evaluation of approaches for imitation learning. A dataset containing 1938 sequences where humans perform daily activities in a realistic environment is presented. The dataset is strongly coupled with an integratio",
+      "authors": [
+        "Raphael Memmesheimer",
+        "Ivanna Mykhalchyshyna",
+        "Viktor Seib",
+        "Dietrich Paulus"
+      ],
+      "categories": [
+        "cs.LG",
+        "cs.RO",
+        "stat.ML"
+      ],
+      "paper_id": "1905.06002",
+      "published": "2019-05-15",
+      "score": 44.098312,
+      "similarity": 0.083,
+      "title": "Simitate: A Hybrid Imitation Learning Benchmark"
+    },
+    {
+      "abstract": "A pseudo-deterministic algorithm is a (randomized) algorithm which, when run multiple times on the same input, with high probability outputs the same result on all executions. Classic streaming algorithms, such as those for finding heavy hitters, approximate counting, $\\ell_2$ ap",
+      "authors": [
+        "Shafi Goldwasser",
+        "Ofer Grossman",
+        "Sidhanth Mohanty",
+        "David P. Woodruff"
+      ],
+      "categories": [
+        "cs.CC",
+        "cs.DS"
+      ],
+      "paper_id": "1911.11368",
+      "published": "2019-11-26",
+      "score": 39.490913,
+      "similarity": 0.111,
+      "title": "Pseudo-deterministic Streaming"
+    },
+    {
+      "abstract": "The aim of this study was to check how efficient can be smoothed finite element method (FEM) for solution of the linear fracture mechanics problems. Accuracy of stress intensity factor (SIF) computation were investigated using three types of smoothed FEM (namely ES-FEM, NS-FEM an",
+      "authors": [
+        "I. V. Rokach"
+      ],
+      "categories": [
+        "cs.CE",
+        "cs.NA"
+      ],
+      "paper_id": "1903.11401",
+      "published": "2019-03-26",
+      "score": 38.592724,
+      "similarity": 0.118,
+      "title": "Smoothed finite element method for stress intensity factor estimation: benefits and limitations"
+    },
+    {
+      "abstract": "Controller synthesis for general linear temporal logic (LTL) objectives is a challenging task. The standard approach involves translating the LTL objective into a deterministic parity automaton (DPA) by means of the Safra-Piterman construction. One of the challenges is the size o",
+      "authors": [
+        "Javier Esparza",
+        "Jan KÅetÃ­nskÃ½",
+        "Jean-FranÃ§ois Raskin",
+        "Salomon Sickert"
+      ],
+      "categories": [
+        "cs.LO",
+        "cs.FL"
+      ],
+      "paper_id": "1701.06103",
+      "published": "2017-01-21",
+      "score": 38.35088,
+      "similarity": 0.117,
+      "title": "From LTL and Limit-Deterministic BÃ¼chi Automata to Deterministic Parity Automata"
+    },
+    {
+      "abstract": "This paper is devoted to the analysis of the angular resolution limit (ARL), an important performance measure in the directions-of-arrival estimation theory. The main fruit of our endeavor takes the form of an explicit, analytical expression of this resolution limit, w.r.t. the a",
+      "authors": [
+        "Xin Zhang",
+        "Mohammed Nabil El Korso",
+        "Marius Pesavento"
+      ],
+      "categories": [
+        "cs.IT",
+        "math.IT"
+      ],
+      "paper_id": "1304.0859",
+      "published": "2013-04-03",
+      "score": 38.26614,
+      "similarity": 0.167,
+      "title": "Angular resolution limit for deterministic correlated sources"
+    }
+  ],
+  "novelty_notes": [
+    "Local SearchEngine /search metadata check completed.",
+    "total=10000"
+  ],
+  "query": "Limitation-Targeted Stress Benchmark for Deterministic Methods",
+  "schema_version": 1,
+  "source": "search_engine"
+}

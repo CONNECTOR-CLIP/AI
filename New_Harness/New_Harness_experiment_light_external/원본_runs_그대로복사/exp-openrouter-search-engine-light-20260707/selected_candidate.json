@@ -1,0 +1,171 @@
+{
+  "candidate": {
+    "candidate_id": "cand-r1-1",
+    "evaluation_plan": "Re-run the deterministic methods or compatible baselines on the extended benchmark. Compare standard aggregate scores with per-slice scores, measure whether limitation-focused slices expose performance drops not visible in aggregate results, and report reproducibility across repeated deterministic runs.",
+    "expected_contribution": "A reproducible benchmark add-on that turns broad future-work limitations into measurable evaluation slices for deterministic methods.",
+    "gap_statement": "The evidence cards consistently indicate deterministic methods with benchmark evaluations and experiment signals, while also noting that each paper highlights an unspecified limitation for future work. This leaves a gap: the current benchmark signals may not isolate which conditions trigger the reported limitations.",
+    "hypothesis": "If benchmark cases are organized around explicit limitation-triggering conditions, then deterministic methods can be compared more diagnostically than with aggregate benchmark results alone.",
+    "proposed_method": "Construct a stress-test benchmark extension that starts from the existing benchmark-evaluation settings reported across the papers, groups test cases by suspected limitation type, and reports per-condition experiment signals alongside standard aggregate metrics. The method would preserve deterministic evaluation protocols while adding structured failure slices and reproducible analysis templates.",
+    "risks": [
+      "The provided evidence does not specify the actual limitations, so the first version may require manual extraction from the full papers.",
+      "Stress slices may be too narrow if the original benchmark tasks are not sufficiently diverse.",
+      "Per-slice findings may be hard to compare across papers if their benchmark settings differ substantially."
+    ],
+    "supporting_evidence_refs": [
+      "2401.14196",
+      "2505.18705",
+      "2312.13010",
+      "2312.10997",
+      "2502.05957"
+    ],
+    "title": "Limitation-Targeted Stress Benchmark for Deterministic Methods"
+  },
+  "candidate_id": "cand-r1-1",
+  "critic_report": {
+    "candidate_id": "cand-r1-1",
+    "confidence": 0.9385,
+    "evidence_score": 0.877,
+    "feasibility_score": 1.0,
+    "metadata": {
+      "evidence_pass_threshold": 0.65,
+      "external_check_path": "external_checks/round_1/cand-r1-1.json",
+      "external_check_report": {
+        "checked_at": "2026-07-07T08:24:34.260402+00:00",
+        "degraded_reason": null,
+        "duplicate_risk": "low",
+        "matches": [
+          {
+            "abstract": "We present Simitate --- a hybrid benchmarking suite targeting the evaluation of approaches for imitation learning. A dataset containing 1938 sequences where humans perform daily activities in a realistic environment is presented. The dataset is strongly coupled with an integratio",
+            "authors": [
+              "Raphael Memmesheimer",
+              "Ivanna Mykhalchyshyna",
+              "Viktor Seib",
+              "Dietrich Paulus"
+            ],
+            "categories": [
+              "cs.LG",
+              "cs.RO",
+              "stat.ML"
+            ],
+            "paper_id": "1905.06002",
+            "published": "2019-05-15",
+            "score": 44.098312,
+            "similarity": 0.083,
+            "title": "Simitate: A Hybrid Imitation Learning Benchmark"
+          },
+          {
+            "abstract": "A pseudo-deterministic algorithm is a (randomized) algorithm which, when run multiple times on the same input, with high probability outputs the same result on all executions. Classic streaming algorithms, such as those for finding heavy hitters, approximate counting, $\\ell_2$ ap",
+            "authors": [
+              "Shafi Goldwasser",
+              "Ofer Grossman",
+              "Sidhanth Mohanty",
+              "David P. Woodruff"
+            ],
+            "categories": [
+              "cs.CC",
+              "cs.DS"
+            ],
+            "paper_id": "1911.11368",
+            "published": "2019-11-26",
+            "score": 39.490913,
+            "similarity": 0.111,
+            "title": "Pseudo-deterministic Streaming"
+          },
+          {
+            "abstract": "The aim of this study was to check how efficient can be smoothed finite element method (FEM) for solution of the linear fracture mechanics problems. Accuracy of stress intensity factor (SIF) computation were investigated using three types of smoothed FEM (namely ES-FEM, NS-FEM an",
+            "authors": [
+              "I. V. Rokach"
+            ],
+            "categories": [
+              "cs.CE",
+              "cs.NA"
+            ],
+            "paper_id": "1903.11401",
+            "published": "2019-03-26",
+            "score": 38.592724,
+            "similarity": 0.118,
+            "title": "Smoothed finite element method for stress intensity factor estimation: benefits and limitations"
+          },
+          {
+            "abstract": "Controller synthesis for general linear temporal logic (LTL) objectives is a challenging task. The standard approach involves translating the LTL objective into a deterministic parity automaton (DPA) by means of the Safra-Piterman construction. One of the challenges is the size o",
+            "authors": [
+              "Javier Esparza",
+              "Jan KÅetÃ­nskÃ½",
+              "Jean-FranÃ§ois Raskin",
+              "Salomon Sickert"
+            ],
+            "categories": [
+              "cs.LO",
+              "cs.FL"
+            ],
+            "paper_id": "1701.06103",
+            "published": "2017-01-21",
+            "score": 38.35088,
+            "similarity": 0.117,
+            "title": "From LTL and Limit-Deterministic BÃ¼chi Automata to Deterministic Parity Automata"
+          },
+          {
+            "abstract": "This paper is devoted to the analysis of the angular resolution limit (ARL), an important performance measure in the directions-of-arrival estimation theory. The main fruit of our endeavor takes the form of an explicit, analytical expression of this resolution limit, w.r.t. the a",
+            "authors": [
+              "Xin Zhang",
+              "Mohammed Nabil El Korso",
+              "Marius Pesavento"
+            ],
+            "categories": [
+              "cs.IT",
+              "math.IT"
+            ],
+            "paper_id": "1304.0859",
+            "published": "2013-04-03",
+            "score": 38.26614,
+            "similarity": 0.167,
+            "title": "Angular resolution limit for deterministic correlated sources"
+          }
+        ],
+        "novelty_notes": [
+          "Local SearchEngine /search metadata check completed.",
+          "total=10000"
+        ],
+        "query": "Limitation-Targeted Stress Benchmark for Deterministic Methods",
+        "source": "search_engine"
+      },
+      "external_verification_depth": "light_external",
+      "feasibility_pass_threshold": 0.65,
+      "resolved_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2312.13010",
+        "2312.10997",
+        "2502.05957"
+      ],
+      "supporting_evidence_refs": [
+        "2401.14196",
+        "2505.18705",
+        "2312.13010",
+        "2312.10997",
+        "2502.05957"
+      ]
+    },
+    "near_pass": false,
+    "novelty_risk": "low",
+    "rationale": "Balanced critic scored evidence=0.88 and feasibility=1.00; novelty_risk=unknown; verdict=pass. External metadata check completed via search_engine; duplicate_risk=low.",
+    "required_fixes": [],
+    "verdict": "pass",
+    "verification_status": "checked",
+    "weaknesses": []
+  },
+  "pass_candidate_ids": [
+    "cand-r1-1",
+    "cand-r1-2",
+    "cand-r1-3"
+  ],
+  "run_id": "exp-openrouter-search-engine-light-20260707",
+  "schema_version": 1,
+  "selected_at": "2026-07-07T08:25:05.598566+00:00",
+  "source_paths": {
+    "candidate": "candidates/candidates_round_1.json",
+    "candidate_loop": "candidate_loop.json",
+    "critic_report": "critic_reports/critic_reports_round_1.json"
+  },
+  "status": "selected"
+}

@@ -1,0 +1,112 @@
+{
+  "checked_at": "2026-07-07T08:06:28.732978+00:00",
+  "degraded_reason": null,
+  "duplicate_risk": "low",
+  "matches": [
+    {
+      "abstract": "Decomposing images of document pages into high-level semantic regions (e.g., figures, tables, paragraphs), document object detection (DOD) is fundamental for downstream tasks like intelligent document editing and understanding. DOD remains a challenging problem as document object",
+      "authors": [
+        "Kai Li",
+        "Curtis Wigington",
+        "Chris Tensmeyer",
+        "Handong Zhao",
+        "Nikolaos Barmpalios",
+        "Vlad I. Morariu",
+        "Varun Manjunatha",
+        "Tong Sun",
+        "Yun Fu"
+      ],
+      "categories": [
+        "cs.CV"
+      ],
+      "paper_id": "2003.13197",
+      "published": "2020-03-30",
+      "score": 60.598244,
+      "similarity": 0.176,
+      "title": "Cross-Domain Document Object Detection: Benchmark Suite and Method"
+    },
+    {
+      "abstract": "Generalizing control policies to novel embodiments remains a fundamental challenge in enabling scalable and transferable learning in robotics. While prior works have explored this in locomotion, a systematic study in the context of manipulation tasks remains limited, partly due t",
+      "authors": [
+        "Meenal Parakh",
+        "Alexandre Kirchmeyer",
+        "Beining Han",
+        "Jia Deng"
+      ],
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "paper_id": "2505.14986",
+      "published": "2025-05-21",
+      "score": 55.440235,
+      "similarity": 0.267,
+      "title": "AnyBody: A Benchmark Suite for Cross-Embodiment Manipulation"
+    },
+    {
+      "abstract": "We introduce the Stress-Guided Lightweight Design Benchmark (SGLDBench), a comprehensive benchmark suite for applying and evaluating material layout strategies to generate stiff, lightweight designs in 3D domains. SGLDBench provides a seamlessly integrated simulation and analysis",
+      "authors": [
+        "Junpeng Wang",
+        "Dennis R. Bukenberger",
+        "Simon Niedermayr",
+        "Christoph Neuhauser",
+        "Jun Wu",
+        "RÃ¼diger Westermann"
+      ],
+      "categories": [
+        "cs.CE"
+      ],
+      "paper_id": "2501.03068",
+      "published": "2025-05-22",
+      "score": 52.454716,
+      "similarity": 0.235,
+      "title": "SGLDBench: A Benchmark Suite for Stress-Guided Lightweight 3D Designs"
+    },
+    {
+      "abstract": "RDF streaming has been explored by the Semantic Web community from many angles, resulting in multiple task formulations and streaming methods. However, for many existing formulations of the problem, reliably benchmarking streaming solutions has been challenging due to the lack of",
+      "authors": [
+        "Piotr Sowinski",
+        "Maria Ganzha",
+        "Marcin Paprzycki"
+      ],
+      "categories": [
+        "cs.DB"
+      ],
+      "paper_id": "2305.06226",
+      "published": "2023-11-27",
+      "score": 52.230602,
+      "similarity": 0.125,
+      "title": "RiverBench: an Open RDF Streaming Benchmark Suite"
+    },
+    {
+      "abstract": "In this technical report, we present the Zamba2 series -- a suite of 1.2B, 2.7B, and 7.4B parameter hybrid Mamba2-transformer models that achieve state of the art performance against the leading open-weights models of their class, while achieving substantial gains in inference la",
+      "authors": [
+        "Paolo Glorioso",
+        "Quentin Anthony",
+        "Yury Tokpanov",
+        "Anna Golubeva",
+        "Vasudev Shyam",
+        "James Whittington",
+        "Jonathan Pilault",
+        "Beren Millidge"
+      ],
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "paper_id": "2411.15242",
+      "published": "2024-11-22",
+      "score": 50.005722,
+      "similarity": 0.093,
+      "title": "The Zamba2 Suite: Technical Report"
+    }
+  ],
+  "novelty_notes": [
+    "Local SearchEngine /search metadata check completed.",
+    "total=10000"
+  ],
+  "query": "Cross-Paper Benchmark Stress Suite for Deterministic Methods with Reported Limitations",
+  "schema_version": 1,
+  "source": "search_engine"
+}

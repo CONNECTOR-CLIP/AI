@@ -1,0 +1,116 @@
+{
+  "checked_at": "2026-07-07T08:24:35.127307+00:00",
+  "degraded_reason": null,
+  "duplicate_risk": "low",
+  "matches": [
+    {
+      "abstract": "In this paper, we tackle the problem of trajectory planning and control of a vehicle under locally varying traction limitations, in the presence of suddenly appearing obstacles. We employ concepts from adaptive model predictive control for run-time adaptation of tire force constr",
+      "authors": [
+        "Lars Svensson",
+        "Monimoy Bujarbaruah",
+        "Nitin Kapania",
+        "Martin TÃ¶rngren"
+      ],
+      "categories": [
+        "cs.RO"
+      ],
+      "paper_id": "1903.04240",
+      "published": "2019-12-10",
+      "score": 49.922596,
+      "similarity": 0.143,
+      "title": "Adaptive Trajectory Planning and Optimization at Limits of Handling"
+    },
+    {
+      "abstract": "In this paper, we address the problem of motion planning and control at the limits of handling, under locally varying traction conditions. We propose a novel solution method where traction variations over the prediction horizon are represented by time-varying tire force constrain",
+      "authors": [
+        "Lars Svensson",
+        "Monimoy Bujarbaruah",
+        "Arpit Karsolia",
+        "Christian Berger",
+        "Martin TÃ¶rngren"
+      ],
+      "categories": [
+        "cs.RO",
+        "cs.SY",
+        "eess.SY"
+      ],
+      "paper_id": "2009.04180",
+      "published": "2021-11-18",
+      "score": 49.922596,
+      "similarity": 0.143,
+      "title": "Traction Adaptive Motion Planning at the Limits of Handling"
+    },
+    {
+      "abstract": "We present Simitate --- a hybrid benchmarking suite targeting the evaluation of approaches for imitation learning. A dataset containing 1938 sequences where humans perform daily activities in a realistic environment is presented. The dataset is strongly coupled with an integratio",
+      "authors": [
+        "Raphael Memmesheimer",
+        "Ivanna Mykhalchyshyna",
+        "Viktor Seib",
+        "Dietrich Paulus"
+      ],
+      "categories": [
+        "cs.LG",
+        "cs.RO",
+        "stat.ML"
+      ],
+      "paper_id": "1905.06002",
+      "published": "2019-05-15",
+      "score": 45.14961,
+      "similarity": 0.083,
+      "title": "Simitate: A Hybrid Imitation Learning Benchmark"
+    },
+    {
+      "abstract": "Training large Deep Neural Network (DNN) models at scale often encounters straggler issues, mostly in communications due to network congestion, RNIC/switch defects, or topological asymmetry. Under advanced pipeline parallelism, even minor communication delays can induce significa",
+      "authors": [
+        "Tianyuan Wu",
+        "Lunxi Cao",
+        "Hanfeng Lu",
+        "Xiaoxiao Jiang",
+        "Yinghao Yu",
+        "Siran Yang",
+        "Guodong Yang",
+        "Jiamang Wang",
+        "Lin Qu",
+        "Liping Zhang",
+        "Wei Wang"
+      ],
+      "categories": [
+        "cs.DC"
+      ],
+      "paper_id": "2504.19232",
+      "published": "2025-04-27",
+      "score": 43.811188,
+      "similarity": 0.231,
+      "title": "Adaptra: Straggler-Resilient Hybrid-Parallel Training with Pipeline Adaptation"
+    },
+    {
+      "abstract": "Pipeline parallelism is widely used to train large language models (LLMs). However, increasing heterogeneity in model architectures exacerbates pipeline bubbles, thereby reducing training efficiency. Existing approaches overlook the co-optimization of model partition, model place",
+      "authors": [
+        "Jihu Guo",
+        "Tenghui Ma",
+        "Wei Gao",
+        "Peng Sun",
+        "Jiaxing Li",
+        "Xun Chen",
+        "Yuyang Jin",
+        "Dahua Lin"
+      ],
+      "categories": [
+        "cs.DC",
+        "cs.AI"
+      ],
+      "paper_id": "2509.23722",
+      "published": "2025-09-28",
+      "score": 43.235138,
+      "similarity": 0.214,
+      "title": "AdaPtis: Reducing Pipeline Bubbles with Adaptive Pipeline Parallelism on Heterogeneous Models"
+    }
+  ],
+  "novelty_notes": [
+    "Local SearchEngine /search metadata check completed.",
+    "total=10000"
+  ],
+  "query": "Hybrid Deterministic Pipeline with Adaptive Limitation Handling",
+  "schema_version": 1,
+  "source": "search_engine"
+}
