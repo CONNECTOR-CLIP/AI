@@ -1,0 +1,60 @@
+{
+    "name": "github_search",
+    "args": {
+        "metadata": {
+            "proposals": [
+                {
+                    "id": 1,
+                    "keywords": [
+                        "positional attention",
+                        "content-based attention",
+                        "hybrid attention",
+                        "adaptive attention",
+                        "gating mechanism"
+                    ]
+                },
+                {
+                    "id": 2,
+                    "keywords": [
+                        "positional attention",
+                        "deep transformers",
+                        "learnability",
+                        "sample complexity",
+                        "multi-layer transformers"
+                    ]
+                },
+                {
+                    "id": 3,
+                    "keywords": [
+                        "Offline Reinforcement Learning",
+                        "Hierarchical Reinforcement Learning",
+                        "Generative Models",
+                        "Trajectory Stitching",
+                        "Diffusion Models"
+                    ]
+                },
+                {
+                    "id": 4,
+                    "keywords": [
+                        "learnable positional encoding",
+                        "adaptive positional encoding",
+                        "end-to-end optimization",
+                        "trainable positional embedding"
+                    ]
+                },
+                {
+                    "id": 5,
+                    "keywords": [
+                        "hierarchical reinforcement learning",
+                        "positional attention",
+                        "temporal attention",
+                        "long-horizon planning",
+                        "offline reinforcement learning"
+                    ]
+                }
+            ],
+            "date_limit": "2010-01-01"
+        }
+    },
+    "result": "=== GitHub search for Future Work Idea 1 (keywords: ['positional attention', 'content-based attention', 'hybrid attention', 'adaptive attention', 'gating mechanism']) ===\nThe results of searching positional attention content-based attention hybrid attention adaptive attention gating mechanism -user:lucidrains on GitHub: \n******************************\n=== GitHub search for Future Work Idea 2 (keywords: ['positional attention', 'deep transformers', 'learnability', 'sample complexity', 'multi-layer transformers']) ===\nThe results of searching positional attention deep transformers learnability sample complexity multi-layer transformers -user:lucidrains on GitHub: \n******************************\n=== GitHub search for Future Work Idea 3 (keywords: ['Offline Reinforcement Learning', 'Hierarchical Reinforcement Learning', 'Generative Models', 'Trajectory Stitching', 'Diffusion Models']) ===\nThe results of searching Offline Reinforcement Learning Hierarchical Reinforcement Learning Generative Models Trajectory Stitching Diffusion Models -user:lucidrains on GitHub: \n******************************\n=== GitHub search for Future Work Idea 4 (keywords: ['learnable positional encoding', 'adaptive positional encoding', 'end-to-end optimization', 'trainable positional embedding']) ===\nThe results of searching learnable positional encoding adaptive positional encoding end-to-end optimization trainable positional embedding -user:lucidrains on GitHub: \n******************************\n=== GitHub search for Future Work Idea 5 (keywords: ['hierarchical reinforcement learning', 'positional attention', 'temporal attention', 'long-horizon planning', 'offline reinforcement learning']) ===\nThe results of searching hierarchical reinforcement learning positional attention temporal attention long-horizon planning offline reinforcement learning -user:lucidrains on GitHub: \n******************************\n"
+}

@@ -1,0 +1,11 @@
+{
+    "name": "download_arxiv_source_by_title",
+    "args": {
+        "paper_list": [
+            "Validation of Modern JSON Schema: Formalization and Complexity"
+        ],
+        "local_root": "/workspace/Future-Work-Researcher/workplace_future_work",
+        "workplace_name": "workplace_test"
+    },
+    "result": "Download paper 'Validation of Modern JSON Schema: Formalization and Complexity' successfully\nMatched arxiv title: 'Validation of Modern JSON Schema: Formalization and Complexity' (similarity=1.00)\nThe paper is downloaded to path: /workplace_test/papers/validation_of_modern_json_schema_formalization_and_complexity.tex"
+}

@@ -1,0 +1,269 @@
+{
+    "messages": [
+        {
+            "content": null,
+            "role": "assistant",
+            "tool_calls": [
+                {
+                    "index": 0,
+                    "function": {
+                        "arguments": "{\"path\":\"/workplace_test/papers/241115594.tex\"}",
+                        "name": "open_local_file"
+                    },
+                    "id": "call-016761c9-620c-4e8c-85ef-1c119f0838bc-0",
+                    "type": "function"
+                }
+            ],
+            "function_call": null,
+            "reasoning_content": "The task is to decompose the goals of the paper \"2411.15594\" at path \"/workplace_test/papers/241115594.tex\".\n",
+            "provider_specific_fields": {
+                "refusal": null,
+                "reasoning": "The task is to decompose the goals of the paper \"2411.15594\" at path \"/workplace_test/papers/241115594.tex\".\n",
+                "reasoning_details": [
+                    {
+                        "type": "reasoning.summary",
+                        "summary": "The task is to decompose the goals of the paper \"2411.15594\" at path \"/workplace_test/papers/241115594.tex\".\n",
+                        "format": "xai-responses-v1",
+                        "index": 0
+                    },
+                    {
+                        "type": "reasoning.encrypted",
+                        "data": "cYZM6riF5E68PERke0yIGZUz0KFG8acfu8v0xd4TmJjz2N0CenkOxQdoRM19GcYangF9o0NvMh9dDFzm1iKYR+FfKqM3m1R0ptfwJWXZ8xY9fFwrqjxAxJ/4pLa66TZnpRsR1/X9IuKpLSJm4/GXZ/zXwRHWG6GVvgMpEd3YELZv1HeS70oFC1iB+7IhJu/VUWwXeOJInpCHWoqo+KNufOXtQFupkG6MoHfuWpV+5J58vzwm+23HXySULBWcz5QV4vP7pHwVwtblnBvFOGt7aniJDmjyQ8nPsTJ5kQDtxRxE5vqzqCsZ0TxURyotponcDshw",
+                        "format": "xai-responses-v1",
+                        "id": "rs_17c20905-5082-97b3-9d94-8e6e58e85429",
+                        "index": 1
+                    }
+                ],
+                "reasoning_content": "The task is to decompose the goals of the paper \"2411.15594\" at path \"/workplace_test/papers/241115594.tex\".\n"
+            },
+            "sender": "Goal Decomposition Agent"
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call-016761c9-620c-4e8c-85ef-1c119f0838bc-0",
+            "name": "open_local_file",
+            "content": "Address: file:///workplace_test/papers/241115594.tex\nViewport position: Showing page 1 of 72.\n=======================\n\n==================================================\nFilename: figures/fig4_structure_improvement.tex\n==================================================\n% \\begin{forest}\n%     for tree={\n%         grow=east,\n%         reversed=true,\n%         anchor=base west,\n%         parent anchor=east,\n%         child anchor=west,\n%         base=left,\n%         font=\\small,\n%         rectangle,\n%         draw,\n%         rounded corners,align=left,\n%         minimum width=2.5em,\n%         inner xsep=4pt,\n%         inner ysep=1pt,\n%     },\n%     where level=1{text width=5em,fill=blue!10}{},\n%     where level=2{text width=5em,font=\\footnotesize,fill=pink!30}{},\n%     where level=3{font=\\footnotesize,yshift=0.26pt,fill=yellow!20}{},\n%     [Improvement\\\\Strategy, fill=green!20\n%         [Design Strategy of \\\\Evaluation Prompts \\\\(Sec.~\\ref{subsec:design_prompts}), text width=8em\n%             [Optimizing LLMs’ \\\\Understanding of \\\\Evaluation Tasks, text width=6em\n%                 [\\emph{Few-shot prompting:} FActScore~\\cite{min2023factscore} / SALAD-Bench~\\cite{salad_bench} / GPTScore~\\cite{fu2024gptscore}]\n%                 [\\emph{Evaluation steps decomposition:} G-Eval~\\cite{geval} / DHP~\\cite{dhp} / SocREval~\\cite{he2024socreval} / BSM~\\cite{bsm}]\n%                 [\\emph{Evaluation criteria decomposition:} HD-Eval~\\cite{hd-eval} / Hu and Gao et al.~\\cite{hu-etal-2024-llm}]\n%                 [\\emph{Shuffling contents:} Wang et al.~\\cite{wang-etal-2024-large-language-models-fair} / Auto-J~\\cite{auto-j} / JudgeLM~\\cite{zhu2023judgelm} / PandaLM~\\cite{wang2023pandalm}]\n%                 [\\emph{Conversion of evaluation tasks:} Liu et al.~\\cite{liu2024aligning}]\n%             ]\n%             [Optimizing LLMs’\\\\ Output Forms, text width=6em\n%                 [\\emph{Constraining outputs in structured formats:} G-Eval~\\cite{geval} / DHP~\\cite{dhp} / LLM-EVAL~\\cite{llmeval}]\n%                 [\\emph{Providing evaluations with explanations:} CLAIR~\\cite{chan2023clair} / FLEUR~\\cite{lee-etal-2024-fleur}]\n%             ]\n%         ]\n%         [Improvement Strategy \\\\of LLMs’ Abilities \\\\(Sec.~\\ref{subsec:improve_models}), text width=8em)\n%             [Fine-tuning via Meta \\\\Evaluation Datasets, text width=7em\n%                 [\\emph{Evaluation template:} PandaLM~\\cite{wang2023pandalm} / SALAD-Bench~\\cite{salad_bench}]\n%                 [\\emph{Deep transformation:} OffsetBias~\\cite{offsetbias} / JudgeLM~\\cite{zhu2023judgelm} / CritiqueLLM~\\cite{ke2024critiquellm} / Yu et al.~\\cite{yu2025improve}]\n%             ]\n%             [Iterative Optimization \\\\Based on Feedbacks, text width=7em\n%                 [INSTRUCTSCORE~\\cite{xu2023instructscore} / JADE~\\cite{zhang2023jade} / Think-J~\\cite{huang2025think}]\n%             ]\n%         ]\n%         [Optimization Strategy \\\\of Final Results \\\\(Sec.~\\ref{subsec:optimization_results}), text width=8em)\n%             [Integration of multiple \\\\Evaluation Results, text width=7.5em\n%                 [\\emph{Summarize by multiple rounds:} Sottana et al.~\\cite{sottana2023evaluation} / PsychoBench~\\cite{psycho_bench} / Auto-J~\\cite{auto-j}]\n%                 [\\emph{Vote by multiple LLMs:} CPAD~\\cite{cpad} / Bai et al.~\\cite{lm-as-an-examiner}]\n%                 [\\emph{Hierarchical evaluation framework:} Jung et al.~\\cite{jung2024trust} / Zhang et al.~\\cite{zhang2025crowd}]\n%             ]\n%             [Direct Optimization of \\\\LLMs’ Outputs, text width=7.5em\n%                 [\\emph{Score smoothing:} FLEUR~\\cite{lee-etal-2024-fleur} / G-Eval~\\cite{geval} / DHP~\\cite{dhp}]\n%                 [\\emph{Self validation:} TrueTeacher~\\cite{gekhman2023trueteacher}]\n%             ]\n%         ]\n%     ]\n% \\end{forest}\n\n\\begin{forest}\n    for tree={\n        grow=east,\n        reversed=true,\n        anchor=base west,\n        parent anchor=east,\n        child anchor=west,\n        base=left,\n        font=\\small,\n        rectangle,\n        draw,\n        rounded corners,align=left,\n        minimum width=2.5em,\n        inner xsep=4pt,\n        inner ysep=1pt,\n    },\n    where level=1{text width=5em,fill=blue!10}{},\n    where level=2{text "
+        },
+        {
+            "content": null,
+            "role": "assistant",
+            "tool_calls": [
+                {
+                    "index": 0,
+                    "function": {
+                        "arguments": "{\"search_string\":\"\\\\\\\\begin{abstract}\"}",
+                        "name": "find_on_page_ctrl_f"
+                    },
+                    "id": "call-ee89e644-f098-4d46-804f-5fb4d14ba74c-1",
+                    "type": "function"
+                }
+            ],
+            "function_call": null,
+            "reasoning_content": "The file opened is a LaTeX file, but it's showing content from a figure or something. The viewport is page 1 of 72, but the content is about a forest diagram for improvement strategies.\n",
+            "provider_specific_fields": {
+                "refusal": null,
+                "reasoning": "The file opened is a LaTeX file, but it's showing content from a figure or something. The viewport is page 1 of 72, but the content is about a forest diagram for improvement strategies.\n",
+                "reasoning_details": [
+                    {
+                        "type": "reasoning.summary",
+                        "summary": "The file opened is a LaTeX file, but it's showing content from a figure or something. The viewport is page 1 of 72, but the content is about a forest diagram for improvement strategies.\n",
+                        "format": "xai-responses-v1",
+                        "index": 0
+                    },
+                    {
+                        "type": "reasoning.encrypted",
+                        "data": "kqu/n2JYH64GsZye0A+LWhjWM/2HHz7HcWnGO/clywWhrOa95JvMOR5o3A251B2K4KDwtGrZMAiNI3285qQ8BuBgOOHmhtrmazpvyMj51jHZsepRQRHTJswjQkwG24gVVQHneCHzMRb9WB6BXypAbJ9SPq6Qsf6/YuG1NC7+HlUmHDjTFGWyaamKig4EHIXqVNfaPAchR4iuep/2ACI4MpjYEhlRqK+i495CYKTV3WU5P+ogI4JPm6SUdMvoXNecsjSZJlUz78LsX2Terwh1Y7HRUxalvMFjADHZO7ae1opPzjJWq4RAuvFw5I3udclP6Do1JJK/Abc3Dw4kpGSkZs17l5FvT23d5S1Lhox7+v6e9/MXkuSxTCvWQmsv4UgrwPFoYu5dzd1VZtcn1mvNYCE1xUQ6cF1GV72Cn6TxarfqllPqPRyjMC5oOA/tzsrTHPDTpL+vkcQpnFAJxDl/mT8/vhV3XxHVAl4HE9DXCJoJZqt149MfB11hUj/sVBxYCfRxydr5+0/XbzETE3vCVze9xMi3kmW1TUVQxabt7vVgugOsZtEzWtKhrFl67B5C5zcjx7lsMq+d+KH7XTQGCg",
+                        "format": "xai-responses-v1",
+                        "id": "rs_806f9f9b-7c7e-9ab5-8162-a3ad69984fa1",
+                        "index": 1
+                    }
+                ],
+                "reasoning_content": "The file opened is a LaTeX file, but it's showing content from a figure or something. The viewport is page 1 of 72, but the content is about a forest diagram for improvement strategies.\n"
+            },
+            "sender": "Goal Decomposition Agent"
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call-ee89e644-f098-4d46-804f-5fb4d14ba74c-1",
+            "name": "find_on_page_ctrl_f",
+            "content": "Address: file:///workplace_test/papers/241115594.tex\nViewport position: Showing page 6 of 72.\n=======================\nleft=1pt, right=1pt,top=2pt, bottom=2pt, boxsep=0pt]{#2}  % eval style with reduced left and right padding\n        }{\n          \\textcolor{black}{\\large #2} % Default behavior if no optional argument is provided\n        }\n      }\n    }\n  }\n}\n\n%%\n%% end of the preamble, start of the body of the document source.\n\\begin{document}\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%%\n%% The \"title\" command has an optional parameter,\n%% allowing the author to define a \"short title\" to be used in page headers.\n\\title{A Survey on LLM-as-a-Judge}\n\n%%\n%% The \"author\" command and its associated commands are used to define\n%% the authors and their affiliations.\n%% Of note is the shared affiliation of the first two authors, and the\n%% \"authornote\" and \"authornotemark\" commands\n%% used to denote shared contribution to the research.\n\n% -----------------------author\n% \\author{Jiawei Gu}\n% \\authornote{Both authors contributed equally to this research.}\n% \\email{ypchang_jluai@outlook.com}\n% \\orcid{ }\n% \\author{Xu Wang}\n% \\authornotemark[1]\n% \\email{xwang22@mails.jlu.edu.cn}\n% \\affiliation{%\n%   \\institution{School of Artificial Intelligence, Jilin University}\n%   \\streetaddress{2699 Qianjin St}\n%   \\city{Changchun}\n%   \\country{China}\n%   \\postcode{130012}\n% }\n\n\\author{Jiawei Gu\\textsuperscript{1,2*}, Xuhui Jiang\\textsuperscript{1,3*}, Zhichao Shi\\textsuperscript{1,4,*}, Hexiang Tan\\textsuperscript{4}, Xuehao Zhai\\textsuperscript{5}, Chengjin Xu\\textsuperscript{1,3}, Wei Li\\textsuperscript{4}, Yinghan Shen\\textsuperscript{4}, Shengjie Ma\\textsuperscript{1,6}, Honghao Liu\\textsuperscript{1}, \\\\Saizhuo Wang\\textsuperscript{1,7},Kun Zhang\\textsuperscript{4}, Zhouchi Lin\\textsuperscript{1}, Bowen Zhang\\textsuperscript{1}, Lionel Ni\\textsuperscript{7,8}, Wen Gao\\textsuperscript{9}, Yuanzhuo Wang\\textsuperscript{4,†}, Jian Guo\\textsuperscript{1,†}}\n\n\\begingroup\n\\renewcommand{\\thefootnote}{\\fnsymbol{footnote}}\n\\footnotetext[1]{These authors contributed equally to this research.}\n\\footnotetext[2]{Corresponding author.}\n\\endgroup\n\n\\affiliation{\\\\\n  \\textsuperscript{1}IDEA Research, International Digital Economy Academy\\country{China}\\\\\n  \\textsuperscript{2}Sun Yat-sen University \\country{China}\\\\\n    \\textsuperscript{3}DataArc Tech Ltd\\country{China}\\\\\n  \\textsuperscript{4}Institute of Computing Technology, Chinese Academy of Sciences \\country{China}\\\\\n  \\textsuperscript{5}Department of Civil and Environmental Engineering, Imperial College London\\country{UK} \\\\\n  \\textsuperscript{6}Gaoling School of Artificial Intelligence, Renmin University of China \\\\\n    \\textsuperscript{7}The Hong Kong University of Science and Technology\n  \\country{China} \\\\\n    \\textsuperscript{8}The Hong Kong University of Science and Technology (Guangzhou)\n  \\country{China} \\\\\n  \\textsuperscript{9}Department of Computer Science and Technology, Peking University\n  \\country{China}\n}\n\n%%\n%% By default, the full list of authors will be used in the page\n%% headers. Often, this list is too long, and will overlap\n%% other information printed in the page headers. This command allows\n%% the author to define a more concise list\n%% of authors' names for this purpose.\n\\renewcommand{\\shortauthors}{J. Gu, X. Jiang, Z. Shi, J. Guo, et al.}\n\n%%\n%% The abstract is a short summary of the work to be presented in the\n%% article.\n% \\maketitle\n\n\\begin{abstract}\\label{abstract}\n\n\\section*{Abstract}\nAccurate and consistent evaluation is crucial for decision-making across numerous fields, yet it remains a challenging task due to inherent subjectivity, variability, and scale.\nLarge Language Models (LLMs) have achieved remarkable success across diverse domains, leading to the emergence of \"LLM-as-a-Judge,\" where LLMs are employed as evaluators for complex tasks. With their ability to process diverse data types and provide scalable and flexible assessments, LLMs present a compelling alternative to traditional expert-driven evaluations.\nHowever, ensuring the reliability of LLM-as-a-Judge systems remains a significant challenge that requires careful design and standardization.\nThis paper provides a comprehensive survey "
+        },
+        {
+            "content": null,
+            "role": "assistant",
+            "tool_calls": [
+                {
+                    "index": 0,
+                    "function": {
+                        "arguments": "{}",
+                        "name": "page_down_markdown"
+                    },
+                    "id": "call-c37e93f8-0e66-4a28-bed3-1f9363c2ae33-2",
+                    "type": "function"
+                },
+                {
+                    "index": 1,
+                    "function": {
+                        "arguments": "{}",
+                        "name": "page_down_markdown"
+                    },
+                    "id": "call-c37e93f8-0e66-4a28-bed3-1f9363c2ae33-3",
+                    "type": "function"
+                },
+                {
+                    "index": 2,
+                    "function": {
+                        "arguments": "{\"search_string\":\"\\\\\\\\section{Introduction}\"}",
+                        "name": "find_on_page_ctrl_f"
+                    },
+                    "id": "call-c37e93f8-0e66-4a28-bed3-1f9363c2ae33-4",
+                    "type": "function"
+                }
+            ],
+            "function_call": null,
+            "reasoning_content": "The paper is \"A Survey on LLM-as-a-Judge\". It's a survey paper, not an original research contribution with experiments. The research problem is about reliable LLM-based evaluation of complex tasks.\n",
+            "provider_specific_fields": {
+                "refusal": null,
+                "reasoning": "The paper is \"A Survey on LLM-as-a-Judge\". It's a survey paper, not an original research contribution with experiments. The research problem is about reliable LLM-based evaluation of complex tasks.\n",
+                "reasoning_details": [
+                    {
+                        "type": "reasoning.summary",
+                        "summary": "The paper is \"A Survey on LLM-as-a-Judge\". It's a survey paper, not an original research contribution with experiments. The research problem is about reliable LLM-based evaluation of complex tasks.\n",
+                        "format": "xai-responses-v1",
+                        "index": 0
+                    },
+                    {
+                        "type": "reasoning.encrypted",
+                        "data": "KWtBJuB56HxgutoSPK8TGpJM0boCRXsbk1kdhBl6A25oxLWFFOMOBgKStrhBzb56eSXYJ/ZrO1M4cQXPUKzifZK4bJRKSAlfWbIl4VQm9SkDsYZDoUbfIROlp/Jj6iMY0NB08RlzzausXlOyU9H5Lx1SoMNVOXDdcQ9BLCDK/WeTiL4OPVtoMPNLK75OSZdZFkdSrMJ+Yg/S8ROjZ3G5JPL1wDjVryn42t7e8VueoaGuazxBbOkVunyS2lEUhKngJBK8iRBke5xjxaLxiTfEv0eFwF96ImpmCnuypwa5s9jrRlupedBEFGaJNS+rBHjRQtJH34qoTE1MeledXpxd3CSjWdotCKPunksBbXpiZwsk",
+                        "format": "xai-responses-v1",
+                        "id": "rs_8a1440f2-ff53-9c3b-b12f-5527bffdcd8d",
+                        "index": 1
+                    }
+                ],
+                "reasoning_content": "The paper is \"A Survey on LLM-as-a-Judge\". It's a survey paper, not an original research contribution with experiments. The research problem is about reliable LLM-based evaluation of complex tasks.\n"
+            },
+            "sender": "Goal Decomposition Agent"
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call-c37e93f8-0e66-4a28-bed3-1f9363c2ae33-2",
+            "name": "page_down_markdown",
+            "content": "Address: file:///workplace_test/papers/241115594.tex\nViewport position: Showing page 7 of 72.\n=======================\non LLM-as-a-Judge, offering a \\textbf{formal definition} and a \\textbf{detailed classification}, while focusing on addressing the core question: \\textbf{How to built reliable LLM-as-a-Judge systems?} We explore strategies to enhance reliability, including improving consistency, mitigating biases, and adapting to diverse assessment scenarios. Additionally, we propose methodologies for evaluating the reliability of LLM-as-a-Judge systems, supported by a novel benchmark designed for this purpose.\nTo advance the development and real-world deployment of LLM-as-a-Judge systems, we also discussed practical applications, challenges, and future directions.\n\nThis survey serves as a foundational reference for researchers and practitioners in this rapidly evolving field. Our contributions span multiple levels: we establish the conceptual boundaries of LLM-as-a-Judge, reorganize fragmented literature into a unified framework, and propose a novel reliability-oriented benchmark. Building on these, we also articulate a forward-looking research agenda, offering both theoretical foundations and practical guidance for constructing reliable and socially trustworthy LLM-as-a-Judge systems.\nThe associated resources can be accessed at \\textbf{\\url{https://awesome-llm-as-a-judge.github.io/}}.\n% \\begin{figure}[H]\n%     \\centering\n% \\includegraphics[width=1\\linewidth]{figures/survey_abs_figure.png}\n%     \\caption*{Overview of the structure and content of the survey}\n%     \\label{fig:teaser}\n% \\end{figure}\n\\end{abstract}\n\n% Accurate and consistent evaluation is crucial for decision-making across numerous fields, yet it remains a challenging task due to inherent subjectivity, variability, and scale. Large Language Models (LLMs) have achieved remarkable success across diverse domains, leading to the emergence of \"LLM-as-a-Judge,\" where LLMs are employed as evaluators for complex tasks. With their ability to process diverse data types and provide scalable, cost-effective, and consistent assessments, LLMs present a compelling alternative to traditional expert-driven evaluations. However, ensuring the reliability of LLM-as-a-Judge systems remains a significant challenge that requires careful design and standardization. This paper provides a comprehensive survey of LLM-as-a-Judge, addressing the core question: How can reliable LLM-as-a-Judge systems be built? We explore strategies to enhance reliability, including improving consistency, mitigating biases, and adapting to diverse assessment scenarios. Additionally, we propose methodologies for evaluating the reliability of LLM-as-a-Judge systems, supported by a novel benchmark designed for this purpose. To advance the development and real world deployment of LLM-as-a-Judge systems, we also discussed practical applications, challenges, and future directions. This survey serves as a foundational reference for researchers and practitioners in\n\n%%\n%% The code below is generated by the tool at http://dl.acm.org/ccs.cfm.\n%% Please copy and paste the code instead of the example below.\n%%\n\n% \\maketitle\n\n%%\n%% This command processes the author and affiliation and title\n%% information and builds the first part of the formatted document.\n\\maketitle\n\n\\input{tex/1_Introduction}\n\\input{tex/2_Formulation}\n\\input{tex/3_Improvement/3_Improvement}\n\\input{tex/4_Evaluation}\n\\input{tex/5_Experiments}\n\\input{tex/5_1_o1}\n% \\input{tex/0_towards_AGI}\n\\input{tex/6_Application}\n\\input{tex/7_Challenge}\n\\input{tex/8_Future_work}\n\\input{tex/9_Conclusion}\n\n% \\section*{Acknowledgements}\n\n% \\section*{Disclaimer}\n\n% The goal of this paper is mainly to summarize and discuss existing evaluation efforts on large language models.\n% Results and conclusions in each paper are original contributions of their corresponding authors, particularly for potential issues in ethics and biases.\n% This paper may discuss some side effects of LLM and the only intention is to foster a better understanding.\n\n% Due to the evolution of LLM especially online services such as Claude and ChatGPT, it is very likely that they become stronger and some of the limitations "
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call-c37e93f8-0e66-4a28-bed3-1f9363c2ae33-3",
+            "name": "page_down_markdown",
+            "content": "Address: file:///workplace_test/papers/241115594.tex\nViewport position: Showing page 8 of 72.\n=======================\ndescribed in this paper are mitigated (and new limitations may arise).\n% We encourage interested readers to take this survey as a reference for future research and conduct real experiments in current systems when performing evaluations.\n\n% Finally, the evaluation of LLM is continuously developing, thus we may miss some new papers or benchmarks.\n% We welcome all constructive feedback and suggestions.\n% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n% \\bibitem{author2023title}\n% A. Author and W. Writer. 2023. Title of the article. \\emph{Journal Name} 10, 3 (2023), 100-110. DOI: https://doi.org/10.0000/xxxxxxx\n\n%%\n%% The next two lines define the bibliography style to be used, and\n%% the bibliography file.\n\\bibliographystyle{ACM-Reference-Format}\n\n% \\setcounter{tocdepth}{-1}\n% \\addtocontents{toc}{\\protect\\def\\tocdepth{-1}}\n\\bibliography{reference}\n% \\addtocontents{toc}{\\protect\\def\\tocdepth{3}}\n% \\setcounter{tocdepth}{3}\n\n% \\clearpage\n% \\input{Responses to Editors and Reviewers}\n\n\\end{document}\n\\endinput\n%%\n%% End of file `sample-acmsmall.tex'.\n\n==================================================\nFilename: tables/exp_result_models.tex\n==================================================\n\\begin{table*}[t]\n    \\small\n    \\centering\n    \\begin{adjustbox}{max width=\\textwidth}\n    \\begin{tabular}{lcccccccc}\n        \\toprule\n        \\multirow{4}{*}{LLMs} & Alignment & \\multicolumn{7}{c}{Biases} \\\\\n        & with & \\multirow{2}{*}{Position} & \\multirow{2}{*}{Length} & Concre- & Empty & Content & Nested & Familiar \\\\\n        & Human & & & teness & Reference & Continuation & Instruction & Knowledge \\\\\n        & (n=5106) & (n=2633) & (n=34) & (n=28) & (n=26) & (n=24) & (n=24) & (n=24) \\\\\n        \\midrule\n        GPT-4-turbo & 61.54 & 80.31 & 91.18 & 89.29 & 65.38 & 95.83 & 70.83 & 100.0 \\\\\n        GPT-3.5-turbo & 54.72 & 68.78 & 20.59 & 64.29 & 23.08 & 91.67 & 58.33 & 54.17 \\\\\n        \\midrule\n        Qwen2.5-7B-Instruct & 56.54 & 63.50 & 64.71 & 71.43 & 69.23 & 91.67 & 45.83 & 83.33 \\\\\n        LLaMA3-8B-Instruct & 50.72 & 38.85 & 20.59 & 57.14 & 65.38 & 75.00 & 45.83 & 54.17 \\\\\n        Mistral-7B-Instruct-v0.3 & 55.42 & 59.78 & 26.47 & 67.86 & 53.85 & 66.67 & 37.50 & 41.67 \\\\\n        Mixtral-8$\\times$7B-Instruct-v0.1 & 56.29 & 59.06 & 50.00 & 78.57 & 42.31 & 83.33 & 29.17 & 83.33 \\\\\n        \\midrule\n        gemini-2.0-thinking & 60.75 & 76.84 & 94.12 & 89.29 & 50.00 & 100.00 & 83.33 & 100.00 \\\\\n        o1-mini & 60.16 & 76.73 & 91.18 & 89.29 & 53.85 & 95.83 & 75.00 & 95.83 \\\\\n        o3-mini & 61.66 & 74.63 & 82.35 & 92.86 & 73.08 & 95.83 & 87.50 & 91.67 \\\\\n        deepseek r1 & 56.48 & 69.17 & 94.12 & 100.00 & 50.00 & 100.00 & 75.00 & 87.50 \\\\\n        \\bottomrule\n    \\end{tabular}\n    \\end{adjustbox}\n    \\caption{The meta-evaluation results for different LLMs. All the values are percentages.}\n    \\label{tb:exp_results_models}\n    \\vspace{-20pt}\n\\end{table*}\n\n==================================================\nFilename: tables/exp_result_strategies.tex\n==================================================\n\\begin{table*}[t]\n    \\small\n    \\centering\n    \\begin{adjustbox}{max width=\\textwidth}\n    \\begin{tabular}{lcccccccc}\n        \\toprule\n        \\multirow{4}{*}{Improvement Strategies} & Alignment & \\multicolumn{7}{c}{Biases} \\\\\n        & with & \\multirow{2}{*}{Position} & \\multirow{2}{*}{Length} & Concre- & Empty & Content & Nested & Familiar \\\\\n        & Human & & & teness & Reference & Continuation & Instruction & Knowledge \\\\\n        & (n=5106) & (n=2633) & (n=34) & (n=28) & (n=26) & (n=24) & (n=24) & (n=24) \\\\\n        \\midrule\n        GPT-3.5-turbo & & & & & & & & \\\\\n        \\,- base & 54.72 & 68.78 & 20.59 & 64.29 & 23.08 & 91.67 & 58.33 & 54.17 \\\\\n        \\,- \\textit{w/} explanation & 52.47 & 48.97 & 35.29 & 60.71 & 38.46 & 91.67 & 41.67 & 50.00 \\\\\n        \\,- \\textit{w/} self-validation & 54.86 & 69.31 & 23.53 & 60.71 & 23.08 & 91.67 & 41.67 & 50.00 \\\\\n        \\,- \\textit{w/} multi rounds & & & & & & & & \\\\\n        \\qquad- majority@5 & 54.68 & 70\n        11 & 26.47 & 67.86 & 23.08 & 95.83 & 54.17 & 50.00 \\\\\n        \\qquad- mean@5 & 54.72 "
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call-c37e93f8-0e66-4a28-bed3-1f9363c2ae33-4",
+            "name": "find_on_page_ctrl_f",
+            "content": "Address: file:///workplace_test/papers/241115594.tex\nViewport position: Showing page 25 of 72.\n=======================\nbenchmark would significantly advance the development and adoption of LLM-as-a-judge.\n\n(2) \\textit{Challenges of Controlled Study.}\nWhen evaluating a specific dimension, especially a particular type of bias, it is often challenging to isolate the bias of interest from other confounding factors such as additional biases or general quality-related characteristics.\nFor instance, in the case of position bias, lengthening the response could potentially alter the style, fluency, and coherence, or even introduce new biases such as self-enhancement bias.\nAdditionally, the tendency for GPT-4 to favor its own responses over those of GPT-3.5 can be interpreted as either self-enhancement bias or a proper tendency towards higher quality text.\nTherefore, it is essential for analytical work to carefully control for these variances.\n\n==================================================\nFilename: tex/1_Introduction.tex\n==================================================\n\\clearpage\n\n\\section{Introduction}\\label{sec:introduction}\n\n\\begin{quote}\n\\textsf{Judgment is the faculty of thinking the particular as contained under the universal.\nIt involves the capacity to subsume under rules, that is, to distinguish whether something falls under a given rule.}\n\\begin{flushright}\n\\footnotesize ------ Kant, \\textit{Critique of Judgment}~\\citep{kant1790cj}, \\textit{Introduction IV, 5:179}; \\textit{Critique of Pure Reason}~\\citep{kant1781cpr}, \\textit{A132/B171}.\n\\end{flushright}\n\\end{quote}\n\nRecently, Large Language Models (LLMs) have achieved remarkable success across numerous domains~\\cite{inno_new_world}, ranging from technical fields~\\cite{inno_aigeo_zhao2024artificial,inno_medicine_tang2024llms,inno_life_science_yuan2023advanced} to the humanities~\\cite{inno_cognitive_qu2024promoting,inno_life_science_luo2024artificial,inno_cancer_zhong2023artificial,inno_proteins} and social sciences~\\cite{nature_personality_wang2025,inno_science_xu2023artificial,inno_paper_he2023chatgpt,inno_drug_shi2024drug}.\nThis growing interest stems from LLMs' ability to mimic human-like reasoning and thinking processes, enabling them to take on roles traditionally reserved for human experts while offering a cost-effective solution that can be effortlessly scaled to meet increasing evaluation demands.\n% For instance, employing LLM-as-a-Judge in the academic peer-review\\footnote{\\url{https://blog.iclr.cc/2024/10/09/iclr2025-assisting-reviewers/}} process can potentially help handle the rapid increase in submissions while maintaining expert-level judgment.\nFor instance, the use of LLM-as-a-Judge in academic peer review\\footnote{\\url{https://blog.iclr.cc/2024/10/09/iclr2025-assisting-reviewers/}}  offers a potential means to address the sharp growth in submissions while sustaining expert-level judgments.\n\n% -----------------------------------------\n% These trends underscore a key motivation for adopting LLM-as-a-Judge: enhancing evaluation efficiency while providing a practical alternative to traditional expert-driven or rigid statistical methods, which often lack scalability and adaptability.\n% % These trends underscore a key motivation for adopting LLM-as-a-Judge: the potential to enhance evaluation efficiency while addressing limitations inherent in human assessments and statistical methods, such as scalability, efficiency, and adaptability.\n% % (1) human evaluation disadvantages -> scalable and efficiency advantages of LLM-as-a-Judge. (2) traditional method disadvantages -> advantages of LLM-as-a-Judge: traditional statistical methods rely 评估指标的对比，such as BLEU for software artifact summarization, often fail to align with human judgment or provide clear insights in particularly in specialized domains like software engineering.\n% Expert-driven human evaluations, while often regarded as the gold standard, suffer from significant drawbacks in scalability, cost, and consistency. These evaluations are time-intensive, requiring substantial effort from a limited pool of qualified experts, making them expensive and difficult to scale. Furthermore, evaluator fatigue during lengthy tasks "
+        },
+        {
+            "content": null,
+            "role": "assistant",
+            "tool_calls": [
+                {
+                    "index": 0,
+                    "function": {
+                        "arguments": "{}",
+                        "name": "page_down_markdown"
+                    },
+                    "id": "call-17415429-44ca-439c-8121-182537959122-5",
+                    "type": "function"
+                },
+                {
+                    "index": 1,
+                    "function": {
+                        "arguments": "{\"search_string\":\"\\\\\\\\section{Conclusion}\"}",
+                        "name": "find_on_page_ctrl_f"
+                    },
+                    "id": "call-17415429-44ca-439c-8121-182537959122-6",
+                    "type": "function"
+                },
+                {
+                    "index": 2,
+                    "function": {
+                        "arguments": "{\"search_string\":\"\\\\\\\\section{Future}\"}",
+                        "name": "find_on_page_ctrl_f"
+                    },
+                    "id": "call-17415429-44ca-439c-8121-182537959122-7",
+                    "type": "function"
+                }
+            ],
+            "function_call": null,
+            "reasoning_content": "The paper is \"A Survey on LLM-as-a-Judge\". The research problem is building reliable LLM-as-a-Judge systems.\n",
+            "provider_specific_fields": {
+                "refusal": null,
+                "reasoning": "The paper is \"A Survey on LLM-as-a-Judge\". The research problem is building reliable LLM-as-a-Judge systems.\n",
+                "reasoning_details": [
+                    {
+                        "type": "reasoning.summary",
+                        "summary": "The paper is \"A Survey on LLM-as-a-Judge\". The research problem is building reliable LLM-as-a-Judge systems.\n",
+                        "format": "xai-responses-v1",
+                        "index": 0
+                    },
+                    {
+                        "type": "reasoning.encrypted",
+                        "data": "peG04VQ9aBBKke8KY7rNTFMP6GxC36Q4HxYV4OZJ9XEahXBDbDLD3dAAe+kqqE4/GRyN7LeETmeD7BpsIxmAxtiAupyWoLbRKWvi+4E8w2WCdyel0kkl+nez/UJebyjDYtDLPgdqstpa32+W5Uy858XzuY08V2fR3FNAzhZp5q9sEu4FP1AHf0hb/khsKPfin9Lut6qCLY+N3xhaDhT9eSBhf+cHO4WkaUPyniHy8zzdhOM+fZqyF5GxSg",
+                        "format": "xai-responses-v1",
+                        "id": "rs_af6543f0-34a1-9e96-a50f-dd824efc2697",
+                        "index": 1
+                    }
+                ],
+                "reasoning_content": "The paper is \"A Survey on LLM-as-a-Judge\". The research problem is building reliable LLM-as-a-Judge systems.\n"
+            },
+            "sender": "Goal Decomposition Agent"
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call-17415429-44ca-439c-8121-182537959122-5",
+            "name": "page_down_markdown",
+            "content": "Address: file:///workplace_test/papers/241115594.tex\nViewport position: Showing page 26 of 72.\n=======================\ncan compromise reliability and accuracy, and the added complexity of coordination and training exacerbates these challenges.\n% In contrast, LLM-as-a-Judge offers scalable, cost-effective, and efficient evaluation processes. By reducing subjective variability, it enhances consistency and objectivity, addressing many of the limitations inherent in human-led evaluations.\n% % ---------------------\n% Similarly, traditional automated metrics face notable limitations in comprehensiveness and adaptability.\n% For example, Perplexity (PPL), a widely used metric in tasks like text generation, evaluates a model's ability to fit training data by measuring how well it predicts token probabilities. While effective for assessing statistical accuracy,  PPL fails to capture essential aspects of text quality, such as fluency, coherence, and practical relevance.\n% Moreover, following the remarkable success of ChatGPT and GPT-4—widely recognized as milestones in Large-scale Pre-trained Generative Language Models—there has been a rapid proliferation of open-source or close-source LLMs. This rapid growth has further exposed PPL's inadequacy as a evaluation tool, particularly for tasks involving subjective, open-ended challenges. These tasks require an adaptable evaluation framework capable of handling diverse contexts and complexities, which automated metrics like PPL lack.\n% At the same time, while human evaluations\\footnote{OpenAI's Evals project aims to improve evaluation processes by gathering better questions, but its existence highlights the persistent challenges of relying on human-led assessments to meet the growing demands of LLM evaluation.} are often more reliable, they remain costly, time-consuming, and difficult to scale effectively\\footnote{\\url{https://lmsys.org/blog/2023-05-03-arena/}}.\n% % ------------------------------\n% By bridging these gaps, LLM-as-a-Judge demonstrates a clear advantage over both human and traditional statistical methods, making it an increasingly valuable tool for modern evaluative tasks.\n% % ------------\n% LLMs offer flexibility to process diverse input types, including text, semi-structured data, and multi-modal content, allowing evaluations to integrate qualitative insights with quantitative rigor. This human-aligned adaptability makes LLMs effective for complex, context-aware assessments beyond the limits of conventional metrics~\\cite{wang2023pandalm,auto-j,data-juicer}.\n\n% \\xz{(A paragraph that fits here.)}\nBefore the era of LLMs, finding a balance between comprehensive and scalable evaluation posed a persistent challenge. On the one hand, widely used subjective methods like expert-driven assessments~\\cite {shi2024judging,human_like_summarization} integrate holistic reasoning and fine-grained contextual understanding, making them the gold standard in comprehensiveness. However, these approaches are costly, difficult to scale, and susceptible to inconsistency.\nOn the other hand, objective assessment methods, such as automatic metrics, offer strong scalability and consistency. For example, tools such as BLEU~\\cite{papineni2002bleu} or ROUGE~\\cite{lin2004rouge} can rapidly evaluate machine-generated translations or summaries against reference texts without human intervention. However, these metrics, which heavily rely on surface-level lexical overlaps, often fail to capture deeper nuances, resulting in poor performance in tasks like story generation or instructional texts~\\cite{schluter-2017-limits}.\nAs a solution to this persistent dilemma, ``LLM-as-a-Judge'' has emerged as a promising idea to combine the strengths of the above two evaluation methods. Recent studies have shown that this idea can merge the scalability of automatic methods with the detailed, context-sensitive reasoning found in expert judgments~\\cite{nips_llm_as_a_judge,wang2023pandalm,zhu2023judgelm,auto-j,data-juicer}.\nMoreover, LLMs may become sufficiently flexible to handle multimodal inputs~\\cite{mllm-as-a-judge} under appropriate prompt learning or fine-tuning~\\cite{khattak2023maple}.\n% , which is a unique advantage compared with traditional "
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call-17415429-44ca-439c-8121-182537959122-6",
+            "name": "find_on_page_ctrl_f",
+            "content": "Address: file:///workplace_test/papers/241115594.tex\nViewport position: Showing page 53 of 72.\n=======================\nhuman evaluation approaches, and identifying some reliable evaluation examples. This initial conceptualization is vital for preempting potential ambiguities and biases that could compromise the fairness and accuracy of subsequent LLM judgments.\n\nNext is prompt design, detailed in Section~\\ref{formulation:icl}, where both wording and formats matter. The most efficient and generally effective approach involves specifying scoring dimensions, emphasizing relative comparisons for improved assessments, and creating effective examples to guide the LLM. Careful prompt engineering is essential to mitigate issues like output variability and inter-rater reliability, ensuring the LLM consistently interprets and responds to evaluation criteria as intended.\n\nThe third stage, model selection (Section~\\ref{formulation:model_selection}), focuses on choosing a large-scale model with strong reasoning and instruction-following abilities to ensure reliable evaluations. The inherent biases and generalization limitations of different models, as well as their black-box nature, underscore the importance of selecting a robust and well-understood backbone to minimize evaluation inconsistencies and unverified judgments.\n\nFinally, standardizing the evaluation process ensures that the outputs are structured~(Section~\\ref{formulation:post_processing}). This can be achieved by using specific formats like \\textbackslash{boxed\\{XX\\}}, numerical scores, or binary responses (e.g., \"Yes\" or \"No\"). Such standardization is crucial to counteract the fragility of token extraction methods and the potential for stylistic biases to propagate, thereby enhancing the interpretability and validity of the final evaluation results. The entire process includes iterative testing with cases and refinement through retesting, thereby enhancing reliability. During development, it is essential to compare models or prompts and verify ongoing improvements.\n\n==================================================\nFilename: tex/9_Conclusion.tex\n==================================================\n\\section{Conclusion}\\label{sec:conclusion}\n\nLLM-as-a-Judge has emerged as a promising paradigm for automated evaluation, offering scalability and adaptability that surpass traditional expert-driven or metric-based methods. By leveraging the reasoning capabilities of large language models, this framework excels in tasks such as text quality assessment, model evaluation, and automated data annotation. It is particularly valuable for large-scale, efficient, and adaptable evaluation. Its ability to process diverse content formats and integrate domain-specific knowledge makes it particularly well-suited for applications in education, peer review, and decision-making systems.\n\nDespite these strengths, several challenges must be addressed to fully realize its potential. Ensuring reliability remains a key issue, because probabilistic outputs can introduce inconsistencies, overconfidence, and biases inherited from training data. Although techniques RLHF have improved alignment with human judgment, they do not eliminate all sources of subjectivity. Moreover, ensuring robustness is another critical concern. LLM-as-a-Judge can be susceptible to adversarial prompt manipulation and contextual framing biases, potentially causing unintended or unreliable evaluations. Finally, generalization across domains and modalities remains a significant hurdle, as current models struggle with evaluating multi-modal inputs, reasoning over structured data, and adapting to domain-specific evaluation standards.\n\nTo address these challenges, this paper has offered a comprehensive and principled roadmap. \\textbf{First,} at the definitional level, we have provided both formal and informal definitions of LLM-as-a-Judge, thereby establishing the conceptual boundaries of this paradigm. Critically, we introduced a contextualized definition of reliability that accounts for input variability, model characteristics, and contextual dependencies, providing a foundational framework for designing trustworthy systems. \\textbf{Second,} at the "
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call-17415429-44ca-439c-8121-182537959122-7",
+            "name": "find_on_page_ctrl_f",
+            "content": "Address: file:///workplace_test/papers/241115594.tex\nViewport position: Showing page 31 of 72.\n=======================\nacross diverse fields, including decision-making, complex problem-solving, and ethical AI systems. However, significant challenges remain, such as ensuring the reliability of LLM-as-a-Judge systems, addressing biases, and maintaining alignment with human values. These challenges and potential applications will be discussed in subsequent sections, along with future directions for developing AGI through LLM-as-a-Judge.\n\n==================================================\nFilename: tex/8_Future_work.tex\n==================================================\n\n\\section{Future Work}\\label{sec:future_work}\nThe field of LLM-as-a-Judge is rapidly evolving, moving from an emerging concept to a core component of modern AI development. While we've seen significant progress in using LLMs for evaluation, there are still critical challenges and vast opportunities to explore. This section outlines key future research directions that are essential for building more reliable, versatile, and impactful LLM-as-a-Judge systems. We'll delve into topics ranging from advancing the foundational reasoning and judgment capabilities of these models to expanding their application into new domains like data annotation and embodied intelligence. Our discussion also focuses on the necessity of developing more robust theoretical frameworks and benchmarks to ensure these systems are not only effective but also trustworthy and aligned with human values. This forward-looking agenda aims to guide the next generation of research, paving the way for LLM-as-a-Judge to become an indispensable tool in the pursuit of more intelligent and socially beneficial AI.\n\n% \\subsubsection{\\textbf{Rethinking Evaluation}}\n\n% Traditional evaluation methodologies, including human assessments and automated metrics, have long served as the cornerstones of model evaluation. Expert-driven human evaluations are widely regarded as the gold standard due to their nuanced, context-aware insights. However, these methods face critical limitations in scalability, cost, and consistency. Human evaluations are labor-intensive and time-consuming, requiring domain expertise and often suffering from inter-rater variability, fatigue, and inconsistency. In large-scale settings, the burden on reviewers can lead to superficial judgments and compromised quality.\n\n% Automated metrics such as BLEU, ROUGE, and Perplexity (PPL) offer high-throughput alternatives that quantify lexical similarity or likelihood. Despite their efficiency, these metrics rely on surface-level features and fail to capture semantic depth, logical coherence, and reasoning quality—dimensions that are increasingly critical in evaluating outputs of large language models (LLMs). For instance, in tasks involving open-ended instruction following or complex summarization, such metrics often misalign with human preferences and overlook structural or argumentative validity.\n\n% To bridge these gaps, the paradigm of LLM-as-a-Judge has emerged as a compelling alternative. This approach repurposes LLMs—originally designed for text generation—as evaluative agents that assess the quality of other models' outputs. Unlike rigid metrics, LLMs possess the flexibility to process multi-turn contexts, understand task-specific instructions, and apply general reasoning principles to diverse outputs. This enables a form of evaluation that is not only scalable and cost-effective but also capable of approximating expert-level reasoning under the right conditions.\n\n% The integration of reasoning capabilities into the evaluation process represents a fundamental shift from metric-based scoring toward judgment-based assessment. LLM-as-a-Judge frameworks can perform nuanced evaluations involving scoring, ranking, classification, or explanation, informed by both syntactic features and high-level semantics. Thus, LLM-as-a-Judge represents more than a tool for evaluating outputs; it introduces a reasoning-centric paradigm that redefines how evaluation itself is conceptualized. In the following sections, we delve deeper into the interplay between reasoning and judgment, "
+        },
+        {
+            "content": "{\n  \"paper_title\": \"A Survey on LLM-as-a-Judge\",\n  \"research_problem\": \"How to build reliable LLM-as-a-Judge systems that deliver accurate, consistent, and unbiased evaluations at scale across diverse tasks, domains, and modalities.\",\n  \"subgoals\": [\n    {\n      \"subgoal_id\": \"G1\",\n      \"label\": \"formal definition and taxonomy\",\n      \"description\": \"Provide a formal definition of LLM-as-a-Judge and organize existing literature into a unified classification framework.\",\n      \"status\": \"achieved\",\n      \"rationale\": \"Abstract and Introduction explicitly define LLM-as-a-Judge and present a detailed classification of improvement strategies; taxonomy is instantiated in the survey structure itself.\"\n    },\n    {\n      \"subgoal_id\": \"G2\",\n      \"label\": \"reliability enhancement strategies\",\n      \"description\": \"Identify and organize concrete methods for improving consistency and mitigating biases in LLM judges.\",\n      \"status\": \"achieved\",\n      \"rationale\": \"Sections 3 (Improvement) compile and categorize prompt design, model fine-tuning, output optimization, and multi-result aggregation techniques with citations to supporting papers; experiments section reports empirical results on bias and human alignment for several strategies.\"\n    },\n    {\n      \"subgoal_id\": \"G3\",\n      \"label\": \"reliability evaluation methodology and benchmark\",\n      \"description\": \"Define metrics and create standardized benchmarks to measure the reliability of LLM judges.\",\n      \"status\": \"achieved\",\n      \"rationale\": \"Section 4 presents reliability evaluation methods; the paper introduces and runs a novel meta-evaluation benchmark whose results appear in Tables for model comparisons and strategy ablation.\"\n    },\n    {\n      \"subgoal_id\": \"G4\",\n      \"label\": \"practical deployment analysis\",\n      \"description\": \"Catalog applications, identify remaining challenges, and outline future research directions for real-world deployment.\",\n      \"status\": \"partially_achieved\",\n      \"rationale\": \"Sections 6–8 discuss applications, challenges (consistency, bias, generalization), and future work, but provide only high-level discussion without new empirical validation of deployment scenarios.\"\n    }\n  ]\n}",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null,
+            "reasoning_content": "The paper is a survey titled \"A Survey on LLM-as-a-Judge\". It frames the overarching problem as building reliable LLM-as-a-Judge systems for scalable, consistent evaluation across diverse tasks.\n",
+            "provider_specific_fields": {
+                "refusal": null,
+                "reasoning": "The paper is a survey titled \"A Survey on LLM-as-a-Judge\". It frames the overarching problem as building reliable LLM-as-a-Judge systems for scalable, consistent evaluation across diverse tasks.\n",
+                "reasoning_details": [
+                    {
+                        "type": "reasoning.summary",
+                        "summary": "The paper is a survey titled \"A Survey on LLM-as-a-Judge\". It frames the overarching problem as building reliable LLM-as-a-Judge systems for scalable, consistent evaluation across diverse tasks.\n",
+                        "format": "xai-responses-v1",
+                        "index": 0
+                    },
+                    {
+                        "type": "reasoning.encrypted",
+                        "data": "am+r/9oinwM+xrCHdw4AJZvS2QhnvP3BSK5+n1E6l1EJLWo5HDybuDA6AiGkdOfNq7gkowkN8hbuwpOu5XWvgEBFuGwAeSYwfMMX/zquRMkYxSYjWHh1UkuBaf8wlpZ+gcGuRlc9I32N7ZpN1D4hbKGbvwCFuVDt2XLnYJeOciycFpYjKW1rrUuyswx8cxskBQaw2nQf5MKPyN9S09UqgJ+Q92ysPslCA9tx/IfJrTDvhwScGTwcypVk8CU+zS/ZYaGSl4JV/9fV42G7S6NWldjf6/M4ie9CChIFflmChBx+11Db/VJm2pVTluN/edgtRnazYRIrjAdK4mKwgoh0I1B3JJSYMvlXLgmqolBNn2C+6xtyJJgpVsYvhfIL8RNOnOLnLghTYqSRKg/EmtQ1kYQoPgIdrvKe/NrdPxE7e6TXRUNMomVxgr0s2ZKjF4xLqrc6QiVLihCpqFBPVzot+bDVBb8BepUmwYto+f2iX76yHwX6dF4Bpp1lsUu1VIL2+MuQZABpRB79FscnRq48e5jFO0G//VLJa499XNw7Il6dlozut+wVshb/811nZjyoG8PyrtufUdrS3GGP6V2q8iTL4ano14NA1YNrDjGqXdkXkn6JZyjLa/hu33GiBAohE/Wmonsanz3sEqqk4ZgF+9sS3T+tzw4wrUuKKIf2rjnvO6r/NDHRby0plgo9/DiLWa6IrjN1kTPOyLgsZ0cEnLKJ0VKayJNFhDWoKmlahqUOY8HpgmgNQ0MwnFQY9kol70miZfZqNdoBHJPNJV55tItgHAUgyY3dEPjGUys5qjzqzo3fxSJekr+H2MsS22c7Z5QDUwcgmt7CZOfGRYVa5Bkyqm5E5Xwl0Ch3hpiwWJI8uUPyhuFKsbk+KJ2ApXmoIGwaGgQtSv/kIhL9VpyoZHVA5KaJoJOdLmgRWs/wlTNaYhtzg6lr4pd6k3KoqvrDm94420gwqQOFMI3uGB91WKlMI563N3Ddf0K/KKLxK1IudsA/1qG7c90OLJaD5XMj+XHFZ1VvDNz0pdyPW93GFX+Bbwtey50FalUF7F39TUREjgRLSuvoN9zXk3myRtbneh1aAH/WhN3Q+jpcEa8THV0mnMTLWm09TlAK8eqXUmptepCb56EexxqXZewBUufd3wRTgjB1mHEBeb8J5rPaxbVR4fJO24cy7aizUKx5eo+jYE5DQnIgdf+ut5gFteLeny0anB9E9pTFNSFlOdGQtDhmxQGhFfaj7WSFNGEnRf1bEumsp0jAd+0wS9hy+FDHpg/sX1IuVSbtVhhXzo+VAnzmre7S5V8qe11EY7AC6zRQlEUSYB9ZKR+IdBB6cQDFU3KSc4bBRoRUQmNhWH+G3Kn0ksgUsGb0zctU4pvMAOlINLzgwqgDt3B4mNICXcZJvjso2u/GrtOn9ALNca4BRP2xzBFEj/SOXrDry8NHDL7eW4R/tO03JwgKbblpWJpJ8CLRsXozO8+BrmiaPg7ADGAtSonezbiiYO7ZRlxmiHfYeznouF15XK60RLBrqFtVAOW2VkhBAOMIqIGQWLXmb5Bhy2aLihfuFNQRSlf/z1yvHhqWSO8+kn4w9dM6QudUjqyUV3WeT2+XLzfkbUA",
+                        "format": "xai-responses-v1",
+                        "id": "rs_8be2b4b9-e165-95b8-9e4c-c72e8f8c0468",
+                        "index": 1
+                    }
+                ],
+                "reasoning_content": "The paper is a survey titled \"A Survey on LLM-as-a-Judge\". It frames the overarching problem as building reliable LLM-as-a-Judge systems for scalable, consistent evaluation across diverse tasks.\n"
+            },
+            "sender": "Goal Decomposition Agent"
+        }
+    ],
+    "context_variables": {}
+}

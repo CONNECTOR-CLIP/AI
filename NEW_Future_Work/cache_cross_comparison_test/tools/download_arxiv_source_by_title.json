@@ -1,0 +1,13 @@
+{
+    "name": "download_arxiv_source_by_title",
+    "args": {
+        "paper_list": [
+            "2412.09569",
+            "2412.12509",
+            "2411.15594"
+        ],
+        "local_root": "/workspace/Future-Work-Researcher/workplace_future_work",
+        "workplace_name": "workplace_test"
+    },
+    "result": "Download paper '2412.09569' successfully\nResolved directly from arxiv id/url (search skipped): http://arxiv.org/abs/2412.09569\nThe paper is downloaded to path: /workplace_test/papers/241209569.tex\nDownload paper '2412.12509' successfully\nResolved directly from arxiv id/url (search skipped): http://arxiv.org/abs/2412.12509\nThe paper is downloaded to path: /workplace_test/papers/241212509.tex\nDownload paper '2411.15594' successfully\nResolved directly from arxiv id/url (search skipped): http://arxiv.org/abs/2411.15594\nThe paper is downloaded to path: /workplace_test/papers/241115594.tex"
+}

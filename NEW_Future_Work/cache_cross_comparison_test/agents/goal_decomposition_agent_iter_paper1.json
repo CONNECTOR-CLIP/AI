@@ -1,0 +1,210 @@
+{
+    "messages": [
+        {
+            "content": null,
+            "role": "assistant",
+            "tool_calls": [
+                {
+                    "index": 0,
+                    "function": {
+                        "arguments": "{\"path\":\"/workplace_test/papers/241212509.tex\"}",
+                        "name": "open_local_file"
+                    },
+                    "id": "call-2957dfe4-296d-44dc-abc4-603b7b0f60e4-0",
+                    "type": "function"
+                }
+            ],
+            "function_call": null,
+            "reasoning_content": "The task is to decompose the goals of the paper at /workplace_test/papers/241212509.tex. I must follow the workflow exactly.\n",
+            "provider_specific_fields": {
+                "refusal": null,
+                "reasoning": "The task is to decompose the goals of the paper at /workplace_test/papers/241212509.tex. I must follow the workflow exactly.\n",
+                "reasoning_details": [
+                    {
+                        "type": "reasoning.summary",
+                        "summary": "The task is to decompose the goals of the paper at /workplace_test/papers/241212509.tex. I must follow the workflow exactly.\n",
+                        "format": "xai-responses-v1",
+                        "index": 0
+                    },
+                    {
+                        "type": "reasoning.encrypted",
+                        "data": "tfcl8PVWBoCi7DTtQwK0F54e2mj+3FG/40OzD+rFmhmyaHrvs0JHzPsJWDDtO9uKKqXImt3W5NT9FL07k4QZoGs/u3TVHxZwsB+Q5ay5/XETg8ypxy5GT/zrHEJO6rdFkDAA+yreSIOC/mJxYo5oNDplGgkdov0QdfnziTPmQDvOzI0UH0ZLO0OTP79cpZEGzloDNWzElnkAwOOFGDR5/bvOoun3GfMUYIUJKUR2eleizsf7bGYzf1Ar3iQjrCXJW2Zv0F7QZw5QgA",
+                        "format": "xai-responses-v1",
+                        "id": "rs_d066c632-8ec8-97cc-805c-c5e6fb9255e8",
+                        "index": 1
+                    }
+                ],
+                "reasoning_content": "The task is to decompose the goals of the paper at /workplace_test/papers/241212509.tex. I must follow the workflow exactly.\n"
+            },
+            "sender": "Goal Decomposition Agent"
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call-2957dfe4-296d-44dc-abc4-603b7b0f60e4-0",
+            "name": "open_local_file",
+            "content": "Address: file:///workplace_test/papers/241212509.tex\nViewport position: Showing page 1 of 12.\n=======================\n\n==================================================\nFilename: main.tex\n==================================================\n% This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.\n\\pdfoutput=1\n% In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.\n\n\\documentclass[11pt]{article}\n\n% Change \"review\" to \"final\" to generate the final (sometimes called camera-ready) version.\n% Change to \"preprint\" to generate a non-anonymous version with page numbers.\n% \\usepackage[review]{acl}\n\\usepackage[preprint]{acl}\n\n% Standard package includes\n\\usepackage{times}\n\\usepackage{latexsym}\n\n% For proper rendering and hyphenation of words containing Latin characters (including in bib files)\n\\usepackage[T1]{fontenc}\n% For Vietnamese characters\n% \\usepackage[T5]{fontenc}\n% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets\n\n% This assumes your files are encoded as UTF8\n\\usepackage[utf8]{inputenc}\n\n% This is not strictly necessary, and may be commented out,\n% but it will improve the layout of the manuscript,\n% and will typically save some space.\n\\usepackage{microtype}\n\n% This is also not strictly necessary, and may be commented out.\n% However, it will improve the aesthetics of text in\n% the typewriter font.\n\\usepackage{inconsolata}\n\n%Including images in your LaTeX document requires adding\n%additional package(s)\n\\usepackage{graphicx}\n\n% Subtable Package\n\\usepackage{subcaption}\n\n\\usepackage{booktabs}\n\n% Package for prompts\n\\usepackage[many]{tcolorbox}\n\n\\newcommand{\\zach}[1]{{\\color{red} #1}}\n\n% If the title and author information does not fit in the area allocated, uncomment the following\n%\n%\\setlength\\titlebox{<dim>}\n%\n% and set <dim> to something 5cm or larger.\n\n\\title{Can You Trust LLM Judgments? Reliability of LLM-as-a-Judge}\n\n% Author information can be set in various styles:\n% For several authors from the same institution:\n% \\author{Author 1 \\and ... \\and Author n \\\\\n%         Address line \\\\ ... \\\\ Address line}\n% if the names do not fit well on one line use\n%         Author 1 \\\\ {\\bf Author 2} \\\\ ... \\\\ {\\bf Author n} \\\\\n% For authors from different institutions:\n% \\author{Author 1 \\\\ Address line \\\\  ... \\\\ Address line\n%         \\And  ... \\And\n%         Author n \\\\ Address line \\\\ ... \\\\ Address line}\n% To start a separate ``row'' of authors use \\AND, as in\n% \\author{Author 1 \\\\ Address line \\\\  ... \\\\ Address line\n%         \\AND\n%         Author 2 \\\\ Address line \\\\ ... \\\\ Address line \\And\n%         Author 3 \\\\ Address line \\\\ ... \\\\ Address line}\n\\author{Kayla Schroeder \\\\\n  Department of Statistics \\\\\n  Northwestern University \\\\\n  % Affiliation / Address line 3 \\\\\n  \\texttt{kaylaschroeder2026@u.northwestern.edu} \\\\\\And\n  Zach Wood-Doughty \\\\\n  Department of Computer Science \\\\\n  Northwestern University \\\\\n  % Affiliation / Address line 3 \\\\\n  \\texttt{zach@northwestern.edu} \\\\}\n\n%\\author{\n%  \\textbf{First Author\\textsuperscript{1}},\n%  \\textbf{Second Author\\textsuperscript{1,2}},\n%  \\textbf{Third T. Author\\textsuperscript{1}},\n%  \\textbf{Fourth Author\\textsuperscript{1}},\n%\\\\\n%  \\textbf{Fifth Author\\textsuperscript{1,2}},\n%  \\textbf{Sixth Author\\textsuperscript{1}},\n%  \\textbf{Seventh Author\\textsuperscript{1}},\n%  \\textbf{Eighth Author \\textsuperscript{1,2,3,4}},\n%\\\\\n%  \\textbf{Ninth Author\\textsuperscript{1}},\n%  \\textbf{Tenth Author\\textsuperscript{1}},\n%  \\textbf{Eleventh E. Author\\textsuperscript{1,2,3,4,5}},\n%  \\textbf{Twelfth Author\\textsuperscript{1}},\n%\\\\\n%  \\textbf{Thirteenth Author\\textsuperscript{3}},\n%  \\textbf{Fourteenth F. Author\\textsuperscript{2,4}},\n%  \\textbf{Fifteenth Author\\textsuperscript{1}},\n%  \\textbf{Sixteenth Author\\textsuperscript{1}},\n%\\\\\n%  \\textbf{Seventeenth S. Author\\textsuperscript{4,5}},\n%  \\textbf{Eighteenth Author\\textsuperscript{3,4}},\n%  \\textbf{Nineteenth N. Author\\textsuperscript{2,5}},\n%  \\textbf{Twentieth Author\\textsuperscript{1}}\n%\\\\\n%\\\\\n%  \\textsuperscript{1}Affiliation 1,\n%  \\textsuperscript{2}Affiliation 2,\n%  \\textsuperscript{3}Affiliation 3,\n%  \\textsuperscript{4}Affiliation "
+        },
+        {
+            "content": null,
+            "role": "assistant",
+            "tool_calls": [
+                {
+                    "index": 0,
+                    "function": {
+                        "arguments": "{\"search_string\":\"\\\\\\\\begin{abstract}\"}",
+                        "name": "find_on_page_ctrl_f"
+                    },
+                    "id": "call-ce7b3fc4-84a3-45f8-8360-66c968255062-1",
+                    "type": "function"
+                }
+            ],
+            "function_call": null,
+            "reasoning_content": "The paper title is \"Can You Trust LLM Judgments? Reliability of LLM-as-a-Judge\". I need to find the abstract or introduction to understand the research problem.",
+            "provider_specific_fields": {
+                "refusal": null,
+                "reasoning": "The paper title is \"Can You Trust LLM Judgments? Reliability of LLM-as-a-Judge\". I need to find the abstract or introduction to understand the research problem.",
+                "reasoning_details": [
+                    {
+                        "type": "reasoning.summary",
+                        "summary": "The paper title is \"Can You Trust LLM Judgments? Reliability of LLM-as-a-Judge\". I need to find the abstract or introduction to understand the research problem.",
+                        "format": "xai-responses-v1",
+                        "index": 0
+                    },
+                    {
+                        "type": "reasoning.encrypted",
+                        "data": "gJZ0ZKAhEsll5TqKKps65J0PeXJGCEzrb4wRUCw5UzGIzL5++z0OsLwhCYoTRzHUctiGOT/qEHs6lbLD/rjzZjkfzn8hvLdEq5AKGkpZ6C8OqVoz7mo/0E91KEWYNwt/qbM16OiimYHTjLu86gmgAqTsiw9y//2W6IoArTGWMIG97kBAVr59TAm+jiMcZW9dTP6XKB4xjr44TgtisvHee0LgKjgFazPYD9ujje5vi1RJ7rexBlCldwwqomk",
+                        "format": "xai-responses-v1",
+                        "id": "rs_180f9728-5588-9923-a88a-1d6374a61f1c",
+                        "index": 1
+                    }
+                ],
+                "reasoning_content": "The paper title is \"Can You Trust LLM Judgments? Reliability of LLM-as-a-Judge\". I need to find the abstract or introduction to understand the research problem."
+            },
+            "sender": "Goal Decomposition Agent"
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call-ce7b3fc4-84a3-45f8-8360-66c968255062-1",
+            "name": "find_on_page_ctrl_f",
+            "content": "Address: file:///workplace_test/papers/241212509.tex\nViewport position: Showing page 2 of 12.\n=======================\n4,\n%  \\textsuperscript{5}Affiliation 5\n%\\\\\n%  \\small{\n%    \\textbf{Correspondence:} \\href{mailto:email@domain}{email@domain}\n%  }\n%}\n\n\\begin{document}\n\\maketitle\n\\begin{abstract}\n\nLarge Language Models (LLMs) have become increasingly powerful and ubiquitous, but their stochastic nature poses challenges to the reliability of their outputs. While deterministic settings can improve consistency, they do not guarantee reliability, as a single sample from the model's probability distribution can still be misleading. Building upon the concept of LLM-as-a-judge, we introduce a novel framework for rigorously evaluating the reliability of LLM judgments, leveraging McDonald's omega. We evaluate the reliability of LLMs when judging the outputs of other LLMs on standard single-turn and multi-turn benchmarks, simultaneously investigating the impact of temperature on reliability. By analyzing these results, we demonstrate the limitations of fixed randomness and the importance of considering multiple samples, which we show has significant implications for downstream applications. Our findings highlight the need for a nuanced understanding of LLM reliability and the potential risks associated with over-reliance on single-shot evaluations. This work provides a crucial step towards building more trustworthy and reliable LLM-based systems and applications.\n\n\\end{abstract}\n\n\\section{Introduction}\n\\label{sec:intro}\n\nIn recent years, Large Language Models (LLMs) have experienced rapid advancements and widespread adoption, with applications ranging from marketing to biotechnology to music \\citep{gozalo2023survey}. As reliance upon LLMs grows, ensuring the quality and trustworthiness of their outputs becomes crucial. We often think about LLM quality in terms of accuracy (how often the LLM is correct). However, equally important are reliability, confidence, and calibration; these three distinct concepts are intertwined and essential for building genuine trust in LLM systems.\n\nLLMs can express how certain, or 'confident', they are about their responses. Calibration measures how well this confidence aligns with the LLM's actual accuracy \\citep{kotelanski2023methods, spiess2024calibration}. A perfectly calibrated LLM that says it's 90\\% confident should be correct about 9 out of 10 times. However, even a perfectly calibrated LLM can be unreliable.\n\nReliability refers to the consistency of an LLM's outputs. A reliable weather forecasting LLM, for example, should give similar predictions for the same day, even if those predictions aren't always accurate. An LLM that sometimes predicts sunshine and sometimes a downpour for the same day is unreliable, even if it's well-calibrated and highly confident. This kind of consistency is what we aim to capture with internal consistency reliability.  A reliable LLM can be consistently wrong, but it's still reliable because its judgments are stable.\n\nWhy is reliability so important? Consider a scenario where an LLM is tasked with evaluating the quality of a medical imaging LLM used to diagnose tumors. Even if the LLM is perfectly calibrated (its confidence accurately reflects its diagnostic ability), if it gives different evaluations for the same AI on different runs, even with different, but accurate, confidence scores, doctors won't know which evaluation to trust. The inconsistency makes the LLM unreliable and ultimately untrustworthy, regardless of its calibration and confidence.\n\nA singular output from an LLM is the result of a draw from a probabilistic distribution \\citep{vaswani2017attention}. Parameters that vary the resulting output, namely temperature and top-k, are increased to obtain more novel or \"creative\" results - a desirable quality of LLMs \\citep{peeperkorn2024temperature}. However, this inherent stochastic nature raises concerns about individual outputs. Given that a single output from an LLM is a representation of only a single draw from the model's distribution, trustworthiness of an LLM output is of utmost importance \\citep{mittelstadt2023protect}. Confidence and calibration are commonly used "
+        },
+        {
+            "content": null,
+            "role": "assistant",
+            "tool_calls": [
+                {
+                    "index": 0,
+                    "function": {
+                        "arguments": "{\"search_string\":\"\\\\\\\\section{Method}\"}",
+                        "name": "find_on_page_ctrl_f"
+                    },
+                    "id": "call-2aa6be65-b572-40f6-bc48-76529080deb2-2",
+                    "type": "function"
+                },
+                {
+                    "index": 1,
+                    "function": {
+                        "arguments": "{\"search_string\":\"\\\\\\\\section{Experiments}\"}",
+                        "name": "find_on_page_ctrl_f"
+                    },
+                    "id": "call-2aa6be65-b572-40f6-bc48-76529080deb2-3",
+                    "type": "function"
+                },
+                {
+                    "index": 2,
+                    "function": {
+                        "arguments": "{\"search_string\":\"\\\\\\\\section{Conclusion}\"}",
+                        "name": "find_on_page_ctrl_f"
+                    },
+                    "id": "call-2aa6be65-b572-40f6-bc48-76529080deb2-4",
+                    "type": "function"
+                },
+                {
+                    "index": 3,
+                    "function": {
+                        "arguments": "{\"search_string\":\"\\\\\\\\section{Limitations}\"}",
+                        "name": "find_on_page_ctrl_f"
+                    },
+                    "id": "call-2aa6be65-b572-40f6-bc48-76529080deb2-5",
+                    "type": "function"
+                }
+            ],
+            "function_call": null,
+            "reasoning_content": "The paper has been opened and the abstract found. I need to read the key sections.\n",
+            "provider_specific_fields": {
+                "refusal": null,
+                "reasoning": "The paper has been opened and the abstract found. I need to read the key sections.\n",
+                "reasoning_details": [
+                    {
+                        "type": "reasoning.summary",
+                        "summary": "The paper has been opened and the abstract found. I need to read the key sections.\n",
+                        "format": "xai-responses-v1",
+                        "index": 0
+                    },
+                    {
+                        "type": "reasoning.encrypted",
+                        "data": "/rh4k8usbNutQBWF9tsL7YptQHvFz12EjuT7Ao7wmBhbp8en87B+YFi5r1/K721kxLDdueubU0rl3P1xFKD0gUtDwg+CmSefq0+tbJvplLERwXWbiJGxGLmWBHo3dcwUpgwx/A0Ww1AXynttPa6xDH2r2xV3ONW+8ovcqo2fj99euZZC725k7puhupdp/vJo8g0lthqzQQ",
+                        "format": "xai-responses-v1",
+                        "id": "rs_8fcf1aa8-c1ce-90fc-96b2-04453c4a2c3c",
+                        "index": 1
+                    }
+                ],
+                "reasoning_content": "The paper has been opened and the abstract found. I need to read the key sections.\n"
+            },
+            "sender": "Goal Decomposition Agent"
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call-2aa6be65-b572-40f6-bc48-76529080deb2-2",
+            "name": "find_on_page_ctrl_f",
+            "content": "Address: file:///workplace_test/papers/241212509.tex\nViewport position: Showing page 2 of 12.\n=======================\n4,\n%  \\textsuperscript{5}Affiliation 5\n%\\\\\n%  \\small{\n%    \\textbf{Correspondence:} \\href{mailto:email@domain}{email@domain}\n%  }\n%}\n\n\\begin{document}\n\\maketitle\n\\begin{abstract}\n\nLarge Language Models (LLMs) have become increasingly powerful and ubiquitous, but their stochastic nature poses challenges to the reliability of their outputs. While deterministic settings can improve consistency, they do not guarantee reliability, as a single sample from the model's probability distribution can still be misleading. Building upon the concept of LLM-as-a-judge, we introduce a novel framework for rigorously evaluating the reliability of LLM judgments, leveraging McDonald's omega. We evaluate the reliability of LLMs when judging the outputs of other LLMs on standard single-turn and multi-turn benchmarks, simultaneously investigating the impact of temperature on reliability. By analyzing these results, we demonstrate the limitations of fixed randomness and the importance of considering multiple samples, which we show has significant implications for downstream applications. Our findings highlight the need for a nuanced understanding of LLM reliability and the potential risks associated with over-reliance on single-shot evaluations. This work provides a crucial step towards building more trustworthy and reliable LLM-based systems and applications.\n\n\\end{abstract}\n\n\\section{Introduction}\n\\label{sec:intro}\n\nIn recent years, Large Language Models (LLMs) have experienced rapid advancements and widespread adoption, with applications ranging from marketing to biotechnology to music \\citep{gozalo2023survey}. As reliance upon LLMs grows, ensuring the quality and trustworthiness of their outputs becomes crucial. We often think about LLM quality in terms of accuracy (how often the LLM is correct). However, equally important are reliability, confidence, and calibration; these three distinct concepts are intertwined and essential for building genuine trust in LLM systems.\n\nLLMs can express how certain, or 'confident', they are about their responses. Calibration measures how well this confidence aligns with the LLM's actual accuracy \\citep{kotelanski2023methods, spiess2024calibration}. A perfectly calibrated LLM that says it's 90\\% confident should be correct about 9 out of 10 times. However, even a perfectly calibrated LLM can be unreliable.\n\nReliability refers to the consistency of an LLM's outputs. A reliable weather forecasting LLM, for example, should give similar predictions for the same day, even if those predictions aren't always accurate. An LLM that sometimes predicts sunshine and sometimes a downpour for the same day is unreliable, even if it's well-calibrated and highly confident. This kind of consistency is what we aim to capture with internal consistency reliability.  A reliable LLM can be consistently wrong, but it's still reliable because its judgments are stable.\n\nWhy is reliability so important? Consider a scenario where an LLM is tasked with evaluating the quality of a medical imaging LLM used to diagnose tumors. Even if the LLM is perfectly calibrated (its confidence accurately reflects its diagnostic ability), if it gives different evaluations for the same AI on different runs, even with different, but accurate, confidence scores, doctors won't know which evaluation to trust. The inconsistency makes the LLM unreliable and ultimately untrustworthy, regardless of its calibration and confidence.\n\nA singular output from an LLM is the result of a draw from a probabilistic distribution \\citep{vaswani2017attention}. Parameters that vary the resulting output, namely temperature and top-k, are increased to obtain more novel or \"creative\" results - a desirable quality of LLMs \\citep{peeperkorn2024temperature}. However, this inherent stochastic nature raises concerns about individual outputs. Given that a single output from an LLM is a representation of only a single draw from the model's distribution, trustworthiness of an LLM output is of utmost importance \\citep{mittelstadt2023protect}. Confidence and calibration are commonly used "
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call-2aa6be65-b572-40f6-bc48-76529080deb2-3",
+            "name": "find_on_page_ctrl_f",
+            "content": "Address: file:///workplace_test/papers/241212509.tex\nViewport position: Showing page 8 of 12.\n=======================\n    \\item Single Latent Trait: All LLM judgments are attempting to measure the same underlying \"true\" judgment. In our case, each LLM judgment replication aims to identify the most accurate, relevant, and useful response to the same prompt, aligning with this assumption.\n\\end{enumerate}\n\n\\section{Experiments and Data}\n\\label{sec:experiments}\n\nResponses to benchmark questions, using the templates outlined in Figure \\ref{fig:prompt_resp}, are generated from five highly popular open-source LLMs: LLaMA-3-8B, Vicuna-7B-v1.5, Gemma-7B, Phi-2, and Falcon-7b \\citep{dubey2024llama, chiang2023vicuna, team2024gemma, javaheripi2023phi, falcon40b}. These models were chosen due to their popularity, with over 100,000 downloads in the prior month on Hugging Face.\\footnote{As of November 2024 at \\url{https://huggingface.co/models}} %  \\citep{huggingface_models}.\nThe generated responses are obtained using top-k of 50 and a temperature of 0.75.\n\nSelecting models that are high performers in the Chatbot Arena \\citep{chiang2024chatbot}, Starling-LM-7B-beta, Gemma-1.1-7b-it, and Meta-Llama-3-8B-Instruct are employed for the judgment task \\citet{starling2023, gemma2024, llama3modelcard}. These selected models are all below the threshold of 10B parameters and are top performing models, ranked in the top 100, with rankings of 65 (Meta-Llama-3-8B-Instruct), 78 (Starling-LM-7B-beta), and 98 (Gemma-1.1-7b-it). In addition, we note that the selected models differ from those used for question answering in the prior step. This distinction is crucial to avoid circular reasoning, where LLMs would be judging responses they themselves generated. This approach also helps mitigate potential bias.\n\nTo further investigate the influence of fixed randomness on LLM outputs, we systematically varied the temperature parameter during the LLM evaluation process. Temperature, a key hyperparameter in LLMs, significantly impacts the randomness (or \"novelty\") of their outputs \\citep{peeperkorn2024temperature, davis2024temperature}. We evaluated LLM judgments at five temperature levels: 1.0, 0.75, 0.5, 0.25, and 0 (machine epsilon), while keeping the top-k sampling parameter constant at 50. This systematic variation in temperature allowed us to observe how changes in the level of randomness within the LLM's generation process affect the variability and reliability of the subsequent judgments, providing a window into the impact of fixed randomness.\n\nThe calculation of McDonald's omega employs the \\texttt{reliabiliPy} package \\citep{rafael_valero_fernandez_2022_5830894}. It is important to note that in calculating the reliability, all judgments that did not provide a judgment of best response were treated as belonging to the same category (\"Non Response\") which was included as a category in addition to the five response categories \"A\" through \"E\". Consequently, the resulting calculated reliability serves as an upper bound on reliability because the variability in non-response judgments is ignored. This is further explored in the experiment results. Results are obtained using a pair of Quadro RTX 8000 GPUs with 48GB of memory each and the transformers library \\citep{wolf2020transformers}.\n\n\\section{Experimental Results}\n\n\\begin{table}[!th] %[!t]\n\\begin{subtable}{.45\\textwidth}\n\\centering\n\\begin{tabular}{cccc}\n% \\toprule\n \\textbf{Temperature} & \\textbf{BBH} & \\textbf{SQuAD}  & \\textbf{MT-Bench}\\\\% & \\textbf{Full}\\\\\n \\midrule\n\\textbf{1} & 0.702 & 0.632 & 0.462\\\\%& 0.817 \\\\\n% \\midrule\n\\textbf{0.75} & 0.713 & 0.639 & 0.618\\\\% & 0.828\\\\\n% \\midrule\n\\textbf{0.5} & 0.703 & 0.644 & 0.476\\\\% & 0.821\\\\\n% \\midrule\n\\textbf{0.25}& 0.677 & 0.598 & 0.64\\\\% & 0.795\\\\\n% \\midrule\n\\textbf{0} & 1 & 1 & 1\\\\% & 1\n\\bottomrule\n\\end{tabular}\n\\caption{Omega reliability of Starling-LM-7B-beta judgments.}\n\\label{tab:starling_reliab}\n\\end{subtable}\n\n% \\begin{table}[!t]\n\\vspace{1em} \\begin{subtable}{.45\\textwidth}\n\\centering\n\\begin{tabular}{cccc}\n \\textbf{Temperature} & \\textbf{BBH} & \\textbf{SQuAD}  & \\textbf{MT-Bench}\\\\% & \\textbf{Full}\\\\\n \\midrule\n\\textbf{1} & 0.712 & 0.632 & 0.59\\\\ % 0.822\\\\\n% \\hline\n"
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call-2aa6be65-b572-40f6-bc48-76529080deb2-4",
+            "name": "find_on_page_ctrl_f",
+            "content": "Address: file:///workplace_test/papers/241212509.tex\nViewport position: Showing page 8 of 12.\n=======================\n    \\item Single Latent Trait: All LLM judgments are attempting to measure the same underlying \"true\" judgment. In our case, each LLM judgment replication aims to identify the most accurate, relevant, and useful response to the same prompt, aligning with this assumption.\n\\end{enumerate}\n\n\\section{Experiments and Data}\n\\label{sec:experiments}\n\nResponses to benchmark questions, using the templates outlined in Figure \\ref{fig:prompt_resp}, are generated from five highly popular open-source LLMs: LLaMA-3-8B, Vicuna-7B-v1.5, Gemma-7B, Phi-2, and Falcon-7b \\citep{dubey2024llama, chiang2023vicuna, team2024gemma, javaheripi2023phi, falcon40b}. These models were chosen due to their popularity, with over 100,000 downloads in the prior month on Hugging Face.\\footnote{As of November 2024 at \\url{https://huggingface.co/models}} %  \\citep{huggingface_models}.\nThe generated responses are obtained using top-k of 50 and a temperature of 0.75.\n\nSelecting models that are high performers in the Chatbot Arena \\citep{chiang2024chatbot}, Starling-LM-7B-beta, Gemma-1.1-7b-it, and Meta-Llama-3-8B-Instruct are employed for the judgment task \\citet{starling2023, gemma2024, llama3modelcard}. These selected models are all below the threshold of 10B parameters and are top performing models, ranked in the top 100, with rankings of 65 (Meta-Llama-3-8B-Instruct), 78 (Starling-LM-7B-beta), and 98 (Gemma-1.1-7b-it). In addition, we note that the selected models differ from those used for question answering in the prior step. This distinction is crucial to avoid circular reasoning, where LLMs would be judging responses they themselves generated. This approach also helps mitigate potential bias.\n\nTo further investigate the influence of fixed randomness on LLM outputs, we systematically varied the temperature parameter during the LLM evaluation process. Temperature, a key hyperparameter in LLMs, significantly impacts the randomness (or \"novelty\") of their outputs \\citep{peeperkorn2024temperature, davis2024temperature}. We evaluated LLM judgments at five temperature levels: 1.0, 0.75, 0.5, 0.25, and 0 (machine epsilon), while keeping the top-k sampling parameter constant at 50. This systematic variation in temperature allowed us to observe how changes in the level of randomness within the LLM's generation process affect the variability and reliability of the subsequent judgments, providing a window into the impact of fixed randomness.\n\nThe calculation of McDonald's omega employs the \\texttt{reliabiliPy} package \\citep{rafael_valero_fernandez_2022_5830894}. It is important to note that in calculating the reliability, all judgments that did not provide a judgment of best response were treated as belonging to the same category (\"Non Response\") which was included as a category in addition to the five response categories \"A\" through \"E\". Consequently, the resulting calculated reliability serves as an upper bound on reliability because the variability in non-response judgments is ignored. This is further explored in the experiment results. Results are obtained using a pair of Quadro RTX 8000 GPUs with 48GB of memory each and the transformers library \\citep{wolf2020transformers}.\n\n\\section{Experimental Results}\n\n\\begin{table}[!th] %[!t]\n\\begin{subtable}{.45\\textwidth}\n\\centering\n\\begin{tabular}{cccc}\n% \\toprule\n \\textbf{Temperature} & \\textbf{BBH} & \\textbf{SQuAD}  & \\textbf{MT-Bench}\\\\% & \\textbf{Full}\\\\\n \\midrule\n\\textbf{1} & 0.702 & 0.632 & 0.462\\\\%& 0.817 \\\\\n% \\midrule\n\\textbf{0.75} & 0.713 & 0.639 & 0.618\\\\% & 0.828\\\\\n% \\midrule\n\\textbf{0.5} & 0.703 & 0.644 & 0.476\\\\% & 0.821\\\\\n% \\midrule\n\\textbf{0.25}& 0.677 & 0.598 & 0.64\\\\% & 0.795\\\\\n% \\midrule\n\\textbf{0} & 1 & 1 & 1\\\\% & 1\n\\bottomrule\n\\end{tabular}\n\\caption{Omega reliability of Starling-LM-7B-beta judgments.}\n\\label{tab:starling_reliab}\n\\end{subtable}\n\n% \\begin{table}[!t]\n\\vspace{1em} \\begin{subtable}{.45\\textwidth}\n\\centering\n\\begin{tabular}{cccc}\n \\textbf{Temperature} & \\textbf{BBH} & \\textbf{SQuAD}  & \\textbf{MT-Bench}\\\\% & \\textbf{Full}\\\\\n \\midrule\n\\textbf{1} & 0.712 & 0.632 & 0.59\\\\ % 0.822\\\\\n% \\hline\n"
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call-2aa6be65-b572-40f6-bc48-76529080deb2-5",
+            "name": "find_on_page_ctrl_f",
+            "content": "Address: file:///workplace_test/papers/241212509.tex\nViewport position: Showing page 11 of 12.\n=======================\nstrongly suggests that with careful design and clear criteria, LLMs can be dependable judges. Future research should extend these findings to more complex scenarios, developing methods to structure complex judgment tasks to leverage LLM reliability and enhance trustworthiness in diverse applications. Our findings reinforce reliability's importance in trustworthy LLM evaluation and highlight the potential for reliable LLM judgment in well-defined tasks.\n\n\\section{Conclusions}\n\nCurrent LLM-as-a-judge methods, relying on single outputs, mask inherent judgment variability, creating a false sense of reliability \\citep{ouyang2023llm, wei2024systematic}. This \"fixed randomness\" (Section \\ref{sec:intro}), poses risks, especially in high-stakes applications like medical AI evaluation. We address this by introducing a novel framework for evaluating LLM-as-a-judge reliability, focusing on internal consistency across replicated evaluations with varying random seeds — a crucial, previously overlooked aspect.\n\nOur results validate our framework's importance. LLM judgment reliability is a significant concern, with several models exhibiting questionable reliability across benchmarks like SQuAD and MT-Bench. SQuAD's low reliability, despite high accuracy, reveals LLMs' difficulty with nuanced distinctions. Our research also suggests a performance-reliability trade-off, which our framework helps navigate. Finally, Head-to-Tail results further demonstrate our framework's value, as high reliability scores and minimal variability highlight the link between reliability and consistent evaluation.\n\nThis work provides a robust framework for assessing LLM-as-a-judge reliability, addressing a critical gap and developing a crucial tool for building trust in LLM-powered systems. As LLMs are increasingly used in complex applications, reliably assessing their judgment is paramount. Our framework empowers informed decisions about LLM deployment, promoting responsible usage. Prioritizing reliability is key to unlocking LLMs' potential while ensuring their ethical use.\n\n\\section{Limitations}\n\nWhile this work represents a significant step forward in understanding and assessing the reliability of LLMs, it is important to acknowledge its limitations. Our work is currently focused on single and multi-turn benchmarks. These benchmarks were selected to provide a robust and generalizable understanding of the impact of reliability under varying and widely used contexts, including both structured and open-ended tasks. Future research can extend our approach to additional datasets and benchmarks. Further, developing domain-specific practical guidelines for interpreting and applying reliability metrics is an important area for future work given that different domains have varying tolerances for variability. For instance, fields like advertising may be more tolerant of variability, while fields like medicine require much higher levels of certainty. By providing domain-specific guidance, we can ensure that LLMs are used responsibly and effectively in various applications.\n\nDespite these limitations, our work provides a strong foundation for future research on LLM reliability. By introducing a rigorous framework for evaluating LLM-as-a-judge responses, we offer valuable insights into the impact of reliability of LLM outputs and provide a roadmap for improving the quality and trustworthiness of LLMs.\n\n\\section{Ethics Statement}\n\nThis research does not raise any ethical concerns based on the theories or datasets employed. The benchmarks (BBH, SQuAD, MT-Bench, and Head-to-Tail) are publicly available and utilize publicly available data sources. As such, no privacy violations are anticipated. However, researchers should exercise caution when applying this work to proprietary datasets, as these may involve specific privacy regulations and ethical considerations.\n\n% Bibliography entries for the entire Anthology, followed by custom entries\n%\\bibliography{anthology,custom}\n% Custom bibliography entries only\n\\bibliography{custom}\n\n% \\appendix\n\n% \\section{Example Appendix}\n% \\label{sec:appendix}\n"
+        },
+        {
+            "content": "{\n  \"paper_title\": \"Can You Trust LLM Judgments? Reliability of LLM-as-a-Judge\",\n  \"research_problem\": \"How can the internal-consistency reliability of stochastic LLM judgments be rigorously quantified and understood when LLMs are used to evaluate other LLM outputs?\",\n  \"subgoals\": [\n    {\n      \"subgoal_id\": \"G1\",\n      \"label\": \"quantify judgment reliability\",\n      \"description\": \"Develop and apply a statistical framework (McDonald's omega) that measures the internal consistency of LLM-as-a-judge outputs across repeated independent samples for the same evaluation task\",\n      \"status\": \"achieved\",\n      \"rationale\": \"Paper introduces an omega-based reliability metric computed on 5 replicated judgments per instance, reports concrete omega values across BBH, SQuAD, and MT-Bench, and validates the metric under the assumptions of unidimensionality and tau-equivalence\"\n    },\n    {\n      \"subgoal_id\": \"G2\",\n      \"label\": \"assess temperature impact\",\n      \"description\": \"Systematically evaluate how sampling temperature affects the measured reliability of LLM judgments\",\n      \"status\": \"achieved\",\n      \"rationale\": \"Experiments vary temperature across five discrete levels (1.0, 0.75, 0.5, 0.25, 0) while holding top-k fixed and tabulate resulting omega scores for three judge models on three benchmarks, showing that only temperature=0 yields perfect reliability while all non-zero values produce lower, dataset-dependent reliability\"\n    }\n  ]\n}",
+            "role": "assistant",
+            "tool_calls": null,
+            "function_call": null,
+            "reasoning_content": "I now have sufficient sections to complete the analysis. The paper's title is \"Can You Trust LLM Judgments? Reliability of LLM-as-a-Judge\". The research problem is the reliability (internal consistenc...",
+            "provider_specific_fields": {
+                "refusal": null,
+                "reasoning": "I now have sufficient sections to complete the analysis. The paper's title is \"Can You Trust LLM Judgments? Reliability of LLM-as-a-Judge\". The research problem is the reliability (internal consistenc...",
+                "reasoning_details": [
+                    {
+                        "type": "reasoning.summary",
+                        "summary": "I now have sufficient sections to complete the analysis. The paper's title is \"Can You Trust LLM Judgments? Reliability of LLM-as-a-Judge\". The research problem is the reliability (internal consistenc...",
+                        "format": "xai-responses-v1",
+                        "index": 0
+                    },
+                    {
+                        "type": "reasoning.encrypted",
+                        "data": "9DRPB7aZUy87prZthFVFsfvng0JkK/uHzzeUszvT/kDU3uISQZ1WHwweyhRSDSZDZ7+3gXMb9NU9Xgt6mlXyMDi4pZmjFXJNLWcT1hDgC3dHlPLfD8JYSoPyoFdGzMghchsudgga2uADmWBysqtC4mjlFUhOr3XMmQreMw8x66pJgZCjFgCwCzh+ivCoMxP0DaX5Lvp9XSgWkXU3uDJdJIFRjJHtBwDSdyQ1YxD0/nKGBBlt22/fcrVvhFHrjc+IAiHQ7HTz7UF8NWp6ac0XdAx8lxHsnyFWPrrHiP9pSOt+1T2YfDNfGe6dSzJTdEr90e8XYeSyTSS+T1uZtExo7gh4qVYgS7CiejAPudjBcpeM6pMgkHP6QAXe7ebdJaCThGJkRVyy7ZfvsjiEanhMD7pL73ooRQVFcRzsaJpUba6fGbFGZ0NVbBkUw7KGItv2Zu5RwEDhPx2nNvlq4Wd2zUIYoLz1Wdnjg7oP/rr1ck/XIkOSkMPgeOjNHoD6tzh/SXYjCg8YqokuVWXFM57+9HyOLZZGiOuW0ewsXoqj/klUrOMXgNfa3TxALTYNsT+9uwt2WMzct4SzdwLwt1xHUaUEsGuvJiHxLi06/FabKfZR+UDqXxvP8Zb4o6tBC7ZltD3hhHAGfj2F+My1xHVSw2m4uHoUrcVhl05eiG25v70Nhw",
+                        "format": "xai-responses-v1",
+                        "id": "rs_331d940b-e97b-9b65-afbd-2428c0f7b976",
+                        "index": 1
+                    }
+                ],
+                "reasoning_content": "I now have sufficient sections to complete the analysis. The paper's title is \"Can You Trust LLM Judgments? Reliability of LLM-as-a-Judge\". The research problem is the reliability (internal consistenc..."
+            },
+            "sender": "Goal Decomposition Agent"
+        }
+    ],
+    "context_variables": {}
+}
