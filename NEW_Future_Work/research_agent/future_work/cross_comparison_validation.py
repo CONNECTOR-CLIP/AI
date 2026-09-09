@@ -1,15 +1,15 @@
-# [3단계: 교차비교] 정적 검증 계층 — AI 미사용. 생성 에이전트(cross_comparison_agent.py)가
+# [CoT3.static] 교차비교 정적 검증 계층 — AI 미사용. 생성 에이전트(cross_comparison_agent.py)가
 # 뱉은 공백 후보 JSON을 (a) 스키마 검증 (b) grounding-by-reference (c) 포맷 정합성
 # (d) 중복 제거 (e) 기각목록 필터까지 순수 정적으로 처리한다.
 #
 # 왜 CoT3에는 grounding "재확인"이 아니라 grounding "검사"가 필요한가:
-#   2단계(limitation)는 quote를 원문에서 정규식으로 슬라이싱하므로 애초에 grounded였고, 거기 validation의
-#   grounding check는 "혹시 모를 버그"용 방어선일 뿐이었다. 반면 3단계 후보는 LLM이 "생성"한 것이라
+#   CoT2(limitation)는 quote를 원문에서 정규식으로 슬라이싱하므로 애초에 grounded였고, 거기 validation의
+#   grounding check는 "혹시 모를 버그"용 방어선일 뿐이었다. 반면 CoT3 후보는 LLM이 "생성"한 것이라
 #   근거를 날조할 수 있다. 그래서 여기서는 후보가 스스로 지목한 source_evidence(예: "P1:G2", "P2:L1")가
 #   실제 CoT1 subgoal / CoT2 limitation 풀에 존재하는지를 대조하는 게 핵심 방어 로직이다.
-#   단, 대조 자체는 사전(evidence_pool) 조회라 순수 정적 — 판정자(step4, LLM)의 "타당성" 평가와는 별개.
+#   단, 대조 자체는 사전(evidence_pool) 조회라 순수 정적 — 판정자(CoT3.judge, LLM)의 "타당성" 평가와는 별개.
 #
-# 왜 정적체크(step3)를 판정자(step4)보다 먼저 두나: 정적체크는 공짜, 판정자는 토큰 비용. 싼 필터로
+# 왜 정적체크(CoT3.static)를 판정자(CoT3.judge)보다 먼저 두나: 정적체크는 공짜, 판정자는 토큰 비용. 싼 필터로
 # 날조·중복·기각재등장을 먼저 쳐내야 판정자 호출을 낭비하지 않는다.
 #
 # 이 파일이 "하드 실패(=재시도 유발)"로 보는 것과 "후보 단위 드롭(=경고만)"으로 보는 것을 구분한다:
@@ -23,7 +23,7 @@ from typing import Dict, List, Literal, Optional, Tuple, Union
 
 from pydantic import BaseModel, ValidationError, field_validator
 
-# 1·2단계 검증 유틸 재사용 (DRY) — 코드펜스 제거 / pydantic 에러 포맷은 이미 있는 걸 그대로 쓴다.
+# CoT1·CoT2 검증 유틸 재사용 (DRY) — 코드펜스 제거 / pydantic 에러 포맷은 이미 있는 걸 그대로 쓴다.
 from research_agent.future_work.goal_decomposition_validation import (
     GoalDecomposition,
     strip_code_fence,
@@ -54,9 +54,17 @@ class CrossComparisonCandidate(BaseModel):
     gap_statement: str
     proposed_direction: str
     rationale: str
-    # step4(판정자)가 나중에 채워 넣는 필드 — 생성 시점엔 없음(그래서 Optional/None 기본값).
-    judge_scores: Optional[Dict[str, int]] = None
-    cause_tag: Optional[str] = None
+    # ── CoT3.judge(판정자)가 채우는 필드 ──────────────────────────────────────────
+    # [신 스키마] 판정자 개편(Phase 2) 후 주 필드. grounding/validity를 1~5 점수가 아니라 이진 판정으로,
+    # 그리고 그 판정의 근거를 '분해된 sub-claim별 함의(entail/neutral/contradict) + 인용'으로 남긴다.
+    judge_verdict: Optional[Dict[str, str]] = None    # {"grounding": "PASS"|"FAIL"|"UNSURE", "validity": ..., "validity_reason": ...}
+    judge_subclaims: Optional[List[Dict]] = None      # [{"claim","verdict":"entail|neutral|contradict","quote"}]
+    # CoT3.static(선언 수리)가 채우는 필드 — source_papers/source_type 재분류 로그(추가/제거/anchorless).
+    # None = 수리 없음. 예: ["P5 added from prose (anchorless)", "source_type: synthesized→combination"].
+    repair: Optional[List[str]] = None
+    # CoT3.recheck(원문 재대조)가 채우는 필드 — achieved 역량에만 기댄 '주장된 한계' 후보를 원문에 되대조한
+    # 결과. None = 검증 대상 아님(검증된 앵커 보유), "OPEN/UNCLEAR/..." = 검증 거쳐 유지된 위험 후보.
+    source_check: Optional[str] = None
 
     @field_validator("candidate_id", "gap_statement", "proposed_direction", "rationale")
     @classmethod
@@ -77,7 +85,7 @@ class CrossComparisonCandidate(BaseModel):
 
 
 def build_evidence_pool(papers: List[PaperInput]) -> Dict:
-    """CoT1·CoT2 결과 N편을 grounding 대조용 evidence 풀로 조립한다(Step 0).
+    """CoT1·CoT2 결과 N편을 grounding 대조용 evidence 풀로 조립한다(CoT3.setup).
     각 논문에 입력 순서대로 P1, P2, ... 키를 부여하고, subgoal은 원래 G-id를,
     limitation은 인덱스 기반 L-id(L1, L2, ...)를 부여한다.
 
@@ -102,7 +110,7 @@ def build_evidence_pool(papers: List[PaperInput]) -> Dict:
 
 
 def format_cross_comparison_input(evidence_pool: Dict) -> str:
-    """evidence_pool(Step 0-a, 기계용 dict)을 생성 에이전트에게 넣을 압축 텍스트 블록(Step 0-b)으로 변환한다.
+    """evidence_pool(CoT3.setup, 기계용 dict)을 생성 에이전트에게 넣을 압축 텍스트 블록으로 변환한다.
     토큰 절약 원칙: 공백(not_achieved/partially)은 근거(rationale)까지 상세히, achieved는 라벨만 한 줄로.
     모든 subgoal/limitation에 'Pk:Gx'/'Pk:Lx' id를 노출해 — 에이전트가 이 id로만 근거를 달게 하고,
     validate_cross_comparison이 같은 id를 evidence_pool에 대조하도록(계약 일치) 한다."""
@@ -181,6 +189,71 @@ def _check_evidence_refs(candidate: CrossComparisonCandidate, pool: Dict) -> Lis
     return problems
 
 
+def _repair_declaration(candidate: CrossComparisonCandidate, pool: Dict) -> List[str]:
+    """[CoT3.static 선언 수리] 후보의 선언(source_papers/source_type)을 '실제 사용'과 일치하도록 고친다.
+    drop 대신 재분류해 후보를 살리고, 근거가 진짜인지의 판단은 이후 판정 게이트(분해+함의)에 맡긴다.
+
+    세 집합으로 대조한다:
+      DECL  = source_papers                        (후보가 '썼다'고 선언한 논문)
+      EVID  = source_evidence의 id가 가리키는 논문   (근거 id가 실제로 달린 논문, pool 실재분만)
+      PROSE = 본문(gap/direction/rationale) 언급 논문 (pool 실재 키만, 단어경계 매칭)
+    수리 규칙:
+      · (EVID∪PROSE)\\DECL → source_papers에 '추가'. EVID엔 없고 PROSE에만 있으면 'anchorless'(근거 id 없음)
+                             로 표기 — judge가 근거를 못 찾아 FAIL시킬 몫으로 넘긴다.
+      · DECL\\(EVID∪PROSE) → 선언만 됐고 근거·언급 어디에도 없음 → '제거'(단 최소 1편은 남긴다).
+      · 논문 수에 맞춰 source_type 재계산(synthesized↔combination). paper_stated는 건드리지 않는다.
+    반환: 수리 로그(없으면 빈 리스트). 변경이 있으면 candidate.source_papers/source_type/repair를 갱신한다.
+    """
+    import re
+
+    known = set(pool.keys())
+    decl = list(candidate.source_papers)
+    decl_set = set(decl)
+
+    # EVID — source_evidence 'Pk:Xy'의 앞부분 논문 키 중 pool에 실재하는 것만
+    evid = set()
+    for ref in candidate.source_evidence:
+        pk = ref.split(":", 1)[0].strip()
+        if pk in known:
+            evid.add(pk)
+
+    # PROSE — 본문에서 실재 pool 키만 단어경계로 매칭(P-value 같은 오탐 방지)
+    body = " ".join([candidate.gap_statement, candidate.proposed_direction, candidate.rationale])
+    prose = {k for k in known if re.search(rf"\b{re.escape(k)}\b", body)}
+
+    used = evid | prose
+    repairs: List[str] = []
+
+    # (1) 추가: 본문/근거엔 쓰였는데 선언 안 한 논문
+    for pk in sorted(used - decl_set):
+        anchorless = pk not in evid
+        decl.append(pk)
+        src = "prose" if anchorless else "evidence"
+        repairs.append(f"{pk} added from {src}" + (" (anchorless: no evidence id)" if anchorless else ""))
+
+    # (2) 제거: 선언만 됐고 근거·본문 어디에도 없는 논문 (최소 1편은 보존)
+    for pk in sorted(decl_set - used):
+        if len(decl) <= 1:
+            break
+        decl.remove(pk)
+        repairs.append(f"{pk} removed (declared but unused: no evidence id, not in prose)")
+
+    # (3) source_type 재계산 — paper_stated는 유지
+    new_type = candidate.source_type
+    if len(decl) >= 2 and candidate.source_type == "synthesized":
+        new_type = "combination"
+    elif len(decl) == 1 and candidate.source_type == "combination":
+        new_type = "synthesized"
+    if new_type != candidate.source_type:
+        repairs.append(f"source_type: {candidate.source_type} → {new_type}")
+
+    if repairs:
+        candidate.source_papers = decl
+        candidate.source_type = new_type
+        candidate.repair = repairs
+    return repairs
+
+
 def _collect_rejected_norms(rejected: Optional[List[Union[CrossComparisonCandidate, Dict, str]]]) -> List[str]:
     """재탐색 루프에서 넘어온 '이미 기각된 후보'들을 정규화된 gap_statement 문자열 집합으로 변환.
     후보 객체 / dict / 순수 문자열 어느 형태로 넘겨도 받아준다."""
@@ -235,6 +308,15 @@ def validate_cross_comparison(
     validated: List[CrossComparisonCandidate] = []
     seen_ids = set()
     for i, raw in enumerate(raw_candidates):
+        # source_type 별칭 교정(방어): 생성 모델이 STEP1의 추론 라벨("coverage-only" 등)을
+        # source_type 값으로 착각해 뱉는 경우가 있다. 커버리지 공백 기반 gap은 정의상 synthesized라
+        # 안전하게 매핑한다 — 이 교정이 없으면 정작 살리려던 unstated 후보가 스키마에서 드롭된다.
+        if isinstance(raw, dict):
+            st = str(raw.get("source_type", "")).strip().lower().replace("-", "_")
+            alias = {"coverage_only": "synthesized", "coverage": "synthesized", "inferred": "synthesized"}
+            if st in alias and raw.get("source_type") not in SOURCE_TYPES:
+                warnings.append(f"[FIX] candidate#{i}: source_type {raw.get('source_type')!r} → {alias[st]!r}")
+                raw = {**raw, "source_type": alias[st]}
         # 후보 단위 스키마 검증 — 실패는 그 후보만 드롭
         try:
             cand = CrossComparisonCandidate.model_validate(raw)
@@ -251,7 +333,13 @@ def validate_cross_comparison(
             warnings.append(f"[DROP] candidate#{i}: duplicate candidate_id {cand.candidate_id!r}")
             continue
 
-        # grounding-by-reference — 핵심 방어
+        # [선언 수리] grounding 검사로 drop하기 전에, 선언(source_papers/source_type)을 실제 사용과 맞춘다.
+        # 본문이 쓴 미선언 논문은 추가(anchorless 표기), 근거·언급 없는 선언은 제거 — drop 아니라 재분류로 살림.
+        repairs = _repair_declaration(cand, evidence_pool)
+        if repairs:
+            warnings.append(f"[REPAIR] {cand.candidate_id}: {'; '.join(repairs)}")
+
+        # grounding-by-reference — 핵심 방어 (수리 후에도 남는 진짜 결함만 drop)
         problems = _check_evidence_refs(cand, evidence_pool)
         if problems:
             warnings.append(f"[DROP] {cand.candidate_id}: grounding failed — {'; '.join(problems)}")
@@ -318,7 +406,7 @@ async def run_cross_comparison_with_retry(
     max_retries: int = 2,
     iter_prefix: str = "gen",
 ) -> Tuple[List[CrossComparisonCandidate], List[str], Dict, Optional[str]]:
-    """생성 에이전트(cross_comparison_agent)를 호출하고 step3 정적검증을 통과할 때까지 재시도한다.
+    """생성 에이전트(cross_comparison_agent)를 호출하고 CoT3.static 정적검증을 통과할 때까지 재시도한다.
     하드실패(JSON/스키마 붕괴)이거나 생존 후보가 0개면, 그 사유(+드롭 로그)를 다음 턴 피드백으로 넣어
     같은 대화 맥락에서 자가수정을 유도한다 — goal_decomposition_validation의 재시도 루프와 같은 철학.
 

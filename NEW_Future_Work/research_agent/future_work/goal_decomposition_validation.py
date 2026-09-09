@@ -1,4 +1,4 @@
-# [1단계: 목표 추론 및 커버리지 진단] 출력에 대한 정적 검증 — AI 미사용, 스키마/형식만 확인 (pydantic).
+# [CoT1: 목표 추론 및 커버리지 진단] 출력에 대한 정적 검증 — AI 미사용, 스키마/형식만 확인 (pydantic).
 # ("목표분해"라 부르면 A~F가 이미 정해진 고정 목록을 나누는 것처럼 들리는데, 실제로는 그 목록 자체가
 # 논문에 없는 걸 모델이 추론(inference)해서 만들어내고, 그걸 기준으로 이 논문의 커버리지를 진단하는
 # 작업이라 이름을 바꿨다. 코드 식별자(goal_decomposition_*)는 영어 관용어라 그대로 둔다.)
@@ -9,7 +9,7 @@
 import json
 from typing import Dict, List, Literal, Optional, Tuple
 
-from pydantic import BaseModel, ValidationError, field_validator
+from pydantic import BaseModel, Field, ValidationError, field_validator
 
 # 1 = "완전히 비어있는 실패"만 걸러내는 진짜 하한. 몇 개가 "적절한" 개수인지는 논문마다 다르고
 # 정적으로 판단 불가능한 영역이라(②~⑤단계 소관) 여기서 3처럼 임의의 숫자로 강제하지 않는다.
@@ -17,14 +17,36 @@ MIN_SUBGOALS = 1
 OVER_FRAGMENTATION_WARN_THRESHOLD = 12
 
 
+class DroppedCandidate(BaseModel):
+    # Step 3에서 탈락/병합시킨 후보의 감사(audit) 기록 — solution-anchoring 재발 진단용 계측.
+    label: str
+    reason: str
+
+    @field_validator("label", "reason")
+    @classmethod
+    def not_empty(cls, v: str, info):
+        if not v.strip():
+            raise ValueError(f"{info.field_name} must not be empty")
+        return v
+
+
 class Subgoal(BaseModel):
     subgoal_id: str
     label: str
     description: str
+    # success_criterion: 이 subgoal이 "달성됐다"고 하려면 논문에서 봐야 할 증거 조건(research_problem에 묶임).
+    # criterion_type: 그 증거의 성격 — measurable(지표) / demonstrable(메커니즘+표적평가) / argued(ablation·논증).
+    # 증거 조건을 argued 수준으로도 못 쓰는 후보는 모호하므로 Step3에서 dropped_candidates로 빠졌어야 한다.
+    success_criterion: str
+    criterion_type: Literal["measurable", "demonstrable", "argued"]
     status: Literal["achieved", "partially_achieved", "not_achieved"]
+    # evaluation_present: 논문이 이 subgoal을 겨냥한 측정/실험/ablation을 실제로 수행했는가.
+    # status와 직교. not_achieved+evaluation_present=False = "측정 안 함"(≈not_evaluated),
+    # not_achieved+evaluation_present=True = "측정했으나 미달". "성능 나쁨"과 "침묵"을 분리한다.
+    evaluation_present: bool
     rationale: str
 
-    @field_validator("subgoal_id", "label", "description", "rationale")
+    @field_validator("subgoal_id", "label", "description", "success_criterion", "rationale")
     @classmethod
     def not_empty(cls, v: str, info):
         if not v.strip():
@@ -36,6 +58,8 @@ class GoalDecomposition(BaseModel):
     paper_title: str
     research_problem: str
     subgoals: List[Subgoal]
+    # Step3 탈락 기록. 계측 목적이라 없어도(=아무것도 안 버렸다는 뜻) 하드 리젝하지 않고 기본 []로 둔다.
+    dropped_candidates: List[DroppedCandidate] = Field(default_factory=list)
 
     @field_validator("paper_title", "research_problem")
     @classmethod
@@ -79,7 +103,7 @@ def format_pydantic_errors(e: ValidationError) -> str:
 
 def validate_goal_decomposition(raw_text: str) -> Tuple[Optional[GoalDecomposition], Optional[str]]:
     """
-    1단계 agent의 원문 출력을 검증한다.
+    CoT1 agent의 원문 출력을 검증한다.
     성공 시 (GoalDecomposition, None), 실패 시 (None, error_message)를 반환한다.
     """
     text = strip_code_fence(raw_text)
@@ -104,6 +128,26 @@ def validate_goal_decomposition(raw_text: str) -> Tuple[Optional[GoalDecompositi
             f"[WARN] '{result.paper_title}': not_achieved 항목 없음 — "
             f"future work 후보가 이 논문에서는 안 나온다는 뜻인데 이상 없는지 확인 필요"
         )
+    # solution-anchoring 재발 계측 — Step2를 넓게 생성했다면 보통 Step3에서 뭔가 탈락/병합된다.
+    # 아무것도 안 버렸고 not_achieved도 없으면, 생성 단계에서 논문이 한 것만 뽑았을 가능성이 크다.
+    if not result.dropped_candidates and not any(
+        sg.status == "not_achieved" for sg in result.subgoals
+    ):
+        print(
+            f"[WARN] '{result.paper_title}': dropped_candidates 비어있고 not_achieved도 없음 — "
+            f"Step2 광범위 생성이 실제로 일어났는지(=solution-anchoring 재발) 의심, 확인 권장"
+        )
+    # PROTECTED-GAP RULE 위반 계측 — 저자가 명시한 한계/future work를 drop 사유로 든 것은 금지 사항.
+    # 그런 후보는 버리지 말고 not_achieved subgoal로 승격됐어야 한다. 사유 문구로 위반을 잡아낸다.
+    _forbidden = ("future work", "scope", "does not address", "not addressed", "out of scope", "beyond")
+    for dc in result.dropped_candidates:
+        low = dc.reason.lower()
+        if any(k in low for k in _forbidden):
+            print(
+                f"[WARN] '{result.paper_title}': dropped_candidate '{dc.label}'의 사유가 "
+                f"금지된 '범위 밖/future work' 계열('{dc.reason}') — PROTECTED-GAP 위반 의심, "
+                f"not_achieved로 승격됐어야 함"
+            )
 
     return result, None
 

@@ -31,7 +31,7 @@ from tenacity import (
     RetryCallState
 )
 from openai import AsyncOpenAI
-from research_agent.constant import  API_BASE_URL, NOT_SUPPORT_SENDER, MUST_ADD_USER, NOT_SUPPORT_FN_CALL, NOT_USE_FN_CALL
+from research_agent.constant import  API_BASE_URL, NOT_SUPPORT_SENDER, MUST_ADD_USER, NOT_SUPPORT_FN_CALL, NOT_USE_FN_CALL, openrouter_provider_extra_body
 from research_agent.inno.fn_call_converter import convert_tools_to_description, convert_non_fncall_messages_to_fncall_messages, SYSTEM_PROMPT_SUFFIX_TEMPLATE, convert_fn_messages_to_non_fn_messages, interleave_user_into_messages
 from research_agent.inno.memory.utils import encode_string_by_tiktoken, decode_tokens_by_tiktoken
 import re
@@ -161,6 +161,8 @@ class MetaChain:
         if tools and create_params['model'].startswith("gpt"):
             create_params["parallel_tool_calls"] = agent.parallel_tool_calls
 
+        # OpenRouter provider 고정 — 죽은 provider 랜덤 배정으로 인한 400/stall 회피. 비-openrouter는 무영향.
+        create_params.update(openrouter_provider_extra_body(create_params['model']))
         return completion(**create_params)
 
     def handle_function_result(self, result, debug) -> Result:
@@ -404,6 +406,8 @@ class MetaChain:
 
             if tools and create_params['model'].startswith("gpt"):
                 create_params["parallel_tool_calls"] = agent.parallel_tool_calls
+            # OpenRouter provider 고정 — 죽은 provider 랜덤 배정으로 인한 400/stall 회피. 비-openrouter는 무영향.
+            create_params.update(openrouter_provider_extra_body(create_params['model']))
             completion_response = await acompletion(**create_params)
         elif create_model in NOT_USE_FN_CALL:
             assert agent.tool_choice == "required", f"Non-function calling mode MUST use tool_choice = 'required' rather than {agent.tool_choice}"
@@ -433,6 +437,8 @@ class MetaChain:
                 "stream": stream,
                 "base_url": API_BASE_URL,
             }
+            # OpenRouter provider 고정 — 죽은 provider 랜덤 배정으로 인한 400/stall 회피. 비-openrouter는 무영향.
+            create_params.update(openrouter_provider_extra_body(create_params['model']))
             completion_response = await acompletion(**create_params)
             last_message = [{"role": "assistant", "content": completion_response.choices[0].message.content}]
             converted_message = convert_non_fncall_messages_to_fncall_messages(last_message, tools)

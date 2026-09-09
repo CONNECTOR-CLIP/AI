@@ -22,8 +22,10 @@ research_agent/evaluation/*/data/
 research_agent/evaluation/*/data/*
 research_agent/evaluation/**/data/
 
-research_agent/cache/*
-research_agent/cache_*/*
+
+/cache_*/
+/workplace_future_work/
+/_backup_before_sync_*/
 
 research_agent/.env
 

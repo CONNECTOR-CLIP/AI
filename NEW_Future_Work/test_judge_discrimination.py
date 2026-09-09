@@ -132,6 +132,10 @@ def main():
     print(f"판정자 변별력 테스트 — judge: {args.judge_model}")
     print("=" * 70)
 
+    # [주의] 판정자 개편(분해+함의) 이후 grounding은 evidence_pool의 인용 텍스트가 있어야 판정된다.
+    # 이 하네스는 옛 1~5 판정자용이라 pool 없이 CANDIDATES/INPUT_BLOCK만 넘긴다 — 새 판정자에선 grounding이
+    # 전부 UNSURE로 나와 변별이 안 된다. 제대로 쓰려면 CANDIDATES의 인용 id에 맞는 evidence_pool을 만들어
+    # judge_candidates(..., evidence_pool=pool)로 넘겨야 한다. (TODO: pool 기반 재설계)
     passed, log = judge_candidates(CANDIDATES, INPUT_BLOCK, model=args.judge_model)
 
     print("\n[판정 로그]")
@@ -147,8 +151,8 @@ def main():
         # 성공 판정: GOOD은 PASS, 불량은 DROP(=판정자가 걸러냄)
         ok = (verdict == "PASS") if axis is None else (verdict == "DROP")
         all_ok = all_ok and ok
-        axis_note = f" [{axis}={c.judge_scores.get(axis)}]" if (axis and c.judge_scores) else ""
-        print(f"  {c.candidate_id:14} scores={c.judge_scores} → {verdict}{axis_note}"
+        axis_note = f" [{axis}={c.judge_verdict.get(axis)}]" if (axis and c.judge_verdict) else ""
+        print(f"  {c.candidate_id:14} verdict={c.judge_verdict} → {verdict}{axis_note}"
               f"   [{'OK' if ok else '미변별!'}]   ({desc})")
 
     print("\n" + "=" * 70)

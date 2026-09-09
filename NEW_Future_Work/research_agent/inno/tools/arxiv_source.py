@@ -1,6 +1,7 @@
 import re
 import tarfile
 import os
+import time
 import requests
 import arxiv
 from typing import List
@@ -88,48 +89,105 @@ def extract_tex_content(tar_path, ):
     except Exception as e:
         return f"Extract failed with error: {str(e)}"
 
-def download_arxiv_source(arxiv_url, local_root, workplace_name, title: str):
+# arxiv src 다운로드 방어 설정. raw 요청(설명적 User-Agent 없음)은 rate limit에 걸리기 쉬운데,
+# 이때 arxiv는 종종 소스 tarball 대신 비-gzip HTML('잠시 후 다시 시도') 페이지를 HTTP 200으로 돌려준다.
+# → search_arxiv가 쓰는 공식 클라이언트와 같은 취지로 UA를 달고, 일시적 실패는 백오프 재시도한다.
+_ARXIV_HEADERS = {"User-Agent": "Future-Work-Researcher/1.0 (mailto:yejin100403@gmail.com)"}
+_GZIP_MAGIC = b"\x1f\x8b"
+
+
+def download_arxiv_source(arxiv_url, local_root, workplace_name, title: str, max_attempts: int = 4):
     """
     download arxiv paper source file
-    
+
     Args:
         arxiv_url: arxiv paper url, e.g. 'http://arxiv.org/abs/2006.11239v2'
         local_root: local root directory
         workplace_name: workplace name
+        max_attempts: rate limit 등 일시적 실패에 대한 최대 시도 횟수(선형 백오프)
+
+    다운로드가 "성공"으로 위장되지 않도록 두 가지를 검증한다:
+      (1) 응답 본문이 실제 gzip인지 매직바이트로 확인 — 아니면(=rate limit HTML 등) 재시도.
+      (2) tar 추출이 실제로 .tex를 뽑았는지 확인 — 추출 실패면 status:-1로 실패 반환(쓰레기 .tex를 남기지 않음).
+    이렇게 해야 상위(ToolModule 캐시/테스트)가 실패를 실패로 인지하고 해당 논문을 제외할 수 있다.
     """
     try:
-        # URL에서 논문 ID 추출
         paper_id = re.search(r'abs/([^/]+)', arxiv_url).group(1)
-        
-        # 소스 URL 생성
-        source_url = f'http://arxiv.org/src/{paper_id}'
-        
-        # 요청보내기
-        response = requests.get(source_url)
-        
-        # 상태 코드 확인
-        if response.status_code == 200:
-            try: 
-                paper_src_dir = os.path.join(local_root, workplace_name, "paper_source")
-                os.makedirs(paper_src_dir, exist_ok=True)
-                safe_title = re.sub(r'[^\w\s]', '', title).strip()
-                filename_base = safe_title.replace(' ', '_').lower()
-                filepath = os.path.join(paper_src_dir, f"{filename_base}.tar.gz")
-                with open(filepath, 'wb') as f:
-                    f.write(response.content)
-                tex_content = extract_tex_content(filepath)
-                paper_tex_dir = os.path.join(local_root, workplace_name, "papers")
-                os.makedirs(paper_tex_dir, exist_ok=True)
-                with open(os.path.join(paper_tex_dir, f"{filename_base}.tex"), 'w') as f:
-                    f.write(tex_content)
-                return {"status": 0, "message": f"Download paper '{title}' successfully", "path": f"/{workplace_name}/papers/{filename_base}.tex"}
-            except Exception as e:
-                return {"status": -1, "message": f"Download paper '{title}' failed with error: {str(e)}", "path": None}
-        else:
-            return {"status": -1, "message": f"Download paper '{title}' failed with HTTP status code {response.status_code}", "path": None}
-            
     except Exception as e:
         return {"status": -1, "message": f"Download paper '{title}' failed with error: {str(e)}", "path": None}
+
+    source_url = f'http://arxiv.org/src/{paper_id}'
+    last_reason = "unknown"
+
+    for attempt in range(max_attempts):
+        if attempt:
+            time.sleep(3.0 * attempt)  # 선형 백오프로 rate limit 완화
+
+        try:
+            response = requests.get(source_url, headers=_ARXIV_HEADERS, timeout=60)
+        except Exception as e:
+            last_reason = f"request error: {type(e).__name__}: {e}"
+            continue
+
+        if response.status_code != 200:
+            last_reason = f"HTTP status code {response.status_code}"
+            continue
+
+        # (0) PDF-only 논문: 저자가 LaTeX 소스를 안 올리면 arxiv가 /src/에서 소스 대신 PDF를 준다.
+        #     이건 결정적(재시도해도 계속 PDF)이라 즉시 실패 처리한다 — 헛된 백오프를 없애고, 로그만 봐도
+        #     "네트워크 탓이 아니라 LaTeX 소스가 없어서"임을 알 수 있게 한다. (.tex 파이프라인은 처리 불가.)
+        ctype = response.headers.get("Content-Type", "")
+        if "application/pdf" in ctype or response.content[:4] == b"%PDF":
+            return {
+                "status": -1,
+                "message": (
+                    f"Download paper '{title}' skipped — PDF-only on arxiv "
+                    f"(no LaTeX source at /src/{paper_id}); cannot build .tex."
+                ),
+                "path": None,
+            }
+
+        # (1) 진짜 gzip tarball인지 확인. 비-gzip 200은 rate limit/오류 페이지일 가능성이 커서 재시도한다.
+        if response.content[:2] != _GZIP_MAGIC:
+            last_reason = (
+                f"response is not a gzip archive (likely rate-limit/HTML page): "
+                f"{len(response.content)} bytes starting with {response.content[:16]!r}"
+            )
+            continue
+
+        paper_src_dir = os.path.join(local_root, workplace_name, "paper_source")
+        os.makedirs(paper_src_dir, exist_ok=True)
+        safe_title = re.sub(r'[^\w\s]', '', title).strip()
+        filename_base = safe_title.replace(' ', '_').lower()
+        filepath = os.path.join(paper_src_dir, f"{filename_base}.tar.gz")
+        try:
+            with open(filepath, 'wb') as f:
+                f.write(response.content)
+            tex_content = extract_tex_content(filepath)
+        except Exception as e:
+            last_reason = f"{type(e).__name__}: {e}"
+            continue
+
+        # (2) extract_tex_content는 실패 시 예외 대신 "Extract failed with error: ..." 문자열을 돌려준다.
+        #     본문은 이미 gzip이므로 이 실패는 대개 결정적(예: LaTeX 소스가 없는 논문)이라 재시도하지 않는다.
+        if tex_content.startswith("Extract failed with error:"):
+            return {
+                "status": -1,
+                "message": f"Download paper '{title}' failed — could not extract .tex ({tex_content})",
+                "path": None,
+            }
+
+        paper_tex_dir = os.path.join(local_root, workplace_name, "papers")
+        os.makedirs(paper_tex_dir, exist_ok=True)
+        with open(os.path.join(paper_tex_dir, f"{filename_base}.tex"), 'w') as f:
+            f.write(tex_content)
+        return {"status": 0, "message": f"Download paper '{title}' successfully", "path": f"/{workplace_name}/papers/{filename_base}.tex"}
+
+    return {
+        "status": -1,
+        "message": f"Download paper '{title}' failed after {max_attempts} attempts ({last_reason})",
+        "path": None,
+    }
 
 
 

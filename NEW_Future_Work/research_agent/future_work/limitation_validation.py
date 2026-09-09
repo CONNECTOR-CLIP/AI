@@ -1,6 +1,6 @@
-# [2단계: 한계/언급 추출] 출력에 대한 정적 검증 — AI 미사용, pydantic 스키마 + grounding 방어 확인.
+# [CoT2: 한계/언급 추출] 출력에 대한 정적 검증 — AI 미사용, pydantic 스키마 + grounding 방어 확인.
 #
-# 1단계(goal_decomposition_validation.py)와의 차이: 거기서는 LLM이 만들어낸 자유서술 텍스트를
+# CoT1(goal_decomposition_validation.py)과의 차이: 거기서는 LLM이 만들어낸 자유서술 텍스트를
 # 파싱/검증하고, 실패 시 LLM에게 재시도를 요청하는 대화형 루프가 필요했다. 여기서는 애초에
 # extract_limitation_candidates()가 정규식으로 원문 substring만 뽑기 때문에 "같은 입력이면
 # 항상 같은 출력"이다 — 재시도해도 결과가 안 바뀌므로 retry 루프 자체가 의미 없다. 대신
@@ -56,7 +56,7 @@ def validate_limitation_extraction(
     paper_text: str,
 ) -> Tuple[List[LimitationCandidate], List[str]]:
     """
-    2단계 추출 결과를 검증한다. LLM 재시도 루프가 없다 — 실패한 후보는 그냥 드롭하고
+    CoT2 추출 결과를 검증한다. LLM 재시도 루프가 없다 — 실패한 후보는 그냥 드롭하고
     사유를 warnings에 남긴다 (전체를 실패 처리하지 않음. 후보 하나의 결함이 다른 후보를
     막을 이유가 없다).
 

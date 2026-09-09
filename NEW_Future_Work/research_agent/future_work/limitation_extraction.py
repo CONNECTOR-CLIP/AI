@@ -1,14 +1,14 @@
-# [2단계: 한계/언급 추출] — LLM을 쓰지 않는다. 정규식 기반 정적 추출.
+# [CoT2: 한계/언급 추출] — LLM을 쓰지 않는다. 정규식 기반 정적 추출.
 #
 # 왜 LLM이 없어도 되는가:
-# 1단계(goal_decomposition)는 quote를 모델이 "생성"하기 때문에 사후에 원문 대조(grounding)가
+# CoT1(goal_decomposition)은 quote를 모델이 "생성"하기 때문에 사후에 원문 대조(grounding)가
 # 반드시 필요했다. 반면 여기서는 quote를 원문 문자열에서 정규식으로 직접 슬라이싱해서 뽑는다 —
 # 그래서 quote는 애초에 원문에 없는 문장일 수가 없다(구조적으로 grounded). 이후 validation 단계의
 # grounding check는 "혹시 모를 버그"를 잡는 방어선일 뿐, 이 자체가 주 검증 로직은 아니다.
 #
 # 이 단계가 잡아내는 것: 논문이 "스스로" 명시적으로 인정한 한계/미탐색/향후연구 문장.
 # 이 단계가 잡아내지 못하는 것: 논문에 안 쓰여 있지만 그 문제를 풀려면 필요한 하위과제(missing subgoal).
-# 후자는 1단계(subgoal 커버리지)와 3단계(교차비교) 몫이다 — 여기서 억지로 채우려 하지 않는다.
+# 후자는 CoT1(subgoal 커버리지)와 CoT3(교차비교) 몫이다 — 여기서 억지로 채우려 하지 않는다.
 
 import re
 from typing import Dict, List, Tuple
