@@ -1,0 +1,27 @@
+# 이 파일을 config.yml로 복사하고 실제 값을 채우세요. config.yml은 .gitignore에 있어 커밋되지 않습니다.
+OPENAI_API_KEY: "insert openai key"
+ANTHROPIC_API_KEY: "insert anthropic key"
+ARXIV_DB_PATH: "path/to/your/arxiv.db"
+
+# 논문 검색은 Semantic Scholar 대신 로컬 arXiv SQLite DB를 사용한다.
+# papers/authors/cso_keywords 테이블이 들어 있는 DB여야 한다.
+
+# idea_novelty_checker(submodule)가 쓰는 값.
+NOVELTY_CHECK_TOPkPapers: 10
+NOVELTY_CHECK_MODEL: "o3-mini"
+NOVELTY_CHECK_TEMPERATURE: 0
+NOVELTY_CHECK_PROMPT: "relaxed"
+NOVELTY_CHECK_EXAMPLES: "relaxed"
+RANKGPT_VARIANT: "priority"
+RANKGPT_MODEL: "gpt-4o"
+RANKGPT_TEMPERATURE: 0
+DEFAULT_MODEL: "gpt-4o"
+DEFAULT_TEMPERATURE: 0
+QUERY_RETRIEVAL_METHOD: "keyword+title+snippet"
+
+# Hugging Face에서 최초 실행 시 내려받아 로컬 추론하는 SPECTER2 설정.
+SPECTER2_BASE_MODEL: "allenai/specter2_base"
+SPECTER2_ADAPTER_MODEL: "allenai/specter2"
+SPECTER2_DEVICE: "auto"
+SPECTER2_BATCH_SIZE: 16
+SPECTER2_MAX_LENGTH: 512

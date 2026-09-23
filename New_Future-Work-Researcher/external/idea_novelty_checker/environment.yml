@@ -1,0 +1,23 @@
+name: nc_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - numpy
+  - pandas
+  - pip
+  - pip:
+      - openai  
+      - anthropic
+      - aiohttp
+      - requests
+      - scikit-learn
+      - sentence_transformers 
+      - transformers
+      - retry
+      - litellm
+      - adapters
+      - nest_asyncio
+      - python-dotenv
+  
