@@ -41,7 +41,7 @@ from research_agent.future_work.cross_comparison_validation import (
 from research_agent.future_work.cross_comparison_judge import judge_candidates
 # CoT3 (CoT3.recheck 원문 재대조 — achieved 역량에만 기댄 위험 후보만 검증)
 from research_agent.future_work.cross_comparison_source_check import verify_candidates_against_source
-
+from research_agent.future_work.future_work_agent import get_future_work_agent
 load_dotenv()
 
 DEFAULT_PAPERS = [
@@ -301,11 +301,13 @@ async def main():
     # build_evidence_pool이 부여하는 P1,P2,... 키와 원문 매핑이 일치한다.
     paper_inputs = []
     paper_texts_ordered = []
+    successful_titles = []
     for i, paper_input, paper_text, log in sorted(results, key=lambda r: r[0]):
         print(log)
         if paper_input is not None:
             paper_inputs.append(paper_input)
             paper_texts_ordered.append(paper_text)
+            successful_titles.append(args.papers[i])
 
     if len(paper_inputs) < 2:
         raise RuntimeError(f"교차비교에 쓸 유효 논문이 {len(paper_inputs)}편뿐입니다(최소 2편 필요).")
@@ -449,7 +451,67 @@ async def main():
     real_passed = [c for c in passed if c.candidate_id not in canary_ids]
     banner(f"[CoT3 최종] {len(real_passed)}개 (→ CoT5로)")
     print(json.dumps([c.model_dump(exclude_none=True) for c in real_passed], indent=2, ensure_ascii=False))
+    if not real_passed:
+        print("Future Work 생성에 사용할 CoT3 후보가 없습니다.")
+        return
 
+    paper_references = "\n".join(
+        f"- P{index}: {title}"
+        for index, title in enumerate(successful_titles, start=1)
+    )
+
+    cot3_candidates = [
+        candidate.model_dump(exclude_none=True)
+        for candidate in real_passed
+    ]
+
+    future_work_query = f"""
+The following candidates were validated by CoT1, CoT2, and CoT3.
+
+Paper reference mapping:
+{paper_references}
+
+Validated CoT3 candidates:
+{json.dumps(cot3_candidates, ensure_ascii=False, indent=2)}
+
+Generate EXACTLY 5 future work proposals using only these candidates.
+Return only the required future_work_proposals JSON object.
+Do not add unsupported claims.
+"""
+
+    future_work_module = AgentModule(
+        get_future_work_agent(model=args.model),
+        client,
+        args.cache_path,
+        interactive_cache=False,
+    )
+
+    future_work_messages, _ = await future_work_module(
+        [{"role": "user", "content": future_work_query}],
+        {},
+        iter_times="future_work",
+    )
+
+    future_work_result = next(
+        (
+            message["content"]
+            for message in reversed(future_work_messages)
+            if message.get("content")
+        ),
+        None,
+    )
+
+    if not future_work_result:
+        raise RuntimeError("Future Work Agent가 결과를 반환하지 않았습니다.")
+
+    payload = json.loads(future_work_result)
+    proposals = payload.get("future_work_proposals")
+
+    if not isinstance(proposals, list) or len(proposals) != 5:
+        raise ValueError("Future Work 결과는 정확히 5개의 제안을 포함해야 합니다.")
+
+    banner("[Future Work 최종 결과]")
+    print(json.dumps(payload, indent=2, ensure_ascii=False))
 
 if __name__ == "__main__":
     asyncio.run(main())
