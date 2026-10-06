@@ -92,7 +92,7 @@ def extract_tex_content(tar_path, ):
 # arxiv src 다운로드 방어 설정. raw 요청(설명적 User-Agent 없음)은 rate limit에 걸리기 쉬운데,
 # 이때 arxiv는 종종 소스 tarball 대신 비-gzip HTML('잠시 후 다시 시도') 페이지를 HTTP 200으로 돌려준다.
 # → search_arxiv가 쓰는 공식 클라이언트와 같은 취지로 UA를 달고, 일시적 실패는 백오프 재시도한다.
-_ARXIV_HEADERS = {"User-Agent": "Future-Work-Researcher/1.0 (mailto:yejin100403@gmail.com)"}
+_ARXIV_HEADERS = {"User-Agent": "Future-Work-Researcher/1.0"}
 _GZIP_MAGIC = b"\x1f\x8b"
 
 
