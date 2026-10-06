@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cot4-idea-feasibility-check"
+version = "0.1.0"
+description = "Technical feasibility check for a new idea (compute/data/implementation clarity/methodological soundness)"
+requires-python = ">=3.11"
+dependencies = ["openai>=1.0"]
+
+[project.scripts]
+cot4 = "cot4.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

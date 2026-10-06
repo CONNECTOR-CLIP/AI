@@ -604,19 +604,33 @@ def _ontology_nearest_label(
     max_hops: int = 4,
 ) -> str | None:
     """
-    CSO 온톨로지 ancestor 경로를 BFS로 탐색해 label_set에 속하는
-    가장 가까운 상위 토픽을 반환한다 (없으면 None).
+    CSO 온톨로지를 BFS로 탐색해 label_set에 속하는 가장 가까운 토픽을 반환한다.
+    1단계: ancestor(상위) 방향으로 max_hops까지 탐색.
+    2단계: 못 찾으면 descendant(하위) 방향으로 max_hops까지 탐색.
     """
     from collections import deque
-    visited: set[str] = set()
+
+    def _check(label: str) -> str | None:
+        space = label.replace("_", " ")
+        if label in label_set:
+            return label
+        if space in label_set:
+            return space
+        return None
+
+    def _slug(lbl: str) -> str:
+        return lbl.lower().replace(" ", "_")
+
+    slugs = [_slug(lbl) for lbl in result_labels]
+
+    # --- 1. ancestor BFS ---
+    visited: set[str] = set(slugs)
     queue: deque[tuple[str, int]] = deque()
-    for lbl in result_labels:
-        slug = lbl.lower().replace(" ", "_")
+    for slug in slugs:
+        found = _check(slug)
+        if found:
+            return found
         queue.append((slug, 0))
-        visited.add(slug)
-        # label_set은 space-form이므로 slug→space 변환해 비교
-        if lbl in label_set or slug.replace("_", " ") in label_set:
-            return lbl if lbl in label_set else slug.replace("_", " ")
 
     while queue:
         node, hops = queue.popleft()
@@ -626,10 +640,28 @@ def _ontology_nearest_label(
             if parent in visited:
                 continue
             visited.add(parent)
-            parent_space = parent.replace("_", " ")
-            if parent in label_set or parent_space in label_set:
-                return parent if parent in label_set else parent_space
+            found = _check(parent)
+            if found:
+                return found
             queue.append((parent, hops + 1))
+
+    # --- 2. descendant BFS (상향 탐색 실패 시) ---
+    visited_down: set[str] = set(slugs)
+    queue_down: deque[tuple[str, int]] = deque((s, 0) for s in slugs)
+
+    while queue_down:
+        node, hops = queue_down.popleft()
+        if hops >= max_hops:
+            continue
+        for child in onto.get_children(node):
+            if child in visited_down:
+                continue
+            visited_down.add(child)
+            found = _check(child)
+            if found:
+                return found
+            queue_down.append((child, hops + 1))
+
     return None
 
 
@@ -697,11 +729,11 @@ def _simulate_assignment(
                     best_raw = results[0]["score"] if results else 0.1
                     in_set = [{"label_id": kw_label, "score": round(best_raw * 0.5, 4)}]
                 else:
-                    # 3. last resort fallback
-                    in_set = [{"label_id": label_set[0], "score": 0.05}]
+                    # 3. unassigned node
+                    in_set = [{"label_id": "unassigned", "score": 0.0}]
             else:
-                # 3. last resort fallback
-                in_set = [{"label_id": label_set[0], "score": 0.05}]
+                # 3. unassigned node
+                in_set = [{"label_id": "unassigned", "score": 0.0}]
 
         in_set_sorted = sorted(in_set, key=lambda x: (-x["score"], x["label_id"]))
         top1 = in_set_sorted[0]
@@ -1074,6 +1106,36 @@ def _expand_large_node(
     # 7. Build expanded node list (with recursive expansion)
     expansion_threshold = run_config.get("subtopic_expansion_threshold", 20)
     expanded: list[dict] = []
+
+    # sub_labels에 배정되지 못한 논문은 rescue 후 unassigned sub-node로 처리
+    sub_unassigned = sub_groups.get("unassigned", [])
+    if sub_unassigned:
+        rescued_sub, still_sub_unassigned = _rescue_unassigned(
+            sub_unassigned, classify_results, cfo, node_path, warnings,
+            excluded_labels=[label_id] + sub_labels,
+        )
+        expanded.extend(rescued_sub)
+        if still_sub_unassigned:
+            unassigned_sub_node_id = f"{node_path}::unassigned"
+            expanded.append({
+                "node_id": unassigned_sub_node_id,
+                "label": "Unassigned",
+                "cfo": {"label_id": "unassigned", "initial_keywords": []},
+                "children": [
+                    {
+                        "paper_id": gp["paper_id"],
+                        "title": gp.get("title", ""),
+                        "assignment": {
+                            "cfo_label_id": "unassigned",
+                            "score": 0.0,
+                            "was_reexpressed": False,
+                            "reexpress_iteration": None,
+                        },
+                    }
+                    for gp in sorted(still_sub_unassigned, key=lambda p: p["paper_id"])
+                ],
+            })
+
     for sub_lid in sub_labels:
         sub_papers = sub_groups.get(sub_lid, [])
         if not sub_papers:
@@ -1127,6 +1189,102 @@ def _expand_large_node(
         f"{len(expanded)} sub-nodes: {[n['cfo']['label_id'] for n in expanded]}"
     )
     return expanded
+
+
+# ---------------------------------------------------------------------------
+# Unassigned rescue
+# ---------------------------------------------------------------------------
+
+def _rescue_unassigned(
+    unassigned_papers: list[dict],
+    classify_results: dict[str, list[dict]],
+    cfo: CFOAdapter,
+    node_prefix: str,
+    warnings: list[str],
+    excluded_labels: list[str] | None = None,
+) -> tuple[list[dict], list[dict]]:
+    """
+    unassigned 논문들을 자기들끼리 재분류해 새 intermediate 노드로 구제한다.
+    기준: singleton(논문 1편) 노드가 생기지 않으면 OK — label_set 기준은 적용하지 않음.
+    node_prefix: 생성될 node_id의 prefix (예: "cs.AI" → "cs.AI::rescued::X")
+    excluded_labels: 이미 상위/동급 트리에 있는 라벨 — rescue 후보에서 제외해 중복 방지
+    반환값: (rescued_nodes, still_unassigned)
+    """
+    if not unassigned_papers:
+        return [], []
+
+    # 상위/동급에 이미 있는 라벨 정규화
+    excluded: set[str] = set()
+    for lbl in (excluded_labels or []):
+        slug = lbl.lower().replace(" ", "_")
+        excluded.add(lbl)
+        excluded.add(slug)
+        excluded.add(slug.replace("_", " "))
+
+    # 1. unassigned 논문들의 classify 결과에서 빈도 상위 라벨 수집 (excluded 제외)
+    freq: dict[str, int] = defaultdict(int)
+    for p in unassigned_papers:
+        for r in classify_results.get(p["paper_id"], [])[:5]:
+            lbl = r["label_id"]
+            if lbl not in excluded:
+                freq[lbl] += 1
+
+    if not freq:
+        return [], list(unassigned_papers)
+
+    # 2. 빈도 상위 최대 3개를 새 label_set으로 구성
+    ranked = sorted(freq, key=lambda k: -freq[k])
+    new_label_set = ranked[:3]
+
+    # 3. singleton 검사 — label_set을 3→2→1 순으로 줄여가며 singleton 없는 배정 탐색
+    for attempt in range(len(new_label_set), 0, -1):
+        trial_set = new_label_set[:attempt]
+        trial_asgn = _simulate_assignment(unassigned_papers, trial_set, classify_results, cfo)
+        groups = _tie_break_sort(unassigned_papers, trial_asgn)
+
+        real_groups = {lid: ps for lid, ps in groups.items() if lid != "unassigned"}
+        has_singleton = any(len(ps) < 2 for ps in real_groups.values())
+
+        if not has_singleton and real_groups:
+            rescued_nodes: list[dict] = []
+            for lid, papers_in_group in sorted(real_groups.items()):
+                node_id = f"{node_prefix}::rescued::{lid}"
+                kws = cfo.initial_keywords(lid)
+                label_text = lid.replace("_", " ").title()
+                children = [
+                    {
+                        "paper_id": gp["paper_id"],
+                        "title": gp.get("title", ""),
+                        "assignment": {
+                            "cfo_label_id": lid,
+                            "score": trial_asgn[gp["paper_id"]]["score"],
+                            "was_reexpressed": False,
+                            "reexpress_iteration": None,
+                        },
+                    }
+                    for gp in sorted(papers_in_group, key=lambda p: p["paper_id"])
+                ]
+                rescued_nodes.append({
+                    "node_id": node_id,
+                    "label": label_text,
+                    "cfo": {"label_id": lid, "initial_keywords": kws},
+                    "children": children,
+                    "rescued_from": "unassigned",
+                })
+
+            still_unassigned = list(groups.get("unassigned", []))
+            warnings.append(
+                f"{node_prefix}: rescued {len(unassigned_papers) - len(still_unassigned)} unassigned paper(s) "
+                f"into {len(rescued_nodes)} new node(s): {[n['cfo']['label_id'] for n in rescued_nodes]}"
+            )
+            if still_unassigned:
+                warnings.append(
+                    f"{node_prefix}: {len(still_unassigned)} paper(s) remain unassigned after rescue"
+                )
+            return rescued_nodes, still_unassigned
+
+    # 모든 시도 실패
+    return [], list(unassigned_papers)
 
 
 # ---------------------------------------------------------------------------
@@ -1463,7 +1621,7 @@ class TreeBuilder:
 
             # Post-hoc coverage boost: score=0.05 fallback 논문을 추가 라벨로 재배정
             # reexpress 완료 후에 적용하므로 기존 배정에 영향 없음
-            fallback_pids = [pid for pid, asgn in assignments.items() if asgn.get("score", 1.0) <= 0.05]
+            fallback_pids = [pid for pid, asgn in assignments.items() if asgn.get("label_id") == "unassigned"]
             if len(fallback_pids) > len(root_papers) * 0.20:
                 # 20% 이상이 fallback이면 추가 라벨 탐색
                 onto = _get_ontology()
@@ -1485,7 +1643,7 @@ class TreeBuilder:
                         fallback_papers = [p for p in root_papers if p["paper_id"] in set(fallback_pids)]
                         new_asgns = _simulate_assignment(fallback_papers, label_set, classify_results, self._cfo)
                         for pid, asgn in new_asgns.items():
-                            if assignments[pid].get("score", 1.0) <= 0.05:
+                            if assignments[pid].get("label_id") == "unassigned" and asgn.get("label_id") != "unassigned":
                                 assignments[pid] = asgn
 
             # Count reexpressed
@@ -1562,6 +1720,62 @@ class TreeBuilder:
                     "cfo": {"label_id": label_id, "initial_keywords": kws},
                     "children": children,
                 })
+
+            # Rescue unassigned papers before falling back to unassigned node
+            unassigned_papers = groups.get("unassigned", [])
+            if unassigned_papers:
+                rescued_nodes, still_unassigned = _rescue_unassigned(
+                    unassigned_papers, classify_results, self._cfo, root_cat, warnings,
+                    excluded_labels=label_set,
+                )
+                for node in rescued_nodes:
+                    for child in node["children"]:
+                        pid = child["paper_id"]
+                        all_assignments.append({
+                            "paper_id": pid,
+                            "root_cat": root_cat,
+                            "intermediate_id": node["node_id"],
+                            "label_id": child["assignment"]["cfo_label_id"],
+                            "score": child["assignment"]["score"],
+                            "was_reexpressed": False,
+                            "iter": None,
+                        })
+                    intermediate_nodes.append(node)
+
+                if still_unassigned:
+                    unassigned_node_id = f"{root_cat}::unassigned"
+                    unassigned_children: list[dict] = []
+                    for gp in sorted(still_unassigned, key=lambda p: p["paper_id"]):
+                        pid = gp["paper_id"]
+                        asgn = assignments[pid]
+                        unassigned_children.append({
+                            "paper_id": pid,
+                            "title": gp.get("title", ""),
+                            "assignment": {
+                                "cfo_label_id": "unassigned",
+                                "score": 0.0,
+                                "was_reexpressed": bool(asgn.get("was_reexpressed", False)),
+                                "reexpress_iteration": asgn.get("reexpress_iteration"),
+                            },
+                        })
+                        all_assignments.append({
+                            "paper_id": pid,
+                            "root_cat": root_cat,
+                            "intermediate_id": unassigned_node_id,
+                            "label_id": "unassigned",
+                            "score": 0.0,
+                            "was_reexpressed": asgn.get("was_reexpressed", False),
+                            "iter": asgn.get("reexpress_iteration"),
+                        })
+                    intermediate_nodes.append({
+                        "node_id": unassigned_node_id,
+                        "label": "Unassigned",
+                        "cfo": {"label_id": "unassigned", "initial_keywords": []},
+                        "children": unassigned_children,
+                    })
+                    warnings.append(
+                        f"{root_cat}: {len(still_unassigned)} paper(s) placed in 'unassigned' node"
+                    )
 
             if intermediate_nodes:
                 roots_output.append({

@@ -1,0 +1,14 @@
+numpy
+pandas
+openai
+torch>=2.1
+transformers>=4.35
+adapters>=1.0
+anthropic
+aiohttp
+requests
+scikit-learn
+retry
+litellm
+nest_asyncio
+python-dotenv

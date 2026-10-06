@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cot5-idea-novelty-checker"
+version = "0.1.0"
+description = "Literature-grounded novelty check for a new research idea (wraps simra-shahid/idea_novelty_checker as a git submodule)"
+requires-python = ">=3.11"
+dependencies = [
+    "openai>=1.0",
+    "torch>=2.1",
+    "transformers>=4.35",
+    "adapters>=1.0",
+    "anthropic",
+    "pandas",
+    "numpy",
+    "aiohttp",
+    "requests",
+    "scikit-learn",
+    "retry",
+    "litellm",
+    "nest_asyncio",
+    "python-dotenv",
+    "pyyaml",
+]
+
+[project.scripts]
+cot5 = "cot5.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "external/idea_novelty_checker"]

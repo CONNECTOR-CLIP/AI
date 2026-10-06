@@ -1,0 +1,10 @@
+{
+  "title": "예시 아이디어",
+  "problem": "여기에 해결하려는 연구 문제를 적으세요.",
+  "proposed_method": "여기에 제안하는 방법과 핵심 메커니즘을 적으세요.",
+  "motivation": "왜 이 문제가 중요한지 적으세요.",
+  "evaluation_plan": "어떻게 검증할 것인지 적으세요.",
+  "application_domain": "적용 분야를 적으세요.",
+  "seed_papers": [],
+  "cutoff_date": "2026-08-18"
+}

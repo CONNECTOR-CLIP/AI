@@ -151,6 +151,7 @@ OUTPUT_SCHEMA: dict = {
                 "node_id": {"type": "string", "minLength": 1},
                 "label": {"type": "string", "minLength": 1},
                 "expanded_from": {"type": ["string", "null"]},
+                "rescued_from": {"type": ["string", "null"]},
                 "cfo": {
                     "type": "object",
                     "additionalProperties": False,
