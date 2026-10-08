@@ -1,4 +1,5 @@
 import re
+import gzip
 import tarfile
 import os
 import time
@@ -49,46 +50,55 @@ def search_arxiv(query, max_results=10):
         })
     return papers
 
-def extract_tex_content(tar_path, ):
-    """
-    Extract all .tex file contents from a tar.gz archive.
-
-    Args:
-        tar_path: path to the tar.gz file
-
-    Returns:
-        str: concatenated contents of all .tex files, each prefixed with its filename
-    """
+def extract_tex_content(tar_path):
     try:
         all_content = []
-        
-        with tarfile.open(tar_path, 'r:gz') as tar:
-            # 모든 .tex 파일 가져오기
-            tex_files = [f for f in tar.getmembers() if f.name.endswith('.tex')]
-            
-            for tex_file in tex_files:
-                # 파일 내용 추출
-                f = tar.extractfile(tex_file)
-                if f is not None:
-                    try:
-                        # utf-8로 디코딩 시도
-                        content = f.read().decode('utf-8')
-                    except UnicodeDecodeError:
-                        # utf-8 실패 시 latin-1 시도
-                        f.seek(0)
-                        content = f.read().decode('latin-1')
-                    
-                    # 파일명과 내용 추가
-                    all_content.append(f"\n{'='*50}\nFilename: {tex_file.name}\n{'='*50}\n")
-                    all_content.append(content)
-                    all_content.append("\n\n")
-        
-        # 모든 내용을 하나의 문자열로 결합
+
+        try:
+            with tarfile.open(tar_path, "r:*") as tar:
+                tex_files = [
+                    f for f in tar.getmembers()
+                    if f.isfile() and f.name.endswith(".tex")
+                ]
+
+                for tex_file in tex_files:
+                    f = tar.extractfile(tex_file)
+                    if f is not None:
+                        raw = f.read()
+                        try:
+                            content = raw.decode("utf-8")
+                        except UnicodeDecodeError:
+                            content = raw.decode("latin-1")
+
+                        all_content.append(
+                            f"\n{'=' * 50}\n"
+                            f"Filename: {tex_file.name}\n"
+                            f"{'=' * 50}\n"
+                        )
+                        all_content.append(content)
+                        all_content.append("\n\n")
+
+        except tarfile.ReadError:
+            # 일부 구형 논문은 tar가 아니라 gzip으로 압축된 단일 TeX 파일이다.
+            with gzip.open(tar_path, "rb") as source:
+                raw = source.read()
+
+            try:
+                content = raw.decode("utf-8")
+            except UnicodeDecodeError:
+                content = raw.decode("latin-1")
+
+            all_content.append(
+                f"\n{'=' * 50}\n"
+                f"Filename: source.tex\n"
+                f"{'=' * 50}\n"
+            )
+            all_content.append(content)
+
         return "".join(all_content)
-    
+
     except Exception as e:
         return f"Extract failed with error: {str(e)}"
-
 # arxiv src 다운로드 방어 설정. raw 요청(설명적 User-Agent 없음)은 rate limit에 걸리기 쉬운데,
 # 이때 arxiv는 종종 소스 tarball 대신 비-gzip HTML('잠시 후 다시 시도') 페이지를 HTTP 200으로 돌려준다.
 # → search_arxiv가 쓰는 공식 클라이언트와 같은 취지로 UA를 달고, 일시적 실패는 백오프 재시도한다.
@@ -112,7 +122,7 @@ def download_arxiv_source(arxiv_url, local_root, workplace_name, title: str, max
     이렇게 해야 상위(ToolModule 캐시/테스트)가 실패를 실패로 인지하고 해당 논문을 제외할 수 있다.
     """
     try:
-        paper_id = re.search(r'abs/([^/]+)', arxiv_url).group(1)
+        paper_id = re.search(r'abs/(.+?)(?:[?#]|$)', arxiv_url).group(1)
     except Exception as e:
         return {"status": -1, "message": f"Download paper '{title}' failed with error: {str(e)}", "path": None}
 
