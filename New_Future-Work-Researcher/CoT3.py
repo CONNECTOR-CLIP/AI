@@ -18,6 +18,7 @@ import asyncio
 import json
 import os
 import re
+import sys
 
 from dotenv import load_dotenv
 
@@ -49,6 +50,9 @@ DEFAULT_PAPERS = [
     "Inductive Representation Learning on Large Graphs",
 ]
 
+# CoT3 통과 후보가 0개일 때의 종료 코드. future_work_api가 파이프라인 오류(1)와 구분한다.
+NO_CANDIDATES_EXIT_CODE = 3
+
 
 def get_args():
     parser = argparse.ArgumentParser(description="CoT3(교차비교) end-to-end 단독 테스트")
@@ -56,6 +60,9 @@ def get_args():
                         help="논문 제목 2편 이상 (arxiv에서 찾을 수 있는 정확한 제목)")
     parser.add_argument("--paper_ids", type=str, nargs="+",
                         help="--papers와 같은 순서의 arXiv ID")
+    parser.add_argument("--papers_file", type=str,
+                        help='{"papers": [...], "paper_ids": [...]} JSON 파일. 지정 시 --papers/--paper_ids를 대체한다 '
+                             "('-'로 시작하는 제목도 argv 파싱 없이 전달하기 위함)")
     parser.add_argument("--model", type=str, default=os.environ.get("COMPLETION_MODEL", "gpt-4o-2024-08-06"),
                         help="생성(CoT1+CoT3 생성)용 모델")
     parser.add_argument("--judge_model", type=str,
@@ -69,7 +76,24 @@ def get_args():
     parser.add_argument("--canary-repeat", type=int, default=1,
                         help="판정자가 stochastic이므로 동일 후보·카나리 위에서 judge만 N회 반복해 "
                              "catch율(음성)/survive율(양성)로 집계한다 (--inject-canary 필요, 기본 1)")
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.papers_file:
+        with open(args.papers_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        args.papers = data["papers"]
+        args.paper_ids = data.get("paper_ids") or None
+    return args
+
+
+def parse_json_object(text):
+    """LLM 응답에서 JSON 객체를 꺼낸다. ```json 코드 펜스나 앞뒤 설명문이 붙어도 첫 '{'부터 디코딩한다."""
+    json_start = text.find("{")
+    if json_start < 0:
+        raise ValueError("Future Work 결과에서 JSON 객체를 찾지 못했습니다.")
+    payload, _ = json.JSONDecoder().raw_decode(text[json_start:])
+    if not isinstance(payload, dict):
+        raise ValueError("Future Work 결과는 JSON 객체여야 합니다.")
+    return payload
 
 
 def banner(t):
@@ -453,7 +477,7 @@ async def main():
     print(json.dumps([c.model_dump(exclude_none=True) for c in real_passed], indent=2, ensure_ascii=False))
     if not real_passed:
         print("Future Work 생성에 사용할 CoT3 후보가 없습니다.")
-        return
+        sys.exit(NO_CANDIDATES_EXIT_CODE)
 
     paper_references = "\n".join(
         f"- P{index}: {title}"
@@ -504,7 +528,7 @@ Do not add unsupported claims.
     if not future_work_result:
         raise RuntimeError("Future Work Agent가 결과를 반환하지 않았습니다.")
 
-    payload = json.loads(future_work_result)
+    payload = parse_json_object(future_work_result)
     proposals = payload.get("future_work_proposals")
 
     if not isinstance(proposals, list) or len(proposals) != 5:
