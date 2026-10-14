@@ -26,7 +26,8 @@ CoT1 → CoT2 → CoT3 → Future Work → CoT4 → CoT5
 - CoT1~CoT3는 각각 실행할 수 있는 실험 진입점입니다. CoT3는 내부에서 목표·한계 분석에 필요한 처리를 수행하며, CoT1/CoT2 출력 파일을 CLI 인자로 받는 방식은 아닙니다.
 - `run_future_work.py`는 논문 제목을 받아 자체 스캔·제안 생성을 수행합니다. CoT3 출력 파일을 자동으로 입력받는 연결은 구현되어 있지 않습니다.
 - Future Work 형식의 JSON은 CoT4와 CoT5의 입력으로 사용할 수 있습니다.
-- `run_cot4_then_cot5.py`는 **모든 제안이 CoT4에서 `FEASIBLE` 판정을 받은 경우에만** CoT5를 실행합니다. 하나라도 미통과하거나 오류가 발생하면 해당 배치의 CoT5 전체를 건너뜁니다.
+- `run_cot4_then_cot5.py`를 CLI로 실행하면 **모든 제안이 CoT4에서 `FEASIBLE` 판정을 받은 경우에만** CoT5를 실행합니다(배치 게이트). 하나라도 미통과하거나 오류가 발생하면 해당 배치의 CoT5 전체를 건너뜁니다.
+- 웹 연동 경로(`future_work_api.py` → `CoT3.py`)는 원문 다운로드 → CoT1 → CoT2 → CoT3 → Future Work → CoT4 → CoT5를 한 번에 실행하며, CoT4는 **제안별 게이트**(`run_cot4_then_cot5_filtered`)를 사용합니다. `FEASIBLE`·`QUESTIONABLE` 판정을 받은 제안만 CoT5로 보내고, `INFEASIBLE`·오류 제안만 제외합니다. `QUESTIONABLE`은 판단 근거가 부족하다는 의미이지 실현 불가가 아니므로 통과로 간주합니다(제약 조건 확정 전 임시 기준).
 
 ## 2. 디렉토리 구조
 
@@ -207,6 +208,27 @@ python run_cot4_then_cot5.py future_work.json --cot5-config config.yml --cot4-mo
 - `--cot5-model`은 CoT5의 동등성 검사 제공자 모델을 지정합니다. 외부 신규성 검사·랭킹 모델 설정 전체를 대체하는 옵션은 아닙니다.
 - `--output`의 상위 디렉토리는 미리 존재해야 합니다.
 - CoT5 단독 실행은 CoT4 게이트를 거치지 않습니다. 순서를 강제하려면 연결 실행기를 사용합니다.
+
+## 5-1. 웹 연동 API (`future_work_api.py`)
+
+백엔드가 호출하는 Flask API입니다. 기본 포트는 **8001**입니다(8000은 SearchEngine).
+
+```bash
+python future_work_api.py
+```
+
+| API | 설명 |
+|---|---|
+| `POST /api/gap/jobs` | 요청 `{"papers": [{"paper_id", "title", "abstract"}]}`. 분석 작업을 시작하고 `{"job_id", "status": "queued"}`를 바로 반환(202) |
+| `GET /api/gap/jobs/<job_id>` | `{"status", "stages", "gap_content", "error"}` 반환. `stages`는 `download`·`CoT1`·`CoT2`·`CoT3`·`FutureWork`·`CoT4`·`CoT5` 순서의 단계별 상태와 데이터 |
+| `POST /api/gap` | 동기 실행(완료될 때까지 대기). 후보 없음 422, 시간 초과 504, 실패 500 |
+
+- `status`: `queued` · `running` · `completed` · `no_candidates` · `timeout` · `failed`
+- 분석은 한 번에 1건만 실행되고(나머지는 `queued`로 대기), 진행 상황 조회는 분석 중에도 응답합니다.
+- 단계별 진행 이벤트는 `CoT3.py --progress_file`이 JSON lines로 기록합니다.
+- 전체 제한 시간은 `COT_PIPELINE_TIMEOUT`(기본 1800초)입니다.
+- 작업 상태는 프로세스 메모리에만 보관되므로 서버를 재시작하면 사라집니다.
+- arXiv에 LaTeX 원문이 없고 PDF만 있는 논문은 분석에서 제외됩니다.
 
 ## 6. CoT5 DB 요구사항 및 비공개 정책
 
