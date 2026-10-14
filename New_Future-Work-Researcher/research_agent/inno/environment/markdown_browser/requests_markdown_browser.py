@@ -155,6 +155,9 @@ class RequestsMarkdownBrowser(AbstractMarkdownBrowser):
         local_path = path.replace(self.docker_workplace, self.local_workplace)
         return local_path
     def _convert_local_to_docker(self, path: str) -> str:
+        # 주소는 pathlib.Path.as_uri()로 만든 file:// URI라 한글 등 비ASCII 경로가 퍼센트 인코딩돼 있다.
+        # 디코딩하지 않으면 local_workplace(원문 경로)와 비교가 항상 실패한다.
+        path = unquote(path)
         assert self.local_workplace in path, f"The path must be a absolute path from `{self.local_workplace}/` directory"
         docker_path = path.replace(self.local_workplace, self.docker_workplace)
         return docker_path
