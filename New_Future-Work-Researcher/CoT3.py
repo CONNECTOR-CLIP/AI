@@ -44,8 +44,8 @@ from research_agent.future_work.cross_comparison_judge import judge_candidates
 # CoT3 (CoT3.recheck 원문 재대조 — achieved 역량에만 기댄 위험 후보만 검증)
 from research_agent.future_work.cross_comparison_source_check import verify_candidates_against_source
 from research_agent.future_work.future_work_agent import get_future_work_agent
-# CoT4(실현가능성) → CoT5(신규성): FEASIBLE·QUESTIONABLE 제안만 CoT5로 보낸다
-from run_cot4_then_cot5 import run_cot4_then_cot5_filtered
+# 심화 검증 CoT4(실현가능성) → CoT5(신규성): --verify를 줄 때만 실행한다
+from verify_proposals import verify_with_progress
 load_dotenv()
 
 DEFAULT_PAPERS = [
@@ -68,6 +68,9 @@ def get_args():
                              "('-'로 시작하는 제목도 argv 파싱 없이 전달하기 위함)")
     parser.add_argument("--progress_file", type=str,
                         help="단계별 진행 이벤트를 JSON lines로 기록할 파일 (future_work_api가 읽어 프론트에 전달)")
+    parser.add_argument("--verify", action="store_true",
+                        help="Future Work 뒤에 CoT4 → CoT5 검증까지 이어서 실행 (기본: Future Work까지만. "
+                             "선택한 제안만 검증할 때는 verify_proposals.py를 쓴다)")
     parser.add_argument("--model", type=str, default=os.environ.get("COMPLETION_MODEL", "gpt-4o-2024-08-06"),
                         help="생성(CoT1+CoT3 생성)용 모델")
     parser.add_argument("--judge_model", type=str,
@@ -611,42 +614,15 @@ Do not add unsupported claims.
         for p in proposals
     ])
 
-    # [CoT4 → CoT5] 제안 5개는 그대로 두고, 판정 결과를 같은 payload에 덧붙인다.
-    # FEASIBLE·QUESTIONABLE 제안이 CoT5로 간다(run_cot4_then_cot5.FILTERED_GATE_CLASSIFICATIONS).
-    banner("[CoT4 실현가능성 → CoT5 신규성] 제안별 병렬 실행")
-    emit("CoT4", "running", proposals=len(proposals))
-
-    def on_cot4_done(cot4_results, passed_titles):
-        emit("CoT4", "done", results=[
-            {
-                "title": r.get("idea_title"),
-                "classification": r.get("classification"),
-                "confidence": r.get("confidence"),
-                "concerns": {k: bool(v.get("present")) for k, v in (r.get("concerns") or {}).items()},
-                "rationale": r.get("rationale") or r.get("error"),
-            }
-            for r in cot4_results
-        ])
-        if passed_titles:
-            emit("CoT5", "running", ideas=passed_titles)
-        else:
-            emit("CoT5", "skipped", reason="CoT4를 통과한 제안이 없습니다(모두 실현 불가 또는 오류).")
-
-    downstream = await run_cot4_then_cot5_filtered(payload, on_cot4_done=on_cot4_done)
-    if downstream["CoT5"]["status"] == "completed":
-        emit("CoT5", "done", results=[
-            {
-                "title": r.get("idea_title"),
-                "classification": r.get("classification"),
-                "reason": r.get("reason") or r.get("error"),
-                "evaluated_paper_count": r.get("evaluated_paper_count"),
-            }
-            for r in downstream["CoT5"]["results"]
-        ])
-    payload["gate"] = downstream["gate"]
-    payload["CoT4"] = downstream["CoT4"]
-    payload["CoT5"] = downstream["CoT5"]
-    print(f"  CoT4 통과(FEASIBLE·QUESTIONABLE) {len(downstream['gate']['passed_ideas'])}/{len(proposals)} → CoT5 {downstream['CoT5']['status']}")
+    # [CoT4 → CoT5] 기본 분석은 Future Work까지만 실행하고, 사용자가 고른 제안만 따로 검증한다
+    # (verify_proposals.py). --verify를 주면 전 제안을 이어서 검증해 같은 payload에 덧붙인다.
+    if args.verify:
+        banner("[CoT4 실현가능성 → CoT5 신규성] 제안별 병렬 실행")
+        downstream = await verify_with_progress(payload, emit)
+        payload["gate"] = downstream["gate"]
+        payload["CoT4"] = downstream["CoT4"]
+        payload["CoT5"] = downstream["CoT5"]
+        print(f"  CoT4 통과(FEASIBLE·QUESTIONABLE) {len(downstream['gate']['passed_ideas'])}/{len(proposals)} → CoT5 {downstream['CoT5']['status']}")
 
     banner("[Future Work 최종 결과]")
     print(json.dumps(payload, indent=2, ensure_ascii=False))
