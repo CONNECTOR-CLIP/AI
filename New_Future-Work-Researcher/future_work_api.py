@@ -13,17 +13,24 @@ from flask import Flask, jsonify, request
 
 BASE_DIR = Path(__file__).resolve().parent
 RESULT_MARKER = "[Future Work 최종 결과]"
+# verify_proposals.RESULT_MARKER와 같은 값
+VERIFY_RESULT_MARKER = "[검증 결과]"
 # CoT3.NO_CANDIDATES_EXIT_CODE와 같은 값. (CoT3를 import하면 무거운 의존성이 함께 로드되므로 값만 맞춘다.)
 NO_CANDIDATES_EXIT_CODE = 3
 # 파이프라인 전체 제한 시간(초). 초과 시 하위 프로세스를 종료하고 504를 반환한다.
 PIPELINE_TIMEOUT_SECONDS = int(os.environ.get("COT_PIPELINE_TIMEOUT", "1800"))
 # 끝난 작업을 메모리에 보관하는 시간(초)
 JOB_RETENTION_SECONDS = 60 * 60
-# 진행 패널에 표시하는 단계 순서. CoT3.emit()의 stage 값과 같다.
-STAGES = ["download", "CoT1", "CoT2", "CoT3", "FutureWork", "CoT4", "CoT5"]
+# 진행 패널에 표시하는 단계 순서. CoT3.emit()·verify_proposals.emit()의 stage 값과 같다.
+# 기본 분석은 Future Work까지, 심화 검증(사용자가 고른 제안)은 CoT4 → CoT5만 실행한다.
+ANALYSIS_STAGES = ["download", "CoT1", "CoT2", "CoT3", "FutureWork"]
+VERIFY_STAGES = ["CoT4", "CoT5"]
 
-# CoT3는 workplace_future_work/ 아래 같은 작업 폴더를 쓰므로 파이프라인은 한 번에 하나만 실행한다.
-PIPELINE_LOCK = threading.Lock()
+# CoT3는 workplace_future_work/ 아래 같은 작업 폴더를 쓰므로 기본 분석은 한 번에 하나만 실행한다.
+ANALYSIS_LOCK = threading.Lock()
+# 검증은 작업 폴더를 쓰지 않으므로 잠금을 따로 둔다. 오래 걸리는 검증(CoT5) 때문에 기본 분석이 기다리지 않는다.
+# 다만 CoT5가 임베딩 모델(SPECTER2)을 메모리에 올리므로 검증끼리는 한 번에 하나만 실행한다.
+VERIFY_LOCK = threading.Lock()
 JOBS = {}
 JOBS_LOCK = threading.Lock()
 
@@ -56,8 +63,9 @@ def parse_papers(body):
     return (titles, paper_ids), None
 
 
-def run_pipeline(titles, paper_ids, work_dir, progress_file=None):
-    """CoT3.py(CoT1 → CoT5)를 하위 프로세스로 실행하고 결과를 분류해 돌려준다.
+def run_pipeline(titles, paper_ids, work_dir, progress_file=None, verify=False):
+    """기본 분석: CoT3.py(원문 → CoT1 → CoT2 → CoT3 → Future Work)를 하위 프로세스로 실행한다.
+    verify=True면 CoT4 → CoT5까지 이어서 실행한다.
 
     반환: {"kind": "completed" | "no_candidates" | "timeout" | "failed", "payload"?, "error"?, "detail"?}
     """
@@ -79,7 +87,38 @@ def run_pipeline(titles, paper_ids, work_dir, progress_file=None):
     ]
     if progress_file:
         command += ["--progress_file", str(progress_file)]
+    if verify:
+        command.append("--verify")
 
+    return run_subprocess(command, RESULT_MARKER, "Future Work")
+
+
+def run_verify(proposals, work_dir, progress_file=None):
+    """심화 검증: verify_proposals.py(CoT4 → CoT5)를 하위 프로세스로 실행한다.
+
+    반환: run_pipeline과 같은 형식. payload는 {"gate", "CoT4", "CoT5"}
+    """
+    payload_file = Path(work_dir) / "proposals.json"
+    payload_file.write_text(
+        json.dumps({"future_work_proposals": proposals}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+
+    command = [
+        sys.executable,
+        "-u",
+        str(BASE_DIR / "verify_proposals.py"),
+        "--payload_file",
+        str(payload_file),
+    ]
+    if progress_file:
+        command += ["--progress_file", str(progress_file)]
+
+    return run_subprocess(command, VERIFY_RESULT_MARKER, "Verification")
+
+
+def run_subprocess(command, marker, label):
+    """하위 프로세스를 제한 시간 안에서 실행하고, 출력의 marker 뒤 JSON을 결과로 꺼낸다."""
     process = subprocess.Popen(
         command,
         cwd=BASE_DIR,
@@ -124,21 +163,21 @@ def run_pipeline(titles, paper_ids, work_dir, progress_file=None):
     if return_code != 0:
         return {"kind": "failed", "error": "CoT pipeline failed", "detail": output[-4000:]}
 
-    marker_position = output.rfind(RESULT_MARKER)
+    marker_position = output.rfind(marker)
 
     if marker_position < 0:
-        return {"kind": "failed", "error": "Future Work result marker not found", "detail": output[-4000:]}
+        return {"kind": "failed", "error": f"{label} result marker not found", "detail": output[-4000:]}
 
-    result_text = output[marker_position + len(RESULT_MARKER):]
+    result_text = output[marker_position + len(marker):]
     json_start = result_text.find("{")
 
     if json_start < 0:
-        return {"kind": "failed", "error": "Future Work JSON not found"}
+        return {"kind": "failed", "error": f"{label} JSON not found"}
 
     try:
         payload, _ = json.JSONDecoder().raw_decode(result_text[json_start:])
     except json.JSONDecodeError as error:
-        return {"kind": "failed", "error": "Invalid Future Work JSON", "detail": str(error)}
+        return {"kind": "failed", "error": f"Invalid {label} JSON", "detail": str(error)}
 
     return {"kind": "completed", "payload": payload}
 
@@ -160,11 +199,11 @@ def read_events(progress_file):
     return events
 
 
-def fold_stages(events, job_status):
+def fold_stages(events, job_status, stage_names):
     """진행 이벤트를 단계별 현재 상태로 접는다. 같은 단계의 이벤트는 마지막 것이 현재 상태다."""
     stages = {
         name: {"stage": name, "status": "pending", "started_at": None, "finished_at": None, "data": {}}
-        for name in STAGES
+        for name in stage_names
     }
     for event in events:
         stage = stages.get(event.get("stage"))
@@ -183,12 +222,13 @@ def fold_stages(events, job_status):
         for stage in stages.values():
             if stage["status"] == "running":
                 stage["status"] = "failed"
-    return [stages[name] for name in STAGES]
+    return [stages[name] for name in stage_names]
 
 
-def run_job(job_id, titles, paper_ids):
-    with PIPELINE_LOCK:
-        with tempfile.TemporaryDirectory(prefix="cot3_") as work_dir:
+def run_job(job_id, lock, run):
+    """작업 하나를 잠금 안에서 실행하고 결과를 JOBS에 기록한다. run(work_dir, progress_file) → outcome"""
+    with lock:
+        with tempfile.TemporaryDirectory(prefix="cot_") as work_dir:
             progress_file = Path(work_dir) / "progress.jsonl"
             with JOBS_LOCK:
                 job = JOBS[job_id]
@@ -196,7 +236,7 @@ def run_job(job_id, titles, paper_ids):
                 job["started_at"] = time.time()
                 job["progress_file"] = str(progress_file)
             try:
-                outcome = run_pipeline(titles, paper_ids, work_dir, progress_file)
+                outcome = run(work_dir, progress_file)
             except Exception as exc:
                 outcome = {"kind": "failed", "error": f"{type(exc).__name__}: {exc}"}
             # 작업 폴더가 지워지기 전에 이벤트를 메모리로 옮긴다.
@@ -210,7 +250,48 @@ def run_job(job_id, titles, paper_ids):
         job["progress_file"] = None
         job["error"] = outcome.get("error")
         if outcome["kind"] == "completed":
-            job["gap_content"] = json.dumps(outcome["payload"], ensure_ascii=False)
+            if job["kind"] == "verify":
+                job["verification"] = outcome["payload"]
+            else:
+                job["gap_content"] = json.dumps(outcome["payload"], ensure_ascii=False)
+
+
+def create_job(kind, stages, papers, lock, run):
+    """작업을 등록하고 백그라운드에서 시작한다. 다른 작업이 같은 잠금을 쓰는 중이면 queued로 기다린다."""
+    prune_jobs()
+    job_id = uuid.uuid4().hex
+    with JOBS_LOCK:
+        JOBS[job_id] = {
+            "job_id": job_id,
+            "kind": kind,
+            "stages": stages,
+            "status": "queued",
+            "papers": papers,
+            "created_at": time.time(),
+            "started_at": None,
+            "finished_at": None,
+            "progress_file": None,
+            "events": [],
+            "error": None,
+            "gap_content": None,
+            "verification": None,
+        }
+    threading.Thread(target=run_job, args=(job_id, lock, run), daemon=True).start()
+    return job_id
+
+
+def parse_proposals(body):
+    """검증 요청 본문에서 제안 목록을 꺼낸다. 형식 오류면 (None, 오류 메시지)."""
+    proposals = body.get("proposals")
+    if not isinstance(proposals, list) or not proposals:
+        return None, "proposals must be a non-empty list"
+    for index, proposal in enumerate(proposals):
+        if not isinstance(proposal, dict):
+            return None, f"proposals[{index}] must be an object"
+        for field in ("background_and_gap", "proposed_direction"):
+            if not str(proposal.get(field) or "").strip():
+                return None, f"proposals[{index}].{field} is required"
+    return proposals, None
 
 
 def prune_jobs():
@@ -230,15 +311,18 @@ def health():
 
 @app.post("/api/gap")
 def analyze_gap():
-    """동기 실행: 파이프라인이 끝날 때까지 기다렸다가 결과를 반환한다."""
-    parsed, error = parse_papers(request.get_json(silent=True) or {})
+    """동기 실행: 파이프라인이 끝날 때까지 기다렸다가 결과를 반환한다.
+    기본은 Future Work까지, 요청에 "verify": true면 CoT4 → CoT5까지 실행한다."""
+    body = request.get_json(silent=True) or {}
+    parsed, error = parse_papers(body)
     if error:
         return jsonify({"error": error}), 400
     titles, paper_ids = parsed
+    verify = body.get("verify") is True
 
-    with PIPELINE_LOCK:
-        with tempfile.TemporaryDirectory(prefix="cot3_") as work_dir:
-            outcome = run_pipeline(titles, paper_ids, work_dir)
+    with ANALYSIS_LOCK:
+        with tempfile.TemporaryDirectory(prefix="cot_") as work_dir:
+            outcome = run_pipeline(titles, paper_ids, work_dir, verify=verify)
 
     status_codes = {"timeout": 504, "no_candidates": 422, "failed": 500}
     if outcome["kind"] != "completed":
@@ -254,29 +338,42 @@ def analyze_gap():
 
 @app.post("/api/gap/jobs")
 def start_gap_job():
-    """비동기 실행: 작업을 시작하고 job_id를 바로 반환한다. 진행 상황은 GET /api/gap/jobs/<job_id>로 조회."""
-    parsed, error = parse_papers(request.get_json(silent=True) or {})
+    """기본 분석 비동기 실행: 원문 → CoT1 → CoT2 → CoT3 → Future Work.
+    요청에 "verify": true면 CoT4 → CoT5까지 이어서 실행한다. job_id를 바로 반환하고,
+    진행 상황은 GET /api/gap/jobs/<job_id>로 조회한다."""
+    body = request.get_json(silent=True) or {}
+    parsed, error = parse_papers(body)
     if error:
         return jsonify({"error": error}), 400
     titles, paper_ids = parsed
+    verify = body.get("verify") is True
 
-    prune_jobs()
-    job_id = uuid.uuid4().hex
-    with JOBS_LOCK:
-        JOBS[job_id] = {
-            "job_id": job_id,
-            # 다른 분석이 실행 중이면 끝날 때까지 queued 상태로 기다린다.
-            "status": "queued",
-            "papers": titles,
-            "created_at": time.time(),
-            "started_at": None,
-            "finished_at": None,
-            "progress_file": None,
-            "events": [],
-            "error": None,
-            "gap_content": None,
-        }
-    threading.Thread(target=run_job, args=(job_id, titles, paper_ids), daemon=True).start()
+    job_id = create_job(
+        "analysis",
+        ANALYSIS_STAGES + (VERIFY_STAGES if verify else []),
+        titles,
+        ANALYSIS_LOCK,
+        lambda work_dir, progress_file: run_pipeline(titles, paper_ids, work_dir, progress_file, verify),
+    )
+    return jsonify({"job_id": job_id, "status": "queued"}), 202
+
+
+@app.post("/api/gap/verify-jobs")
+def start_verify_job():
+    """심화 검증 비동기 실행: 사용자가 고른 Future Work 제안만 CoT4 → CoT5로 검증한다.
+    요청: {"proposals": [Future Work 결과의 제안 객체, ...]}
+    결과(GET /api/gap/jobs/<job_id>의 verification): {"gate", "CoT4", "CoT5"}, 결과마다 proposal_id 포함"""
+    proposals, error = parse_proposals(request.get_json(silent=True) or {})
+    if error:
+        return jsonify({"error": error}), 400
+
+    job_id = create_job(
+        "verify",
+        VERIFY_STAGES,
+        [str(p.get("proposed_direction", "")) for p in proposals],
+        VERIFY_LOCK,
+        lambda work_dir, progress_file: run_verify(proposals, work_dir, progress_file),
+    )
     return jsonify({"job_id": job_id, "status": "queued"}), 202
 
 
@@ -291,14 +388,18 @@ def get_gap_job(job_id):
     events = read_events(job["progress_file"]) if job["progress_file"] else job["events"]
     return jsonify({
         "job_id": job_id,
+        "kind": job["kind"],
         "status": job["status"],
         "papers": job["papers"],
         "created_at": job["created_at"],
         "started_at": job["started_at"],
         "finished_at": job["finished_at"],
-        "stages": fold_stages(events, job["status"]),
+        "stages": fold_stages(events, job["status"], job["stages"]),
         "error": job["error"],
+        # 기본 분석 결과 (JSON 문자열)
         "gap_content": job["gap_content"],
+        # 심화 검증 결과 ({"gate", "CoT4", "CoT5"} 객체)
+        "verification": job["verification"],
     })
 
 
@@ -307,6 +408,6 @@ if __name__ == "__main__":
         host="0.0.0.0",
         port=8001,
         # 진행 상황 조회가 실행 중인 분석에 막히지 않도록 요청별 스레드를 쓴다.
-        # 파이프라인 자체는 PIPELINE_LOCK으로 한 번에 하나만 실행된다.
+        # 기본 분석은 ANALYSIS_LOCK, 검증은 VERIFY_LOCK으로 각각 한 번에 하나만 실행된다.
         threaded=True,
     )
