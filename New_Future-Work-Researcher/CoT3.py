@@ -18,6 +18,8 @@ import asyncio
 import json
 import os
 import re
+import sys
+import time
 
 from dotenv import load_dotenv
 
@@ -42,12 +44,17 @@ from research_agent.future_work.cross_comparison_judge import judge_candidates
 # CoT3 (CoT3.recheck 원문 재대조 — achieved 역량에만 기댄 위험 후보만 검증)
 from research_agent.future_work.cross_comparison_source_check import verify_candidates_against_source
 from research_agent.future_work.future_work_agent import get_future_work_agent
+# 심화 검증 CoT4(실현가능성) → CoT5(신규성): --verify를 줄 때만 실행한다
+from verify_proposals import verify_with_progress
 load_dotenv()
 
 DEFAULT_PAPERS = [
     "LightGCN: Simplifying and Powering Graph Convolution Network for Recommendation",
     "Inductive Representation Learning on Large Graphs",
 ]
+
+# CoT3 통과 후보가 0개일 때의 종료 코드. future_work_api가 파이프라인 오류(1)와 구분한다.
+NO_CANDIDATES_EXIT_CODE = 3
 
 
 def get_args():
@@ -56,6 +63,14 @@ def get_args():
                         help="논문 제목 2편 이상 (arxiv에서 찾을 수 있는 정확한 제목)")
     parser.add_argument("--paper_ids", type=str, nargs="+",
                         help="--papers와 같은 순서의 arXiv ID")
+    parser.add_argument("--papers_file", type=str,
+                        help='{"papers": [...], "paper_ids": [...]} JSON 파일. 지정 시 --papers/--paper_ids를 대체한다 '
+                             "('-'로 시작하는 제목도 argv 파싱 없이 전달하기 위함)")
+    parser.add_argument("--progress_file", type=str,
+                        help="단계별 진행 이벤트를 JSON lines로 기록할 파일 (future_work_api가 읽어 프론트에 전달)")
+    parser.add_argument("--verify", action="store_true",
+                        help="Future Work 뒤에 CoT4 → CoT5 검증까지 이어서 실행 (기본: Future Work까지만. "
+                             "선택한 제안만 검증할 때는 verify_proposals.py를 쓴다)")
     parser.add_argument("--model", type=str, default=os.environ.get("COMPLETION_MODEL", "gpt-4o-2024-08-06"),
                         help="생성(CoT1+CoT3 생성)용 모델")
     parser.add_argument("--judge_model", type=str,
@@ -69,11 +84,43 @@ def get_args():
     parser.add_argument("--canary-repeat", type=int, default=1,
                         help="판정자가 stochastic이므로 동일 후보·카나리 위에서 judge만 N회 반복해 "
                              "catch율(음성)/survive율(양성)로 집계한다 (--inject-canary 필요, 기본 1)")
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.papers_file:
+        with open(args.papers_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        args.papers = data["papers"]
+        args.paper_ids = data.get("paper_ids") or None
+    return args
+
+
+def parse_json_object(text):
+    """LLM 응답에서 JSON 객체를 꺼낸다. ```json 코드 펜스나 앞뒤 설명문이 붙어도 첫 '{'부터 디코딩한다."""
+    json_start = text.find("{")
+    if json_start < 0:
+        raise ValueError("Future Work 결과에서 JSON 객체를 찾지 못했습니다.")
+    payload, _ = json.JSONDecoder().raw_decode(text[json_start:])
+    if not isinstance(payload, dict):
+        raise ValueError("Future Work 결과는 JSON 객체여야 합니다.")
+    return payload
 
 
 def banner(t):
     print("\n" + "=" * 72 + f"\n{t}\n" + "=" * 72)
+
+
+# --progress_file 경로. main()에서 설정한다.
+PROGRESS_FILE = None
+
+
+def emit(stage, status, **data):
+    """단계별 진행 이벤트를 JSON lines로 남긴다. 같은 단계의 이벤트가 여러 번 오면 마지막 것이 현재 상태다.
+    stage: download | CoT1 | CoT2 | CoT3 | FutureWork | CoT4 | CoT5
+    status: running | done | skipped"""
+    if not PROGRESS_FILE:
+        return
+    event = {"stage": stage, "status": status, "time": time.time(), "data": data}
+    with open(PROGRESS_FILE, "a", encoding="utf-8") as f:
+        f.write(json.dumps(event, ensure_ascii=False) + "\n")
 
 
 def build_canaries(pool):
@@ -206,6 +253,10 @@ async def main():
     if len(args.papers) < 2:
         raise SystemExit("교차비교(CoT3)는 최소 2편이 필요합니다. --papers 에 2편 이상 주세요.")
 
+    global PROGRESS_FILE
+    PROGRESS_FILE = args.progress_file
+    emit("download", "running", papers=[{"title": t} for t in args.papers])
+
     local_root = os.path.join(os.getcwd(), "workplace_future_work")
     os.makedirs(local_root, exist_ok=True)
 
@@ -239,6 +290,7 @@ async def main():
     for t in args.papers:
         if t not in path_by_title:
             print(f"[SKIP] '{t}': 다운로드 실패로 pool에서 제외")
+    emit("download", "done", papers=[{"title": t, "ok": t in path_by_title} for t in args.papers])
     if len(path_by_title) < 2:
         raise RuntimeError(
             f"논문을 2편 이상 다운로드하지 못했습니다 (성공 {len(path_by_title)}편):\n{download_res}"
@@ -265,7 +317,7 @@ async def main():
                 gd_module, title, path_hint, {}, paper_index=i, max_retries=args.max_retries,
             )
             if err:
-                return i, None, None, f"[SKIP] P{i+1} CoT1 실패 — {err}"
+                return i, None, None, f"[SKIP] P{i+1} CoT1 실패 — {err}", None
 
             # [CoT2] 원문 .tex 정규식 추출 (LLM 없음, 파일 읽기만 — 논문 간 독립)
             rel_path = path_hint.lstrip("/\\")
@@ -281,10 +333,19 @@ async def main():
                 f"(not_achieved={sum(1 for s in gd.subgoals if s.status=='not_achieved')})\n"
                 f"  limitations={len(lims)} (raw {len(raw_lims)} → validated {len(lims)})"
             )
+            # 진행 패널에 보여줄 논문별 요약 (CoT1 목표 달성 상태 분포, CoT2 한계 후보 raw → 검증 통과)
+            stats = {
+                "subgoals": {
+                    status: sum(1 for s in gd.subgoals if s.status == status)
+                    for status in ("achieved", "partially_achieved", "not_achieved")
+                },
+                "limitations_raw": len(raw_lims),
+                "limitations": len(lims),
+            }
             # paper_text는 CoT3.recheck 원문 재대조에서 위험 후보 검증용으로 재사용된다.
-            return i, PaperInput(goal_decomposition=gd, limitations=lims), paper_text, log
+            return i, PaperInput(goal_decomposition=gd, limitations=lims), paper_text, log, stats
         except Exception as e:
-            return i, None, None, f"[SKIP] P{i+1} 예외 — {type(e).__name__}: {e}"
+            return i, None, None, f"[SKIP] P{i+1} 예외 — {type(e).__name__}: {e}", None
 
     # 성공한 논문만 CoT1+CoT2에 투입한다. 원래 인덱스 i를 보존해 P번호/로그/캐시태그가 일관되게 한다.
     # (실패 논문은 위에서 이미 제외 로그를 찍었다.)
@@ -295,6 +356,7 @@ async def main():
     ]
 
     # 논문 간 동시 실행. 한 편이 실패해도 (worker가 예외를 잡아 로그로 반환하므로) 나머지는 계속된다.
+    emit("CoT1", "running", papers=[{"title": t} for t in args.papers if t in path_by_title])
     results = await asyncio.gather(*tasks)
 
     # 원래 논문 순서를 보존해서 조립. paper_inputs와 paper_texts_ordered는 같은 순서를 유지해야
@@ -302,12 +364,28 @@ async def main():
     paper_inputs = []
     paper_texts_ordered = []
     successful_titles = []
-    for i, paper_input, paper_text, log in sorted(results, key=lambda r: r[0]):
+    paper_stats = []
+    for i, paper_input, paper_text, log, stats in sorted(results, key=lambda r: r[0]):
         print(log)
+        paper_stats.append({"title": args.papers[i], "ok": paper_input is not None, **(stats or {})})
         if paper_input is not None:
             paper_inputs.append(paper_input)
             paper_texts_ordered.append(paper_text)
             successful_titles.append(args.papers[i])
+
+    # 진행 패널의 P번호는 build_evidence_pool의 키(P1, P2, ...)와 같도록 성공한 논문 순서로 매긴다.
+    ref = 0
+    for s in paper_stats:
+        if s["ok"]:
+            ref += 1
+            s["ref"] = f"P{ref}"
+    emit("CoT1", "done", papers=[
+        {k: s[k] for k in ("title", "ok", "ref", "subgoals") if k in s} for s in paper_stats
+    ])
+    emit("CoT2", "done", papers=[
+        {k: s[k] for k in ("title", "ok", "ref", "limitations_raw", "limitations") if k in s}
+        for s in paper_stats
+    ])
 
     if len(paper_inputs) < 2:
         raise RuntimeError(f"교차비교에 쓸 유효 논문이 {len(paper_inputs)}편뿐입니다(최소 2편 필요).")
@@ -322,6 +400,7 @@ async def main():
     print(input_block)
 
     # [CoT3.gen1+gen2 생성 + CoT3.static 정적검증]
+    emit("CoT3", "running", funnel=[])
     cc_agent = get_cross_comparison_agent(model=args.model)
     cc_module = AgentModule(cc_agent, client, args.cache_path)
     validated, warnings, context_variables, err = await run_cross_comparison_with_retry(
@@ -334,13 +413,17 @@ async def main():
 
     if err:
         print(f"\n[생성 실패, 재시도 소진] {err}")
-        return
+        raise RuntimeError(f"CoT3 후보 생성 실패(재시도 소진): {err}")
 
     banner(f"[CoT3.static 통과] {len(validated)}개 → CoT3.recheck 원문 재대조로")
     print(f"후보 id: {[c.candidate_id for c in validated]}")
+    # 진행 패널의 후보 깔때기: 단계를 지날 때마다 남은 후보 수를 이어 붙인다.
+    funnel = [{"label": "정적 검증 통과", "count": len(validated)}]
+    emit("CoT3", "running", funnel=funnel)
     if not validated:
         print("CoT3.static 통과 후보가 없어 이후 단계를 건너뜁니다.")
-        return
+        emit("CoT3", "done", funnel=funnel)
+        sys.exit(NO_CANDIDATES_EXIT_CODE)
 
     # [CoT3.recheck 원문 재대조] achieved 역량에만 기댄 '주장된 한계' 위험 후보만 원문에 되대조.
     # pool 키(P1,P2,...) 순서에 맞춰 원문 매핑을 만든다(paper_texts_ordered는 paper_inputs와 동순서).
@@ -351,9 +434,12 @@ async def main():
     )
     for l in source_log:
         print("  -", l)
+    funnel.append({"label": "원문 재대조 통과", "count": len(verified)})
+    emit("CoT3", "running", funnel=funnel)
     if not verified:
         print("CoT3.recheck 통과 후보가 없어 CoT3.judge를 건너뜁니다.")
-        return
+        emit("CoT3", "done", funnel=funnel)
+        sys.exit(NO_CANDIDATES_EXIT_CODE)
 
     # [CANARY 주입] 대조군 — 정답을 우리가 아는 후보(음성=잡혀야, 양성=살아야)를 judge 직전에 섞는다.
     # static/recheck는 건너뛴다(그건 judge가 아니라 정적층을 시험하게 됨). 게이트 변별력을 양방향으로 시험.
@@ -451,9 +537,20 @@ async def main():
     real_passed = [c for c in passed if c.candidate_id not in canary_ids]
     banner(f"[CoT3 최종] {len(real_passed)}개 (→ CoT5로)")
     print(json.dumps([c.model_dump(exclude_none=True) for c in real_passed], indent=2, ensure_ascii=False))
+    funnel.append({"label": "판정 통과", "count": len(real_passed)})
+    emit("CoT3", "done", funnel=funnel, candidates=[
+        {
+            "id": c.candidate_id,
+            "source_type": c.source_type,
+            "source_papers": c.source_papers,
+            "gap_statement": c.gap_statement,
+            "verdict": c.judge_verdict,
+        }
+        for c in real_passed
+    ])
     if not real_passed:
         print("Future Work 생성에 사용할 CoT3 후보가 없습니다.")
-        return
+        sys.exit(NO_CANDIDATES_EXIT_CODE)
 
     paper_references = "\n".join(
         f"- P{index}: {title}"
@@ -479,6 +576,7 @@ Return only the required future_work_proposals JSON object.
 Do not add unsupported claims.
 """
 
+    emit("FutureWork", "running", candidates=len(real_passed))
     future_work_module = AgentModule(
         get_future_work_agent(model=args.model),
         client,
@@ -504,11 +602,27 @@ Do not add unsupported claims.
     if not future_work_result:
         raise RuntimeError("Future Work Agent가 결과를 반환하지 않았습니다.")
 
-    payload = json.loads(future_work_result)
+    payload = parse_json_object(future_work_result)
     proposals = payload.get("future_work_proposals")
 
     if not isinstance(proposals, list) or len(proposals) != 5:
         raise ValueError("Future Work 결과는 정확히 5개의 제안을 포함해야 합니다.")
+
+    emit("FutureWork", "done", proposals=[
+        {"id": p.get("id"), "direction": p.get("proposed_direction", ""),
+         "reference_papers": p.get("reference_papers", [])}
+        for p in proposals
+    ])
+
+    # [CoT4 → CoT5] 기본 분석은 Future Work까지만 실행하고, 사용자가 고른 제안만 따로 검증한다
+    # (verify_proposals.py). --verify를 주면 전 제안을 이어서 검증해 같은 payload에 덧붙인다.
+    if args.verify:
+        banner("[CoT4 실현가능성 → CoT5 신규성] 제안별 병렬 실행")
+        downstream = await verify_with_progress(payload, emit)
+        payload["gate"] = downstream["gate"]
+        payload["CoT4"] = downstream["CoT4"]
+        payload["CoT5"] = downstream["CoT5"]
+        print(f"  CoT4 통과(FEASIBLE·QUESTIONABLE) {len(downstream['gate']['passed_ideas'])}/{len(proposals)} → CoT5 {downstream['CoT5']['status']}")
 
     banner("[Future Work 최종 결과]")
     print(json.dumps(payload, indent=2, ensure_ascii=False))

@@ -2,7 +2,7 @@ import asyncio
 import unittest
 
 import CoT4
-from run_cot4_then_cot5 import run_cot4_then_cot5
+from run_cot4_then_cot5 import run_cot4_then_cot5, run_cot4_then_cot5_filtered
 
 
 PAYLOAD = {
@@ -86,6 +86,76 @@ class Cot4ThenCot5Tests(unittest.TestCase):
         self.assertFalse(report["gate"]["passed"])
         self.assertEqual(report["CoT4"]["results"][0]["classification"], "ERROR")
         self.assertEqual(report["CoT5"]["status"], "skipped")
+
+
+# 사용자가 고른 제안만 검증하는 경우: 원래 분석의 3번·5번 제안만 들어온다.
+SELECTED_PAYLOAD = {
+    "future_work_proposals": [
+        {"id": 3, "background_and_gap": "Gap three", "proposed_direction": "Method three"},
+        {"id": 5, "background_and_gap": "Gap five", "proposed_direction": "Method five"},
+    ]
+}
+
+
+class ByTitleCot4Pipeline:
+    """제안 간 병렬 실행이라 호출 순서가 정해지지 않으므로 제목으로 판정을 정한다."""
+
+    def __init__(self, classification_by_title):
+        self.classification_by_title = classification_by_title
+
+    def check(self, idea):
+        return {"idea_title": idea.title, "classification": self.classification_by_title[idea.title]}
+
+
+class FilteredGateTests(unittest.TestCase):
+    def test_feasible_and_questionable_pass_and_results_keep_proposal_id(self):
+        cot4 = ByTitleCot4Pipeline({"Method three": "QUESTIONABLE", "Method five": "FEASIBLE"})
+
+        async def cot5_check(idea):
+            return {"idea_title": idea.title, "classification": "NOVEL"}
+
+        report = asyncio.run(
+            run_cot4_then_cot5_filtered(SELECTED_PAYLOAD, cot4_pipeline=cot4, cot5_check=cot5_check)
+        )
+
+        self.assertEqual(report["CoT5"]["status"], "completed")
+        self.assertEqual(
+            [(r["idea_title"], r["proposal_id"]) for r in report["CoT4"]["results"]],
+            [("Method three", 3), ("Method five", 5)],
+        )
+        self.assertEqual(
+            sorted((r["idea_title"], r["proposal_id"]) for r in report["CoT5"]["results"]),
+            [("Method five", 5), ("Method three", 3)],
+        )
+
+    def test_infeasible_proposal_is_excluded_from_cot5_only(self):
+        cot4 = ByTitleCot4Pipeline({"Method three": "INFEASIBLE", "Method five": "FEASIBLE"})
+        cot5_calls = []
+
+        async def cot5_check(idea):
+            cot5_calls.append(idea.title)
+            return {"idea_title": idea.title, "classification": "NOVEL"}
+
+        report = asyncio.run(
+            run_cot4_then_cot5_filtered(SELECTED_PAYLOAD, cot4_pipeline=cot4, cot5_check=cot5_check)
+        )
+
+        self.assertEqual(cot5_calls, ["Method five"])
+        self.assertEqual(report["gate"]["failed_ideas"], ["Method three"])
+        self.assertEqual([r["proposal_id"] for r in report["CoT5"]["results"]], [5])
+
+    def test_cot5_is_skipped_when_no_proposal_passes(self):
+        cot4 = ByTitleCot4Pipeline({"Method three": "INFEASIBLE", "Method five": "INFEASIBLE"})
+
+        async def cot5_check(_idea):
+            self.fail("CoT5 must not run when no proposal passes CoT4")
+
+        report = asyncio.run(
+            run_cot4_then_cot5_filtered(SELECTED_PAYLOAD, cot4_pipeline=cot4, cot5_check=cot5_check)
+        )
+
+        self.assertEqual(report["CoT5"]["status"], "skipped")
+        self.assertEqual([r["proposal_id"] for r in report["CoT4"]["results"]], [3, 5])
 
 
 if __name__ == "__main__":
