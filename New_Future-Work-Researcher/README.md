@@ -27,7 +27,10 @@ CoT1 → CoT2 → CoT3 → Future Work → CoT4 → CoT5
 - `run_future_work.py`는 논문 제목을 받아 자체 스캔·제안 생성을 수행합니다. CoT3 출력 파일을 자동으로 입력받는 연결은 구현되어 있지 않습니다.
 - Future Work 형식의 JSON은 CoT4와 CoT5의 입력으로 사용할 수 있습니다.
 - `run_cot4_then_cot5.py`를 CLI로 실행하면 **모든 제안이 CoT4에서 `FEASIBLE` 판정을 받은 경우에만** CoT5를 실행합니다(배치 게이트). 하나라도 미통과하거나 오류가 발생하면 해당 배치의 CoT5 전체를 건너뜁니다.
-- 웹 연동 경로(`future_work_api.py` → `CoT3.py`)는 원문 다운로드 → CoT1 → CoT2 → CoT3 → Future Work → CoT4 → CoT5를 한 번에 실행하며, CoT4는 **제안별 게이트**(`run_cot4_then_cot5_filtered`)를 사용합니다. `FEASIBLE`·`QUESTIONABLE` 판정을 받은 제안만 CoT5로 보내고, `INFEASIBLE`·오류 제안만 제외합니다. `QUESTIONABLE`은 판단 근거가 부족하다는 의미이지 실현 불가가 아니므로 통과로 간주합니다(제약 조건 확정 전 임시 기준).
+- 웹 연동 경로는 두 단계로 나뉩니다.
+  - **기본 분석**(`CoT3.py`): 원문 다운로드 → CoT1 → CoT2 → CoT3 → Future Work까지 실행해 아이디어(제안 5개)를 만듭니다. `--verify`를 주면 CoT4 → CoT5까지 이어서 실행합니다.
+  - **심화 검증**(`verify_proposals.py`): 사용자가 고른 제안만 CoT4 → CoT5로 검증합니다.
+- 두 경로 모두 CoT4는 **제안별 게이트**(`run_cot4_then_cot5_filtered`)를 사용합니다. `FEASIBLE`·`QUESTIONABLE` 판정을 받은 제안만 CoT5로 보내고, `INFEASIBLE`·오류 제안만 제외합니다. `QUESTIONABLE`은 판단 근거가 부족하다는 의미이지 실현 불가가 아니므로 통과로 간주합니다(제약 조건 확정 전 임시 기준). CoT4·CoT5 결과마다 원래 제안의 `id`가 `proposal_id`로 붙습니다.
 
 ## 2. 디렉토리 구조
 
@@ -143,6 +146,14 @@ python CoT3.py --papers "논문 제목 A" "논문 제목 B" --model "YOUR_COMPLE
 
 `--paper_ids`를 사용하면 `--papers`와 동일한 순서로 arXiv ID를 지정합니다. 진단 로그와 최종 후보 JSON이 함께 출력되므로 콘솔 출력 전체를 순수 JSON으로 취급하지 않습니다.
 
+`CoT3.py`는 CoT3 후보로 Future Work 제안까지 생성합니다(기본 분석). `--verify`를 주면 이어서 CoT4 → CoT5로 전 제안을 검증합니다. 고른 제안만 검증하려면 다음을 사용합니다.
+
+```powershell
+python verify_proposals.py --payload_file proposals.json
+```
+
+`proposals.json`은 `{"future_work_proposals": [제안, ...]}` 형식이며, 결과는 `[검증 결과]` 표시 뒤에 `{"gate", "CoT4", "CoT5"}` JSON으로 출력됩니다.
+
 ### Future Work: 후속 연구 제안 생성
 
 ```powershell
@@ -219,12 +230,17 @@ python future_work_api.py
 
 | API | 설명 |
 |---|---|
-| `POST /api/gap/jobs` | 요청 `{"papers": [{"paper_id", "title", "abstract"}]}`. 분석 작업을 시작하고 `{"job_id", "status": "queued"}`를 바로 반환(202) |
-| `GET /api/gap/jobs/<job_id>` | `{"status", "stages", "gap_content", "error"}` 반환. `stages`는 `download`·`CoT1`·`CoT2`·`CoT3`·`FutureWork`·`CoT4`·`CoT5` 순서의 단계별 상태와 데이터 |
-| `POST /api/gap` | 동기 실행(완료될 때까지 대기). 후보 없음 422, 시간 초과 504, 실패 500 |
+| `POST /api/gap/jobs` | **기본 분석**. 요청 `{"papers": [{"paper_id", "title", "abstract"}], "verify"?: false}`. 작업을 시작하고 `{"job_id", "status": "queued"}`를 바로 반환(202). `"verify": true`면 CoT4 → CoT5까지 실행 |
+| `POST /api/gap/verify-jobs` | **심화 검증**. 요청 `{"proposals": [Future Work 결과의 제안 객체, ...]}`(고른 제안만). 반환은 위와 같음(202) |
+| `GET /api/gap/jobs/<job_id>` | 두 작업 공통. `{"kind", "status", "stages", "gap_content", "verification", "error"}` |
+| `POST /api/gap` | 기본 분석 동기 실행(완료될 때까지 대기). 후보 없음 422, 시간 초과 504, 실패 500 |
 
+- `kind`: `analysis`(기본 분석) · `verify`(심화 검증)
+- `stages`: 기본 분석은 `download`·`CoT1`·`CoT2`·`CoT3`·`FutureWork`, 심화 검증은 `CoT4`·`CoT5` 순서의 단계별 상태와 데이터
+- `gap_content`: 기본 분석 결과(JSON 문자열, `future_work_proposals` 포함). CoT4·CoT5 결과는 없음
+- `verification`: 심화 검증 결과 객체 `{"gate", "CoT4": {"results"}, "CoT5": {"status", "results"}}`. 결과마다 `proposal_id`(제안의 `id`)가 있어, 원래 분석 결과의 해당 제안에 합칠 때 사용합니다
 - `status`: `queued` · `running` · `completed` · `no_candidates` · `timeout` · `failed`
-- 분석은 한 번에 1건만 실행되고(나머지는 `queued`로 대기), 진행 상황 조회는 분석 중에도 응답합니다.
+- 기본 분석과 심화 검증은 각각 한 번에 1건씩 실행되고(나머지는 `queued`로 대기), 서로는 기다리지 않습니다. 진행 상황 조회는 실행 중에도 응답합니다.
 - 단계별 진행 이벤트는 `CoT3.py --progress_file`이 JSON lines로 기록합니다.
 - 전체 제한 시간은 `COT_PIPELINE_TIMEOUT`(기본 1800초)입니다.
 - 작업 상태는 프로세스 메모리에만 보관되므로 서버를 재시작하면 사라집니다.
