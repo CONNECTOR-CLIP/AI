@@ -143,6 +143,8 @@ async def run_cot4_then_cot5_filtered(
     run_cot4_then_cot5(배치 게이트)와 달리 일부 제안이 INFEASIBLE이어도 나머지는 CoT5로 진행한다.
     모든 CoT4 결과(QUESTIONABLE 포함)는 CoT4 results에 그대로 남겨 근거 자료로 쓴다.
     CoT4·CoT5 모두 제안 간 병렬로 실행하며, 한 제안의 실패는 그 제안의 결과에만 기록된다.
+    CoT4·CoT5 결과마다 원래 제안의 id(proposal_id)를 붙인다. 일부 제안만 검증한 결과를
+    원래 분석 결과에 합칠 때 순서가 아니라 이 값으로 맞춘다.
     """
 
     cot4_pipeline = cot4_pipeline or CoT4.CoT4Pipeline()
@@ -166,11 +168,20 @@ async def run_cot4_then_cot5_filtered(
 
     cot4_results = list(await asyncio.gather(*[check_cot4(idea) for idea in cot4_ideas]))
 
-    passed = [
-        cot5_idea
-        for cot5_idea, result in zip(cot5_ideas, cot4_results)
+    # 제안 id가 없으면 1부터 매긴 순번을 쓴다 (CoT4·CoT5 어댑터의 기본값과 같다).
+    proposal_ids = [
+        proposal.get("id", index) if isinstance(proposal, dict) else index
+        for index, proposal in enumerate(payload["future_work_proposals"], 1)
+    ]
+    for result, proposal_id in zip(cot4_results, proposal_ids):
+        result["proposal_id"] = proposal_id
+
+    passed_pairs = [
+        (cot5_idea, proposal_id)
+        for cot5_idea, result, proposal_id in zip(cot5_ideas, cot4_results, proposal_ids)
         if cot4_filtered_gate_passed(result)
     ]
+    passed = [idea for idea, _ in passed_pairs]
     failed_titles = [
         idea.title
         for idea, result in zip(cot4_ideas, cot4_results)
@@ -216,6 +227,8 @@ async def run_cot4_then_cot5_filtered(
     # 서브모듈 디렉터리 안에서 실행해 각 작업의 복원 대상도 서브모듈 디렉터리가 되게 한다.
     with CoT5.submodule_cwd():
         cot5_results = list(await asyncio.gather(*[check_cot5(idea) for idea in passed]))
+    for result, (_, proposal_id) in zip(cot5_results, passed_pairs):
+        result["proposal_id"] = proposal_id
 
     report["CoT5"] = {"status": "completed", "results": cot5_results}
     return report
