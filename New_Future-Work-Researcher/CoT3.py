@@ -287,10 +287,21 @@ async def main():
         r"The paper is downloaded to path:\s*(\S+\.tex)",
         download_res, re.DOTALL,
     ))
+    # 원문 출처: "latex"(arxiv LaTeX 소스) 또는 "pdf"(LaTeX가 없어 PDF 텍스트로 변환 — 원문과 글자가
+    # 조금 다를 수 있어 프론트에서 표시용). 줄이 없는 예전 캐시 결과는 latex로 본다.
+    source_by_title = dict(re.findall(
+        r"Download paper '([^']+)' successfully(?:(?!Download paper ').)*?"
+        r"Paper source:\s*(\w+)",
+        download_res, re.DOTALL,
+    ))
     for t in args.papers:
         if t not in path_by_title:
             print(f"[SKIP] '{t}': 다운로드 실패로 pool에서 제외")
-    emit("download", "done", papers=[{"title": t, "ok": t in path_by_title} for t in args.papers])
+    emit("download", "done", papers=[
+        {"title": t, "ok": True, "source": source_by_title.get(t, "latex")} if t in path_by_title
+        else {"title": t, "ok": False}
+        for t in args.papers
+    ])
     if len(path_by_title) < 2:
         raise RuntimeError(
             f"논문을 2편 이상 다운로드하지 못했습니다 (성공 {len(path_by_title)}편):\n{download_res}"

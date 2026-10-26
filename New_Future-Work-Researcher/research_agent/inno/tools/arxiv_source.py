@@ -263,6 +263,7 @@ def download_arxiv_source(arxiv_url, local_root, workplace_name, title: str, max
                     "status": 0,
                     "message": f"Download paper '{title}' successfully (PDF-only on arxiv → converted PDF text to .tex)",
                     "path": pdf_path,
+                    "source": "pdf",
                 }
             return {
                 "status": -1,
@@ -303,6 +304,7 @@ def download_arxiv_source(arxiv_url, local_root, workplace_name, title: str, max
                     "status": 0,
                     "message": f"Download paper '{title}' successfully (no usable LaTeX → converted PDF text to .tex)",
                     "path": pdf_path,
+                    "source": "pdf",
                 }
             return {
                 "status": -1,
@@ -314,7 +316,7 @@ def download_arxiv_source(arxiv_url, local_root, workplace_name, title: str, max
         os.makedirs(paper_tex_dir, exist_ok=True)
         with open(os.path.join(paper_tex_dir, f"{filename_base}.tex"), 'w', encoding='utf-8') as f:
             f.write(tex_content)
-        return {"status": 0, "message": f"Download paper '{title}' successfully", "path": f"/{workplace_name}/papers/{filename_base}.tex"}
+        return {"status": 0, "message": f"Download paper '{title}' successfully", "path": f"/{workplace_name}/papers/{filename_base}.tex", "source": "latex"}
 
     return {
         "status": -1,
@@ -398,6 +400,7 @@ def download_arxiv_source_by_title(
                     download_info["message"]
                     + f"\nResolved directly from mapped arxiv id: {mapped_id}"
                     + f"\nThe paper is downloaded to path: {download_info['path']}"
+                + f"\nPaper source: {download_info['source']}"
                 )
             continue
 
@@ -412,6 +415,7 @@ def download_arxiv_source_by_title(
                     download_info["message"]
                     + f"\nResolved directly from arxiv id/url (search skipped): {abs_url}"
                     + f"\nThe paper is downloaded to path: {download_info['path']}"
+                + f"\nPaper source: {download_info['source']}"
                 )
             continue
 
@@ -460,6 +464,7 @@ def download_arxiv_source_by_title(
                 download_info["message"]
                 + f"\nMatched arxiv title: '{best_paper['title']}' (similarity={similarity:.2f})"
                 + f"\nThe paper is downloaded to path: {download_info['path']}"
+                + f"\nPaper source: {download_info['source']}"
             )
             ret_msg.append(msg)
 
