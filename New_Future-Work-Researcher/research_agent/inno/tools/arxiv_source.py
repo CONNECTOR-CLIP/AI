@@ -106,6 +106,115 @@ _ARXIV_HEADERS = {"User-Agent": "Future-Work-Researcher/1.0"}
 _GZIP_MAGIC = b"\x1f\x8b"
 
 
+# ---------------------------------------------------------------------------
+# PDF fallback: LaTeX 소스가 없는(PDF-only) 논문도 파이프라인을 계속 타게 한다.
+# PDF에서 텍스트를 뽑아 papers/<name>.tex 로 저장한다(확장자를 .tex로 유지해야 CoT1/CoT2/flow의
+# `\S+\.tex` 경로 regex와 open_local_file 흐름을 그대로 쓸 수 있다). 변환은 로컬에서 1~수 초면 끝나고,
+# /src/가 이미 PDF 바이트를 돌려준 경우엔 추가 다운로드도 없다 → 전체 실행 시간은 사실상 그대로.
+# 에이전트 프롬프트가 "\begin{abstract}", "\section{Introduction}" 등으로 ctrl+f 하므로
+# 헤딩으로 보이는 줄 앞에 가짜 LaTeX 마커를 붙여 네비게이션도 .tex와 동일하게 동작하게 한다.
+# ---------------------------------------------------------------------------
+_SECTION_KEYWORDS = (
+    "introduction", "related work", "background", "preliminaries", "method", "methods",
+    "methodology", "approach", "model", "experiments", "experiment", "experimental setup",
+    "evaluation", "results", "analysis", "discussion", "limitations", "limitation",
+    "conclusion", "conclusions", "future work", "conclusion and future work",
+    "conclusions and future work", "acknowledgments", "acknowledgements", "references",
+    "appendix",
+)
+_NUMBERED_HEADING = re.compile(r'^(?:\d{1,2}|[IVX]{1,4})\.?\s+([A-Z][^.!?]{1,80})$')
+_SUBSECTION_HEADING = re.compile(r'^\d{1,2}\.\d{1,2}\.?\s+([A-Z][^.!?]{1,80})$')
+
+
+def _pdf_bytes_to_text(pdf_bytes: bytes) -> str:
+    """PDF 바이트 → 평문. 빠른 pypdfium2를 우선 쓰고, 없으면 이미 의존성인 pdfminer로 대체."""
+    try:
+        import pypdfium2 as pdfium
+        pdf = pdfium.PdfDocument(pdf_bytes)
+        try:
+            pages = [pdf[i].get_textpage().get_text_range() for i in range(len(pdf))]
+        finally:
+            pdf.close()
+        return "\n".join(pages)
+    except ImportError:
+        import io
+        import pdfminer.high_level
+        return pdfminer.high_level.extract_text(io.BytesIO(pdf_bytes))
+
+
+def _pdf_text_to_pseudo_tex(text: str) -> str:
+    """추출된 평문에 \\begin{abstract} / \\section{...} 마커를 붙여 .tex 네비게이션과 호환되게 한다."""
+    out = []
+    abstract_done = False
+    for raw_line in text.replace("\r", "").split("\n"):
+        line = raw_line.strip()
+        low = line.lower().rstrip(":")
+        if not abstract_done and low in ("abstract", "a b s t r a c t"):
+            out.append("\\begin{abstract}")
+            abstract_done = True
+            continue
+        if not abstract_done and low.startswith("abstract") and len(line) > 20:
+            # "Abstract—We propose ..." 처럼 같은 줄에 본문이 붙은 경우
+            out.append("\\begin{abstract}")
+            abstract_done = True
+            out.append(raw_line)
+            continue
+        m = _SUBSECTION_HEADING.match(line)
+        if m:
+            out.append(f"\\subsection{{{m.group(1).strip()}}}")
+            continue
+        m = _NUMBERED_HEADING.match(line)
+        if m and len(m.group(1).split()) <= 8:
+            out.append(f"\\section{{{m.group(1).strip()}}}")
+            continue
+        if low in _SECTION_KEYWORDS:
+            out.append(f"\\section{{{line.rstrip(':')}}}")
+            continue
+        out.append(raw_line)
+    body = "\n".join(out)
+    body = re.sub(r'\n{3,}', '\n\n', body)
+    return (
+        "% NOTE: LaTeX source unavailable on arXiv; this file was converted from the PDF.\n"
+        "% Section markers (\\section{...}) are heuristic; equations/tables may be garbled.\n"
+        + body
+    )
+
+
+def _save_pdf_as_tex(pdf_bytes: bytes, local_root: str, workplace_name: str, filename_base: str):
+    """PDF를 원본(.pdf)과 변환본(.tex) 둘 다 저장하고, 변환본 상대경로를 반환한다. 실패 시 None."""
+    try:
+        text = _pdf_bytes_to_text(pdf_bytes)
+    except Exception:
+        return None
+    if len(text.strip()) < 500:  # 스캔본 등 텍스트 레이어가 없는 PDF
+        return None
+    paper_src_dir = os.path.join(local_root, workplace_name, "paper_source")
+    os.makedirs(paper_src_dir, exist_ok=True)
+    with open(os.path.join(paper_src_dir, f"{filename_base}.pdf"), "wb") as f:
+        f.write(pdf_bytes)
+    paper_tex_dir = os.path.join(local_root, workplace_name, "papers")
+    os.makedirs(paper_tex_dir, exist_ok=True)
+    with open(os.path.join(paper_tex_dir, f"{filename_base}.tex"), "w", encoding="utf-8") as f:
+        f.write(_pdf_text_to_pseudo_tex(text))
+    return f"/{workplace_name}/papers/{filename_base}.tex"
+
+
+def _download_pdf_fallback(paper_id: str, local_root: str, workplace_name: str, title: str, filename_base: str):
+    """소스 tar에 .tex가 없을 때 arxiv.org/pdf/<id> 에서 PDF를 받아 변환한다."""
+    try:
+        resp = requests.get(f"https://arxiv.org/pdf/{paper_id}", headers=_ARXIV_HEADERS, timeout=60)
+    except Exception:
+        return None
+    if resp.status_code != 200 or resp.content[:4] != b"%PDF":
+        return None
+    return _save_pdf_as_tex(resp.content, local_root, workplace_name, filename_base)
+
+
+def _filename_base(title: str) -> str:
+    safe_title = re.sub(r'[^\w\s]', '', title).strip()
+    return safe_title.replace(' ', '_').lower()
+
+
 def download_arxiv_source(arxiv_url, local_root, workplace_name, title: str, max_attempts: int = 4):
     """
     download arxiv paper source file
@@ -144,15 +253,23 @@ def download_arxiv_source(arxiv_url, local_root, workplace_name, title: str, max
             continue
 
         # (0) PDF-only 논문: 저자가 LaTeX 소스를 안 올리면 arxiv가 /src/에서 소스 대신 PDF를 준다.
-        #     이건 결정적(재시도해도 계속 PDF)이라 즉시 실패 처리한다 — 헛된 백오프를 없애고, 로그만 봐도
-        #     "네트워크 탓이 아니라 LaTeX 소스가 없어서"임을 알 수 있게 한다. (.tex 파이프라인은 처리 불가.)
+        #     예전엔 여기서 바로 실패 처리했지만, 이제 이 PDF 바이트를 그대로 텍스트로 변환해 .tex로 저장한다
+        #     (추가 다운로드 없음, 로컬 변환 1~수 초). 변환 불가(스캔본 등)일 때만 실패.
         ctype = response.headers.get("Content-Type", "")
         if "application/pdf" in ctype or response.content[:4] == b"%PDF":
+            pdf_path = _save_pdf_as_tex(response.content, local_root, workplace_name, _filename_base(title))
+            if pdf_path:
+                return {
+                    "status": 0,
+                    "message": f"Download paper '{title}' successfully (PDF-only on arxiv → converted PDF text to .tex)",
+                    "path": pdf_path,
+                    "source": "pdf",
+                }
             return {
                 "status": -1,
                 "message": (
-                    f"Download paper '{title}' skipped — PDF-only on arxiv "
-                    f"(no LaTeX source at /src/{paper_id}); cannot build .tex."
+                    f"Download paper '{title}' skipped — PDF-only on arxiv and PDF text extraction failed "
+                    f"(scanned/image PDF?) for /src/{paper_id}."
                 ),
                 "path": None,
             }
@@ -167,8 +284,7 @@ def download_arxiv_source(arxiv_url, local_root, workplace_name, title: str, max
 
         paper_src_dir = os.path.join(local_root, workplace_name, "paper_source")
         os.makedirs(paper_src_dir, exist_ok=True)
-        safe_title = re.sub(r'[^\w\s]', '', title).strip()
-        filename_base = safe_title.replace(' ', '_').lower()
+        filename_base = _filename_base(title)
         filepath = os.path.join(paper_src_dir, f"{filename_base}.tar.gz")
         try:
             with open(filepath, 'wb') as f:
@@ -180,7 +296,16 @@ def download_arxiv_source(arxiv_url, local_root, workplace_name, title: str, max
 
         # (2) extract_tex_content는 실패 시 예외 대신 "Extract failed with error: ..." 문자열을 돌려준다.
         #     본문은 이미 gzip이므로 이 실패는 대개 결정적(예: LaTeX 소스가 없는 논문)이라 재시도하지 않는다.
-        if tex_content.startswith("Extract failed with error:"):
+        #     tar 안에 .tex가 하나도 없을 때(빈 문자열)도 실패로 보고, 두 경우 모두 PDF로 대체 시도한다.
+        if tex_content.startswith("Extract failed with error:") or not tex_content.strip():
+            pdf_path = _download_pdf_fallback(paper_id, local_root, workplace_name, title, filename_base)
+            if pdf_path:
+                return {
+                    "status": 0,
+                    "message": f"Download paper '{title}' successfully (no usable LaTeX → converted PDF text to .tex)",
+                    "path": pdf_path,
+                    "source": "pdf",
+                }
             return {
                 "status": -1,
                 "message": f"Download paper '{title}' failed — could not extract .tex ({tex_content})",
@@ -191,7 +316,7 @@ def download_arxiv_source(arxiv_url, local_root, workplace_name, title: str, max
         os.makedirs(paper_tex_dir, exist_ok=True)
         with open(os.path.join(paper_tex_dir, f"{filename_base}.tex"), 'w', encoding='utf-8') as f:
             f.write(tex_content)
-        return {"status": 0, "message": f"Download paper '{title}' successfully", "path": f"/{workplace_name}/papers/{filename_base}.tex"}
+        return {"status": 0, "message": f"Download paper '{title}' successfully", "path": f"/{workplace_name}/papers/{filename_base}.tex", "source": "latex"}
 
     return {
         "status": -1,
@@ -275,6 +400,7 @@ def download_arxiv_source_by_title(
                     download_info["message"]
                     + f"\nResolved directly from mapped arxiv id: {mapped_id}"
                     + f"\nThe paper is downloaded to path: {download_info['path']}"
+                + f"\nPaper source: {download_info['source']}"
                 )
             continue
 
@@ -289,6 +415,7 @@ def download_arxiv_source_by_title(
                     download_info["message"]
                     + f"\nResolved directly from arxiv id/url (search skipped): {abs_url}"
                     + f"\nThe paper is downloaded to path: {download_info['path']}"
+                + f"\nPaper source: {download_info['source']}"
                 )
             continue
 
@@ -337,6 +464,7 @@ def download_arxiv_source_by_title(
                 download_info["message"]
                 + f"\nMatched arxiv title: '{best_paper['title']}' (similarity={similarity:.2f})"
                 + f"\nThe paper is downloaded to path: {download_info['path']}"
+                + f"\nPaper source: {download_info['source']}"
             )
             ret_msg.append(msg)
 

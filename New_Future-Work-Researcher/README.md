@@ -244,7 +244,7 @@ python future_work_api.py
 - 단계별 진행 이벤트는 `CoT3.py --progress_file`이 JSON lines로 기록합니다.
 - 전체 제한 시간은 `COT_PIPELINE_TIMEOUT`(기본 1800초)입니다.
 - 작업 상태는 프로세스 메모리에만 보관되므로 서버를 재시작하면 사라집니다.
-- arXiv에 LaTeX 원문이 없고 PDF만 있는 논문은 분석에서 제외됩니다.
+- arXiv에 LaTeX 원문이 없고 PDF만 있는 논문은 PDF에서 텍스트를 추출해 분석합니다. `download` 단계의 `papers` 항목에 `source`가 붙습니다: `"latex"`(LaTeX 원문) 또는 `"pdf"`(PDF 변환본 — 원문과 글자·수식이 조금 다를 수 있음). 예: `{"title": "...", "ok": true, "source": "pdf"}`. 다운로드 실패 논문은 `{"title": "...", "ok": false}`입니다.
 
 ## 6. CoT5 DB 요구사항 및 비공개 정책
 
