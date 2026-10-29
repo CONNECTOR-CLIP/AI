@@ -787,9 +787,10 @@ cot5 examples\idea.json
 cot5 D:\path\to\future_work_result.json > cot5_results.json
 ```
 
-CoT4 실현가능성 검증을 먼저 통과시킨 뒤 CoT5를 실행하려면 저장소 루트의
-`run_cot4_then_cot5.py`를 사용한다. 이 통합 실행기는 CoT4 결과가 모든 제안에
-대해 `FEASIBLE`인 경우에만 CoT5를 호출하며, 그렇지 않으면 CoT5를 건너뛴다.
+CoT4에서 구현에 필요한 자원·준비사항을 먼저 안내받은 뒤 CoT5를 실행하려면 저장소 루트의
+`run_cot4_then_cot5.py`를 사용한다. 이 통합 실행기는 모든 제안의 CoT4 결과가
+정상적으로 생성되면 CoT5를 호출한다. CoT4 처리 오류가 있으면 CoT5를 건너뛰지만,
+자원 보유 여부나 실현 가능 여부를 근거로 제안을 걸러내지는 않는다.
 
 16.4 테스트
 
@@ -798,3 +799,37 @@ API 키 없이 실행 가능한 순수 로직(`idea.py`/`cutoff.py`/`verdict.py`
 ```powershell
 python -m pytest tests -v
 ```
+
+## 4종 Overlap 출력 (구현)
+
+`cot5` CLI와 상위 `CoT5.py` 실행 경로는 `overlaps`에 `web`, `paper`, `patent`의 독립 결과를 반환한다. 각 결과에는 `status`(`겹침`/`없음`/`확인불가`), `checked_count`, `matches`, `candidates`, `error`가 있다. `없음`은 **검색 범위 내에서 발견하지 못함**이지 전 세계에 없다는 증명이 아니다. `확인불가`는 검색·설정·파싱·비교가 실제로 실패했을 때만 표시한다. 한 채널의 실패는 다른 채널 실행을 중단시키지 않는다. 기존 논문 `classification`과 `review` 필드는 유지한다.
+
+- GitHub: `GITHUB_TOKEN` 선택 사항(익명 API 제한 완화용).
+- Google 웹 검색: 기존 Google Custom Search 이용자는 `GOOGLE_SEARCH_API_KEY`와 `GOOGLE_SEARCH_ENGINE_ID`; 그렇지 않으면 `SERPAPI_API_KEY`를 설정한다. [Google Custom Search JSON API](https://developers.google.com/custom-search/v1/overview)는 신규 고객에게 닫혀 있고 기존 고객도 2027-01-01까지 전환해야 한다. SerpApi 경로는 제3자 서비스 계정·약관에 따른다. 웹페이지 무단 스크래핑은 하지 않는다.
+- 한국 특허: 웹 검색과 같은 `SERPAPI_API_KEY`로 Google Patents의 `country=KR` 검색을 사용한다. KR 공개번호의 특허만 후보로 수집한다. 검색 스니펫 기반 **기술 유사성 탐색**이며 청구항 분석 또는 침해 판단이 아니다. 한국 특허의 완전한 망라를 보장하지 않는다.
+
+API 키는 환경 변수로 주입하고 저장소에 커밋하지 않는다. GitHub README는 프로젝트의 구현 주장이고 실행 검증은 아니다. 웹 검색 스니펫 역시 제한적인 근거다.
+
+
+
+## 전체 코퍼스 벡터 검색 + 논문 검색 진단 (2026-10)
+
+논문 후보 검색은 이제 (1) 전체 로컬 논문에 대해 미리 구축한 SPECTER2 벡터 인덱스, (2) 기존 CSO 키워드 검색을 독립적으로 사용한다. CSO 검색이 0건이면 별도 SQLite FTS5 제목·초록 인덱스로 결정적 보조 검색을 수행한다. 결과를 합친 다음 기존 SPECTER2 Top-100 및 LLM Top-10/동등성 검사를 수행한다. 벡터·FTS 인덱스가 없거나 최신 DB와 맞지 않으면 해당 소스는 건너뛰고 `paper_search`에 `missing`/`stale`/`building` 상태와 실제 검색 범위를 남긴다. **인덱스가 구축되기 전에는 전체 코퍼스 벡터 검색이 활성화되지 않는다.** 최초 실행 시 자동으로 92만 편을 임베딩하지 않는다.
+
+기존 DB는 읽기 전용이며 인덱스는 별도 경로에 저장된다. 아래 명령은 `CoT5` 폴더에서 실행한다(패키지를 설치하지 않았다면 먼저 `$env:PYTHONPATH='src;external/idea_novelty_checker'`).
+
+```powershell
+D:\.venv-local-win\Scripts\python.exe -m cot5.lexical_cli build --source D:\experiment\arxiv_cs_ai.db
+D:\.venv-local-win\Scripts\python.exe -m cot5.vector_cli build --db D:\experiment\arxiv_cs_ai.db
+D:\.venv-local-win\Scripts\python.exe -m cot5.lexical_cli status --source D:\experiment\arxiv_cs_ai.db
+D:\.venv-local-win\Scripts\python.exe -m cot5.vector_cli status --db D:\experiment\arxiv_cs_ai.db
+```
+
+기본 경로는 `<DB>.fts.sqlite3`와 `<DB>.specter2`이며 `ARXIV_FTS_PATH`, `COT5_VECTOR_INDEX_DIR`로 변경할 수 있다. 벡터 인덱스는 중단 후 동일 DB·동일 모델 설정으로 재개할 수 있지만, CPU만 있는 환경에서 전체 구축에는 긴 시간이 든다. DB나 SPECTER2 설정이 변경되면 새 인덱스가 필요하다. 인덱스 생성 전 상태는 전체 검색 완료로 간주하지 않는다.
+
+`paper_search` 결과에는 생성된 키워드/제목 질의, 질의별 로컬 DB 적중 수, 각 인덱스 상태·후보 수, 최종 랭크 후보 수, `completed_empty`/`reviewed`/`invalid_review` 구분이 기록된다. 정상적인 후보 0건은 파싱 오류가 아니며 한 번만 검색하고 `classification=NO_MATCH_IN_SCOPE`, `paper overlap=없음`으로 표시한다. 이는 **현재 검색 범위에서 미발견**이라는 뜻이지 글로벌 신규성의 증명이 아니다. 후보가 있는데 분류 형식이 잘못된 경우에만 파싱 오류로 재시도한다.
+
+병렬 OpenRouter 실행에서는 `COT_TOTAL_LLM_CONCURRENCY`(기본 4)를 CoT4/CoT5 프로세스에 분배해 합계 상한을 둔다. 명시적인 모델 용량 오류만 최대 3회 같은 모델로 재시도한다. 다른 모델로 자동 전환하지 않는다.
+
+
+GitHub search has been removed. Historical results are preserved unchanged.

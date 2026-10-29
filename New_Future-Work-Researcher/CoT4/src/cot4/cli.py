@@ -10,7 +10,7 @@ from .pipeline import CoT4Pipeline
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="아이디어의 기술적 실현가능성을 검증합니다.")
+    parser = argparse.ArgumentParser(description="아이디어 실행에 필요한 자원을 안내합니다.")
     parser.add_argument(
         "idea_json",
         help="README.md 5.1절 아이디어 JSON 또는 Future-Work-Researcher 결과 JSON 경로",

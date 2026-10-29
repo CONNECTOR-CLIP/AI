@@ -17,37 +17,29 @@ REQUIREMENTS_SCHEMA = {
     },
 }
 
-_CONCERN = {
-    "type": "object",
-    "additionalProperties": False,
-    "required": ["present", "explanation"],
-    "properties": {
-        "present": {"type": "boolean"},
-        "explanation": {"type": "string"},
-    },
-}
-
-FEASIBILITY_SCHEMA = {
+RESOURCE_GUIDANCE_SCHEMA = {
     "type": "object",
     "additionalProperties": False,
     "required": [
-        "classification",
-        "resource_concern",
-        "data_concern",
-        "implementation_concern",
-        "methodological_concern",
-        "missing_constraints",
-        "rationale",
-        "confidence",
+        "compute_resources",
+        "data_resources",
+        "tools_and_dependencies",
+        "team_skills",
+        "time_and_effort",
+        "prerequisites",
+        "unknowns_to_confirm",
+        "required_performance_conditions",
+        "proposed_performance_targets",
     ],
     "properties": {
-        "classification": {"type": "string", "enum": ["FEASIBLE", "QUESTIONABLE", "INFEASIBLE"]},
-        "resource_concern": _CONCERN,
-        "data_concern": _CONCERN,
-        "implementation_concern": _CONCERN,
-        "methodological_concern": _CONCERN,
-        "missing_constraints": {"type": "array", "items": {"type": "string"}},
-        "rationale": {"type": "string"},
-        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "compute_resources": {"type": "string"},
+        "data_resources": {"type": "string"},
+        "tools_and_dependencies": {"type": "array", "items": {"type": "string"}},
+        "team_skills": {"type": "array", "items": {"type": "string"}},
+        "time_and_effort": {"type": "string"},
+        "prerequisites": {"type": "array", "items": {"type": "string"}},
+        "unknowns_to_confirm": {"type": "array", "items": {"type": "string"}},
+        "required_performance_conditions": {"type": "array", "items": {"type": "string"}},
+        "proposed_performance_targets": {"type": "array", "items": {"type": "string"}},
     },
 }

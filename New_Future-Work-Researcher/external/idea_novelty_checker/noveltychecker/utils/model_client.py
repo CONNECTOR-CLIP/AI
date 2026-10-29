@@ -35,6 +35,10 @@ class OpenaiClient(BaseLLMClient):
         *args,
         **kwargs,
     ):
+        # Luna defaults to medium reasoning, which rejects sampling/logprob options.
+        if kwargs.get("model") == "gpt-6-luna" and kwargs.get("reasoning_effort") != "none":
+            for name in ("temperature", "top_p", "top_logprobs", "logprobs"):
+                kwargs.pop(name, None)
         completion = ""
         new_msg = []
         try:

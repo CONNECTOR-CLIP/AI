@@ -55,9 +55,9 @@ async def run_stylechange(idea):
         },
     ]
 
-    client = get_llm_client(os.getenv("STYLE_CHANGE_MODEL", "o3-mini"))
+    client = get_llm_client(os.getenv("STYLE_CHANGE_MODEL", "gpt-6-luna"))
     output_text, _ = await client.a_chat(
-        model=os.getenv("STYLE_CHANGE_MODEL", "o3-mini"),
+        model=os.getenv("STYLE_CHANGE_MODEL", "gpt-6-luna"),
         messages=prompt,
     )
     print("idea: ", idea)

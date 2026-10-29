@@ -10,18 +10,18 @@ class Verdict:
 
 
 def resolve_verdict(category: str | None, evaluated_paper_count: int) -> Verdict:
-    """idea_novelty_checker 원본은 novel/not novel 두 값만 반환한다
-    (noveltychecker/models/idea_novelty_checker/check_novelty.py: parse_output).
-    README 1절의 안전성 확장 — "검색 범위가 불충분하면 NOVEL이 아니라 UNCERTAIN을 출력" — 을
-    "비교할 문헌을 아예 찾지 못했다"는 조건으로만 구현한다. 문헌이 1건이라도 있으면 그걸 근거로
-    LLM이 실제로 검토했다는 뜻이므로 novel 판정을 그대로 신뢰한다(2026-08-18 결정: 최소 문헌 수
-    임계값은 근거 없는 과잉 보수였다고 판단해 제거).
+    """Resolve the legacy paper verdict; empty successful search is not an error.
+
+    NOVEL with zero papers means only that this search found no overlap, not that
+    global novelty has been established. Invalid model output remains UNCERTAIN.
     """
-    if evaluated_paper_count == 0:
-        return Verdict("UNCERTAIN", "비교할 문헌을 전혀 찾지 못했습니다.")
     if category is None:
         return Verdict("UNCERTAIN", "novelty checker의 출력을 파싱하지 못했습니다.")
+    if evaluated_paper_count == 0:
+        return Verdict("NOVEL", "검색 범위에서 비교할 문헌을 찾지 못했습니다. 신규성의 증명은 아닙니다.")
 
+    if not isinstance(category, str):
+        return Verdict("UNCERTAIN", "novelty checker가 문자열이 아닌 분류를 반환했습니다.")
     normalized = category.strip().lower()
     if normalized == "novel":
         return Verdict("NOVEL", "검색된 문헌 중 동등한 연구를 찾지 못했습니다.")

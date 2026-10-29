@@ -65,7 +65,7 @@ async def run_ideanoveltychecker(
 
     if use_retrieval == True:
         retrieval_trace = await get_most_relevant_papers(
-            idea, input_papers, max_papers_specter=100
+            idea, input_papers, max_papers_specter=100, cutoff_date=cutoff_date
         )
 
     retrieval_trace["input_most_relevant_papers"] = input_papers

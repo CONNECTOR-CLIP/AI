@@ -98,7 +98,9 @@ async def get_embeddings_ideapapers(
     elif isinstance(idea_papers, dict):
         idea_papers = {str(key): value for key, value in idea_papers.items()}
 
-    keys = list(idea_papers)
+    keys = [key for key, paper in idea_papers.items() if "embedding" not in paper]
+    if not keys:
+        return idea_papers
     papers = [idea_papers[key] for key in keys]
     vectors = await asyncio.to_thread(_encode_papers, papers)
     for key, vector in zip(keys, vectors):

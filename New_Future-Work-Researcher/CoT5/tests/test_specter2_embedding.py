@@ -24,6 +24,22 @@ def test_embedding_results_are_attached_by_corpus_id(monkeypatch):
     assert result["b"]["embedding"] == [3.0, 4.0]
 
 
+def test_precomputed_vector_is_not_reencoded(monkeypatch):
+    captured = []
+
+    def fake_encode(papers):
+        captured.extend(papers)
+        return [[9.0, 8.0]]
+
+    monkeypatch.setattr(embedding, "_encode_papers", fake_encode)
+    result = asyncio.run(embedding.get_embeddings_ideapapers({
+        "indexed": {"corpusId": "indexed", "embedding": [1.0, 2.0]},
+        "new": {"corpusId": "new", "title": "New", "abstract": "text"},
+    }))
+    assert [paper["corpusId"] for paper in captured] == ["new"]
+    assert result["indexed"]["embedding"] == [1.0, 2.0]
+
+
 def test_missing_runtime_dependencies_have_actionable_error(monkeypatch):
     monkeypatch.setattr(embedding, "_model", None)
     real_import = __import__

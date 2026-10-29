@@ -4,9 +4,9 @@ from cot5.verdict import Verdict, apply_equivalence_override, resolve_verdict
 
 
 class VerdictTests(unittest.TestCase):
-    def test_zero_papers_is_uncertain(self):
+    def test_zero_papers_is_search_not_found(self):
         v = resolve_verdict("novel", 0)
-        self.assertEqual(v.classification, "UNCERTAIN")
+        self.assertEqual(v.classification, "NOVEL")
 
     def test_parse_failure_is_uncertain(self):
         v = resolve_verdict(None, 5)
@@ -27,6 +27,10 @@ class VerdictTests(unittest.TestCase):
 
     def test_unrecognized_category_is_uncertain(self):
         v = resolve_verdict("maybe", 5)
+        self.assertEqual(v.classification, "UNCERTAIN")
+
+    def test_nonstring_category_is_uncertain_not_typeerror(self):
+        v = resolve_verdict(123, 5)
         self.assertEqual(v.classification, "UNCERTAIN")
 
     def test_category_is_case_insensitive(self):

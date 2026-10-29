@@ -13,7 +13,7 @@ class LLMProvider(Protocol):
 class OpenAIProvider:
     def __init__(self, model: str | None = None, api_key: str | None = None):
         from openai import OpenAI
-        self.model = model or os.getenv("NOVELTY_CHECK_MODEL", "o3-mini")
+        self.model = model or os.getenv("NOVELTY_CHECK_MODEL", "gpt-6-luna")
         self.client = OpenAI(api_key=api_key or os.getenv("OPENAI_API_KEY"))
 
     def evaluate(self, *, instructions: str, document: str, schema: dict[str, Any], schema_name: str) -> dict[str, Any]:

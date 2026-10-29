@@ -1,4 +1,5 @@
-import re, os
+import re
+import os
 import ast
 import asyncio
 
@@ -27,14 +28,14 @@ async def get_keywords(input_string):
             keyword_string = keyword_match.group(1)
             try:
                 keywords = ast.literal_eval(keyword_string.strip())
-            except (ValueError, SyntaxError) as e:
+            except (ValueError, SyntaxError):
                 pass
 
         if title_match:
             title_string = title_match.group(1)
             try:
                 titles = ast.literal_eval(title_string.strip())
-            except (ValueError, SyntaxError) as e:
+            except (ValueError, SyntaxError):
                 pass
 
         return keywords, titles
@@ -77,6 +78,7 @@ async def get_query_based_papers_helper(idea):
     snippet_papers = {}
     idea_keywords = []
     title_keywords = []
+    query_hit_counts = []
     search_type = os.getenv("QUERY_RETRIEVAL_METHOD")
 
     if search_type == "keyword+title" or search_type == "keyword+title+snippet":
@@ -90,7 +92,8 @@ async def get_query_based_papers_helper(idea):
                 for query in search_queries
             ]
         )
-        for result in results:
+        for query, result in zip(search_queries, results):
+            query_hit_counts.append({"query": query, "search_type": current_search_type, "hits": len(result)})
             if result:
                 keyword_papers.extend(result)
 
@@ -99,6 +102,7 @@ async def get_query_based_papers_helper(idea):
         snippet_papers_temp = await fetch_papers_for_query(
             idea, current_search_type, limit=100
         )
+        query_hit_counts.append({"query": idea, "search_type": current_search_type, "hits": len(snippet_papers_temp)})
         corpus_IDs = [paper["paper"]["corpusId"] for paper in snippet_papers_temp]
         snippet_papers = await run_all_queries(corpus_IDs)
 
@@ -111,6 +115,7 @@ async def get_query_based_papers_helper(idea):
         "keyword_papers": keyword_papers,
         "idea_keywords": idea_keywords,
         "title_keywords": title_keywords,
+        "query_hit_counts": query_hit_counts,
     }
 
 

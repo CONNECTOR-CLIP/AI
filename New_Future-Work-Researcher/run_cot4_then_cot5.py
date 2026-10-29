@@ -1,17 +1,11 @@
-"""Run the downstream idea checks in the safe order: CoT4 -> CoT5.
-
-CoT4 is the feasibility gate for the downstream novelty check.  CoT5 is
-started only after every proposal has received a ``FEASIBLE`` CoT4 result.
-This is intentionally a batch barrier: a partial CoT5 run would make the
-output set difficult to interpret and could let an unvalidated proposal
-through the downstream stage.
-"""
+"""List CoT4 resource needs before running the CoT5 novelty check."""
 
 from __future__ import annotations
 
 import argparse
 import asyncio
 import json
+from concurrent.futures import ThreadPoolExecutor
 from collections.abc import Awaitable, Callable, Mapping
 from pathlib import Path
 from typing import Any
@@ -33,37 +27,17 @@ def _as_result_dict(result: Any) -> dict[str, Any]:
     return dict(result)
 
 
-def _classification(result: Mapping[str, Any]) -> str | None:
-    """Read the CoT4 classification from either supported result shape."""
-
-    value = result.get("classification")
-    if value is not None:
-        return str(value)
-
-    judgment = result.get("judgment")
-    if isinstance(judgment, Mapping) and judgment.get("classification") is not None:
-        return str(judgment["classification"])
-    return None
-
-
-def cot4_validation_passed(result: Mapping[str, Any]) -> bool:
-    """Return whether a CoT4 result is allowed to cross the stage barrier."""
-
-    return _classification(result) == "FEASIBLE"
-
-
 async def run_cot4_then_cot5(
     payload: dict[str, Any],
     *,
     cot4_pipeline: Any | None = None,
     cot5_check: Cot5Check | None = None,
 ) -> dict[str, Any]:
-    """Run CoT4 first and conditionally run CoT5.
+    """Run resource guidance before CoT5.
 
     The two modules use different ``ResearchIdea`` dataclasses, so the same
     Future-Work payload is adapted independently for each stage.  CoT5 is a
-    batch-level downstream stage: if any CoT4 result is not ``FEASIBLE`` (or
-    CoT4 raises for a proposal), no CoT5 call is made.
+    batch-level downstream stage: only a CoT4 error stops CoT5.
     """
 
     cot4_pipeline = cot4_pipeline or CoT4.CoT4Pipeline()
@@ -76,18 +50,25 @@ async def run_cot4_then_cot5(
 
     cot4_results: list[dict[str, Any]] = []
     failed_titles: list[str] = []
-    for idea in cot4_ideas:
+    async def check_cot4(idea: CoT4.ResearchIdea, executor: ThreadPoolExecutor) -> dict[str, Any]:
         try:
-            result = _as_result_dict(cot4_pipeline.check(idea))
-        except Exception as exc:  # A failed validation must also stop CoT5.
-            result = {
+            return _as_result_dict(await asyncio.get_running_loop().run_in_executor(
+                executor, cot4_pipeline.check, idea,
+            ))
+        except Exception as exc:  # A CoT4 error stops CoT5.
+            return {
                 "idea_title": idea.title,
-                "classification": "ERROR",
+                "status": "error",
                 "error": f"{type(exc).__name__}: {exc}",
             }
 
-        cot4_results.append(result)
-        if not cot4_validation_passed(result):
+    # Gather preserves proposal order and completes all CoT4 calls before CoT5.
+    with ThreadPoolExecutor(max_workers=max(1, len(cot4_ideas))) as executor:
+        cot4_results = list(await asyncio.gather(*(
+            check_cot4(idea, executor) for idea in cot4_ideas
+        )))
+    for idea, result in zip(cot4_ideas, cot4_results):
+        if result.get("status") == "error":
             failed_titles.append(idea.title)
 
     gate_passed = not failed_titles
@@ -95,8 +76,7 @@ async def run_cot4_then_cot5(
         "status": "completed" if gate_passed else "blocked",
         "pipeline": ["CoT4", "CoT5"],
         "gate": {
-            "name": "CoT4 feasibility",
-            "required_classification": "FEASIBLE",
+            "name": "CoT4 resource guidance",
             "passed": gate_passed,
             "failed_ideas": failed_titles,
         },
@@ -107,13 +87,14 @@ async def run_cot4_then_cot5(
         report["CoT5"] = {
             "status": "skipped",
             "results": [],
-            "reason": "CoT4 validation did not pass for every proposal.",
+            "reason": "CoT4 resource guidance failed for at least one proposal.",
         }
         return report
 
-    cot5_results: list[dict[str, Any]] = []
-    for idea in cot5_ideas:
-        cot5_results.append(_as_result_dict(await cot5_check(idea)))
+    cot5_results = [
+        _as_result_dict(result)
+        for result in await asyncio.gather(*(cot5_check(idea) for idea in cot5_ideas))
+    ]
 
     report["CoT5"] = {"status": "completed", "results": cot5_results}
     return report
@@ -131,7 +112,7 @@ def _load_payload(path: Path) -> dict[str, Any]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run CoT4 feasibility before CoT5 novelty checking")
+    parser = argparse.ArgumentParser(description="Run CoT4 resource guidance before CoT5 novelty checking")
     parser.add_argument("future_work_json", type=Path, help="Future-Work-Researcher result JSON")
     parser.add_argument("--cot5-config", default=None, help="CoT5 config.yml path")
     parser.add_argument("--cot5-model", default=None, help="CoT5 equivalence-check model")
