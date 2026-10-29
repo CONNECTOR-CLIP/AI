@@ -1,6 +1,6 @@
 # Future-Work-Researcher
 
-논문에서 연구 목표와 한계를 분석하고, 후속 연구 아이디어의 실현가능성과 신규성을 검토하는 연구용 실험 코드입니다.
+논문에서 연구 목표와 한계를 분석하고, 후속 연구 아이디어에 필요한 자원을 안내하며 신규성을 검토하는 연구용 실험 코드입니다.
 
 **CoT1~CoT5의 실행 코드를 공개하지만, CoT5 검색에 사용하는 실제 문헌 DB는 제공하지 않습니다.** DB 원본·부분 추출본·임베딩·검색 인덱스도 공개 범위에 포함하지 않습니다. 따라서 저장소를 내려받는 것만으로 CoT5의 DB 연동 실험까지 실행할 수는 없습니다.
 
@@ -12,7 +12,7 @@
 | CoT2 | 원문에서 한계 후보 추출 및 정적 검증 | `CoT2.py` |
 | CoT3 | 논문 간 목표·한계 교차 비교 및 후보 판정 | `CoT3.py` |
 | Future Work | 논문을 스캔하고 후속 연구 제안 생성 | `run_future_work.py` |
-| CoT4 | 제안의 기술적 실현가능성 검사 | `CoT4.py` |
+| CoT4 | 제안 구현에 필요한 자원·준비사항 안내 | `CoT4.py` |
 | CoT5 | 로컬 문헌 검색에 근거한 신규성 검사 | `CoT5.py` |
 
 개념적인 실험 순서는 다음과 같습니다.
@@ -26,7 +26,7 @@ CoT1 → CoT2 → CoT3 → Future Work → CoT4 → CoT5
 - CoT1~CoT3는 각각 실행할 수 있는 실험 진입점입니다. CoT3는 내부에서 목표·한계 분석에 필요한 처리를 수행하며, CoT1/CoT2 출력 파일을 CLI 인자로 받는 방식은 아닙니다.
 - `run_future_work.py`는 논문 제목을 받아 자체 스캔·제안 생성을 수행합니다. CoT3 출력 파일을 자동으로 입력받는 연결은 구현되어 있지 않습니다.
 - Future Work 형식의 JSON은 CoT4와 CoT5의 입력으로 사용할 수 있습니다.
-- `run_cot4_then_cot5.py`는 **모든 제안이 CoT4에서 `FEASIBLE` 판정을 받은 경우에만** CoT5를 실행합니다. 하나라도 미통과하거나 오류가 발생하면 해당 배치의 CoT5 전체를 건너뜁니다.
+- `run_cot4_then_cot5.py`는 모든 제안의 CoT4 자원 안내가 정상적으로 생성되면 CoT5를 실행합니다. CoT4 검사 중 오류가 발생하면 해당 배치의 CoT5를 건너뜁니다. 자원 보유 여부나 실현 가능 여부를 AI가 판정하지 않습니다.
 
 ## 2. 디렉토리 구조
 
@@ -35,7 +35,7 @@ Future-Work-Researcher/
 ├── CoT1.py / CoT2.py / CoT3.py       # 상위 단계별 실험
 ├── run_future_work.py               # 후속 연구 제안 생성
 ├── CoT4.py / CoT5.py                 # 하위 검사 단계
-├── run_cot4_then_cot5.py             # 실현가능성 게이트를 포함한 연결 실행
+├── run_cot4_then_cot5.py             # CoT4 자원 안내 후 CoT5 연결 실행
 ├── global_state.py
 ├── research_agent/                  # 공통 에이전트·도구·워크플로
 ├── CoT4/                            # 패키지 소스·예시·테스트
@@ -77,13 +77,13 @@ $env:OPENAI_API_KEY = "YOUR_OPENAI_API_KEY"
 $env:COMPLETION_MODEL = "YOUR_COMPLETION_MODEL"
 $env:CHEEP_MODEL = "YOUR_SCAN_AND_KEYWORD_MODEL"
 $env:JUDGE_MODEL = "YOUR_JUDGE_MODEL"
-$env:COT5_MODEL = "YOUR_OPENAI_FEASIBILITY_MODEL"
+$env:COT5_MODEL = "YOUR_OPENAI_COT4_MODEL"
 ```
 
 - `COMPLETION_MODEL`: 상위 단계 기본 모델. 지원되는 스크립트에서는 `--model`로 지정할 수 있습니다.
 - `CHEEP_MODEL`: 현재 코드의 환경변수 이름입니다. Future Work 스캔·키워드 추출 등에 사용합니다.
 - `JUDGE_MODEL`: CoT3 판정 모델. `--judge_model`로 지정할 수도 있습니다.
-- `COT5_MODEL`: **이름과 달리 현재 `CoT4.py`의 실현가능성 모델 설정**입니다. 연결 실행에서는 `--cot4-model`로 명시할 수 있습니다.
+- `COT5_MODEL`: **이름과 달리 현재 `CoT4.py`의 자원 안내 모델 설정**입니다. 연결 실행에서는 `--cot4-model`로 명시할 수 있습니다.
 - OpenRouter 경유 모델을 사용한다면 해당 제공자의 `OPENROUTER_API_KEY`도 설정합니다.
 - `GITHUB_AI_TOKEN`: Future Work의 GitHub 검색용 토큰입니다. 토큰이 없으면 현재 흐름에서는 해당 검색을 건너뜁니다.
 
@@ -152,13 +152,13 @@ CLI 도움말은 10~15편 입력을 안내합니다. 위 명령은 인자 형식
 
 결과는 콘솔에 출력됩니다. 현재 CLI에는 결과 JSON 저장용 `--output` 옵션이 없습니다. 출력에서 최종 제안 JSON 객체만 분리해 UTF-8 파일로 저장하고, 다음 입력 형식에 맞는지 확인합니다. 로그·마크다운 코드 펜스가 포함된 전체 출력을 그대로 CoT4/CoT5에 넘기지 않습니다.
 
-### CoT4: 실현가능성 검사
+### CoT4: 필요 자원 안내
 
 ```powershell
 python CoT4.py CoT4/examples/idea.json
 ```
 
-제공된 예시는 입력 형식 확인용입니다. 실제 실험에서는 문제·방법·검증 계획과 계산 자원·데이터·일정·팀 역량 등의 제약을 작성합니다. CoT4는 로컬 문헌 DB 없이 실행할 수 있지만 모델 API 환경은 필요합니다.
+제공된 예시는 입력 형식 확인용입니다. 실제 실험에서는 문제·방법·검증 계획과 알려진 계산 자원·데이터·일정·팀 역량 등의 제약을 작성합니다. CoT4는 필요한 자원과 확인할 미지수를 안내하며, 사용자가 그 자원을 보유했는지 판정하지 않습니다. 로컬 문헌 DB 없이 실행할 수 있지만 모델 API 환경은 필요합니다.
 
 ### CoT5: 신규성 검사 — 별도 DB 필요
 
@@ -196,17 +196,19 @@ DB 없이 CoT4만 실행하려면:
 python CoT4.py future_work.json
 ```
 
+Future Work 입력의 제안들은 기본적으로 모두 병렬 검사하며 출력 순서는 입력 순서를 유지합니다. `--workers N`으로 CoT4 동시 검사 수를 제한할 수 있습니다. CoT5 단독 실행과 CoT4→CoT5 연결 실행도 각 단계 안에서 제안별 검사를 병렬 수행하되, 연결 실행은 CoT4 자원 안내가 모두 끝나기 전 CoT5를 시작하지 않습니다. 병렬 API 호출은 서비스의 동시 요청 제한에 영향을 받을 수 있습니다.
+
 DB까지 준비한 뒤 연결 실행하려면:
 
 ```powershell
-python run_cot4_then_cot5.py future_work.json --cot5-config config.yml --cot4-model "YOUR_OPENAI_FEASIBILITY_MODEL" --output report.json
+python run_cot4_then_cot5.py future_work.json --cot5-config config.yml --cot4-model "YOUR_OPENAI_COT4_MODEL" --output report.json
 ```
 
-- 모든 제안이 `FEASIBLE`이면 CoT5를 시작합니다.
-- 하나라도 미통과하거나 CoT4 검사 중 오류가 발생하면 `gate.passed`는 `false`, CoT5 상태는 `skipped`가 됩니다.
+- 모든 제안의 CoT4 자원 안내가 생성되면 CoT5를 시작합니다. 자원 보유 여부는 실행 조건이 아닙니다.
+- CoT4 검사 중 오류가 발생하면 `gate.passed`는 `false`, CoT5 상태는 `skipped`가 됩니다.
 - `--cot5-model`은 CoT5의 동등성 검사 제공자 모델을 지정합니다. 외부 신규성 검사·랭킹 모델 설정 전체를 대체하는 옵션은 아닙니다.
 - `--output`의 상위 디렉토리는 미리 존재해야 합니다.
-- CoT5 단독 실행은 CoT4 게이트를 거치지 않습니다. 순서를 강제하려면 연결 실행기를 사용합니다.
+- CoT5 단독 실행은 CoT4 자원 안내를 거치지 않습니다. 두 결과를 순서대로 받으려면 연결 실행기를 사용합니다.
 
 ## 6. CoT5 DB 요구사항 및 비공개 정책
 
@@ -233,13 +235,13 @@ python run_cot4_then_cot5.py future_work.json --cot5-config config.yml --cot4-mo
 
 ## 7. 테스트와 검증 범위
 
-CoT4 → CoT5 게이트의 기본 회귀 테스트:
+CoT4 → CoT5 연결 실행의 기본 회귀 테스트:
 
 ```powershell
 python -m unittest test_cot4_then_cot5 -v
 ```
 
-이 테스트는 대체 검사 객체를 사용하며 실제 모델 API나 DB 검색을 실행하지 않습니다. CoT4 오류, 일부 제안 미통과, 전체 제안 통과 시 동작을 확인합니다.
+이 테스트는 대체 검사 객체를 사용하며 실제 모델 API나 DB 검색을 실행하지 않습니다. CoT4 오류로 인한 중단과 모든 제안의 자원 안내 생성 후 CoT5 실행을 확인합니다.
 
 추가 테스트는 `CoT4/tests/`, `CoT5/tests/`에 있습니다. 패키지 설치·테스트 도구와 각 테스트의 DB/API/모델 의존성을 먼저 확인하세요. 단위 테스트 통과가 실제 API·문헌 DB 연동 실험의 성공을 의미하지는 않습니다.
 
@@ -253,10 +255,22 @@ python -m unittest test_cot4_then_cot5 -v
 | DB 누락 또는 빈 DB 오류 | 직접 준비한 DB와 `ARXIV_DB_PATH` 확인. 저장소에는 DB가 없음 |
 | 테이블·컬럼 오류 | 사용 DB와 검색 어댑터의 스키마 비교 |
 | JSON 파싱·필드 오류 | 로그·코드 펜스 제거, UTF-8 JSON 및 필수 필드 확인 |
-| CoT5가 `skipped` | 연결 실행 결과의 `gate.failed_ideas`와 CoT4 판정 확인 |
+| CoT5가 `skipped` | 연결 실행 결과의 `gate.failed_ideas`와 CoT4 오류 확인 |
 
 실행하면 `cache_*/`, `workplace_future_work/` 등 로컬 작업 파일이 생성될 수 있습니다. 결과·로그에는 논문 내용과 개인 경로 등이 포함될 수 있으므로 공개 전에 확인합니다.
 
 상세 업로드 기준은 [GITHUB_UPLOAD_GUIDE.md](GITHUB_UPLOAD_GUIDE.md)를 따릅니다. `.gitignore`만으로 이미 커밋된 데이터가 제거되지는 않으므로 공개할 Git 이력과 submodule 참조도 점검해야 합니다. 외부 구현의 라이선스·재배포 조건을 별도로 확인하세요.
 
-이 도구의 판정은 연구 검토를 돕는 모델 기반 결과이며, 기술적 실현가능성이나 신규성을 확정적으로 보장하지 않습니다.
+CoT4의 자원 안내는 사용자 환경에 대한 적합성 판정이 아닙니다. CoT5의 모델 기반 신규성 판정도 확정적인 보장은 아닙니다.
+
+## Current CoT5 output
+
+CoT5 searches Web, papers, and patents. GitHub search has been removed.
+Exact duplicate paper comparison output is stored once under
+`overlaps.paper.candidates` and `overlaps.paper.checked_count`.
+
+`export_cot5_web_view.py INPUT OUTPUT` exports only completed Web results
+as a separate presentation view. Raw results and error records remain unchanged.
+`summarize_five_cot_experiments.py OUTPUT_DIRECTORY` reads saved five-experiment
+artifacts and supports both the old and deduplicated CoT5 output schemas.
+Actual experiment files, databases, API keys, and local cleanup artifacts are not included.

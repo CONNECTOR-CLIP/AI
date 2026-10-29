@@ -74,3 +74,16 @@ timing.json
 timing_detailed.json
 .current_experiment_path
 Github/
+# Local execution runtime restored for reproducible experiments.
+/.runtime/
+# Local-only artifacts and private execution settings.
+/_local_archive/
+/results/
+/parallel_results/
+/diagnostics/
+/configs/
+/.current_experiment_path
+**/.pytest_cache/
+**/.ruff_cache/
+**/__pycache__/
+*.py[cod]

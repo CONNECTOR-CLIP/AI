@@ -1,6 +1,15 @@
+# Current publication scope
+
+CoT5 includes Web, paper, and patent search; GitHub search is removed.
+CoT4 provides resource guidance, not a feasibility pass/fail verdict.
+This update does not add or modify test files. Local test relocation and
+cleanup archives are not part of this public snapshot.
+Never upload API keys, actual config.yml files, databases, model caches,
+results/, diagnostics/, .runtime/, or _local_archive/.
+
 # CoT1~CoT5 GitHub 업로드 파일 가이드
 
-공개 목적은 **CoT1 → CoT2 → CoT3 → Future Work → CoT4(실현가능성) → CoT5(신규성)의 전체 실험 코드와 실행 방법을 제공하는 것**이다.
+공개 목적은 **CoT1 → CoT2 → CoT3 → Future Work → CoT4(자원 안내) → CoT5(신규성)의 전체 실험 코드와 실행 방법을 제공하는 것**이다.
 단, **CoT5에서 사용하는 로컬 문헌 DB와 파생 데이터는 공개하지 않는다.** 따라서 저장소를 내려받는 것만으로 DB 연동 신규성 실험까지 실행할 수는 없으며, 사용자가 호환 DB와 API 키 등 실행 환경을 직접 준비해야 한다. CoT5 실행·검색 코드는 그대로 제공한다.
 
 아래는 업로드 기준을 디렉토리별로 정리한 것이다. 현재 존재하는 파일 목록만을 뜻하지 않으며, 추가 작성할 항목도 표시했다. 분류는 **올릴 것 / 안 올릴 것** 두 가지이며, 소스 디렉토리 안에 있더라도 실제 DB·비밀정보·실험 산출물은 제외한다.
@@ -12,7 +21,7 @@ Future-Work-Researcher/
 ├── CoT1.py                          # 목표 분해
 ├── CoT2.py                          # 한계 추출
 ├── CoT3.py                          # 교차 비교
-├── CoT4.py                          # 실현가능성 검사
+├── CoT4.py                          # 필요 자원 안내
 ├── CoT5.py                          # 신규성 검사: DB 연결·검색 코드 포함
 ├── run_future_work.py               # Future Work 제안 생성
 ├── run_cot4_then_cot5.py             # CoT4 통과 후 CoT5 실행
