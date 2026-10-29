@@ -1,0 +1,108 @@
+{
+  "view_scope": "successful_web_results_only",
+  "displayed_count": 1,
+  "results": [
+    {
+      "candidate_index": 5,
+      "idea_title": "Pre-train both models' components together while adding an auxiliary loss that penalizes generation when retrieval is...",
+      "web": {
+        "status": "없음",
+        "checked_count": 10,
+        "matches": [],
+        "candidates": [
+          {
+            "title": "Researchers Propose AI Training That Targets Early ...",
+            "url": "https://superpowerdaily.com/posts/researchers-propose-ai-training-that-targets-early-mistakes-and-recovery",
+            "snippet": "Researchers Propose AI Training That Targets Early Mistakes and Recovery. PivotOPD pairs prevention with recovery lessons from a teacher model.",
+            "source": "web",
+            "overlap": false,
+            "reason": "The result describes training for early-mistake prevention and recovery, not joint pre-training of retrieval and generation with a loss tied to retrieval relevance.",
+            "evidence": "The snippet says “pairs prevention with recovery lessons from a teacher model.”"
+          },
+          {
+            "title": "ToolTrain: Tool-integrated Reinforcement Learning for ...",
+            "url": "https://arxiv.org/html/2508.03012v1",
+            "snippet": "This two-stage training enables the LLMs to master multi-hop reasoning with retrieval tools, yielding more precise issue localization. We ...",
+            "source": "web",
+            "overlap": false,
+            "reason": "The result snippet describes two-stage training for multi-hop reasoning with retrieval tools, not joint pre-training with an auxiliary loss that penalizes generation when retrieval is predicted irrelevant. The short snippet also does not document that proposed mechanism as an implemented system.",
+            "evidence": "The snippet says, “This two-stage training enables the LLMs to master multi-hop reasoning with retrieval tools.”"
+          },
+          {
+            "title": "Local Support Learning",
+            "url": "https://www.opentrain.ai/papers/local-support-learning--arxiv-2610.02126/",
+            "snippet": "LSL pairs two components with distinct roles: a standard weight adapter, trained as usual to minimize the loss, and a gating function",
+            "source": "web",
+            "overlap": false,
+            "reason": "The result snippet mentions an adapter and a gating function, but does not describe jointly pre-training retrieval and generation components or using reflection labels to penalize generation when retrieval is irrelevant. Shared use of multiple components is insufficient to establish the same core mechanism and purpose.",
+            "evidence": "The snippet says LSL “pairs two components with distinct roles,” but gives no evidence of the proposed retrieval-conditioned auxiliary loss."
+          },
+          {
+            "title": "1Introduction",
+            "url": "https://arxiv.org/html/2509.21459v1",
+            "snippet": "RLVR is a post-training paradigm of applying reinforcement learning to fine-tune a pre-trained LLM on a given task where the reward function ...",
+            "source": "web",
+            "overlap": false,
+            "reason": "The result describes post-training an LLM with reinforcement learning, not joint pre-training of retrieval and generation components or an auxiliary loss based on retrieval relevance labels. The snippet does not establish the proposed mechanism as an existing implementation.",
+            "evidence": "The snippet says “applying reinforcement learning to fine-tune a pre-trained LLM”; it does not mention retrieval relevance or the proposed auxiliary loss."
+          },
+          {
+            "title": "Training a Retriever on Synthetic Data | by Baptiste Loquette",
+            "url": "https://medium.com/@baptisteloquette.entr/training-a-retriever-on-synthetic-data-1ab36026556e",
+            "snippet": "Retriever models usually are based on Bi-Encoder, while Re-Ranker architecture are based on Cross-Encoders. The reason is simple : By their ...",
+            "source": "web",
+            "overlap": false,
+            "reason": "The result snippet discusses retriever architectures and training retrievers on synthetic data. It does not document joint pre-training of retrieval and generation components or a relevance-conditioned auxiliary loss.",
+            "evidence": "“Training a Retriever on Synthetic Data”"
+          },
+          {
+            "title": "Machine Learning",
+            "url": "https://papers.cool/arxiv/cs.LG",
+            "snippet": "CRISP improves throughput by up to 2.1× at the same memory budget while limiting accuracy loss to 3.6\\% relative to full-width inference.",
+            "source": "web",
+            "overlap": false,
+            "reason": "The search result describes CRISP optimizing inference throughput and memory, not jointly pre-training retrieval and generation models or using reflection labels to penalize generation from irrelevant retrievals.",
+            "evidence": "“improves throughput by up to 2.1× at the same memory budget”"
+          },
+          {
+            "title": "arXiv:2204.03044v1 [cs.CL] 6 Apr 2022",
+            "url": "https://arxiv.org/pdf/2204.03044",
+            "snippet": "Pretrained models are the standard starting point for training. This approach consistently outperforms the use of a random initialization.",
+            "source": "web",
+            "overlap": false,
+            "reason": "The snippet only says pretrained models are a standard starting point and outperform random initialization. It does not describe jointly pre-training retrieval and generation components or penalizing generation based on retrieval-irrelevance labels.",
+            "evidence": "“Pretrained models are the standard starting point for training.”"
+          },
+          {
+            "title": "Appendix",
+            "url": "https://openaccess.thecvf.com/content/CVPR2026/supplemental/Zheng_Designing_to_Forget_CVPR_2026_supplemental.pdf",
+            "snippet": "This retrieval process is implemented using the FAISS ・ significantly reducing retrieval latency. When a class is unlearned ・ the model avoids generating ...",
+            "source": "web",
+            "overlap": false,
+            "reason": "The snippet mentions FAISS retrieval and avoiding generation after class unlearning, but does not describe jointly pre-training retrieval and generation components or using reflection labels in an auxiliary loss to reject irrelevant retrievals.",
+            "evidence": "The snippet says “When a class is unlearned, the model avoids generating”; it does not document the proposed mechanism."
+          },
+          {
+            "title": "arXiv:2505.21930v1 [cs.LG] 28 May 2025",
+            "url": "https://arxiv.org/pdf/2505.21930",
+            "snippet": "This paper develops an ensemble method for fine-tuning a language model to multiple datasets. Existing methods, such as quantized.",
+            "source": "web",
+            "overlap": false,
+            "reason": "The result describes ensemble fine-tuning across multiple datasets, not joint pre-training of retrieval and generation components or an auxiliary loss based on retrieval relevance. The snippet does not document the proposed mechanism.",
+            "evidence": "“an ensemble method for fine-tuning a language model to multiple datasets”"
+          },
+          {
+            "title": "IEEE ICASSP 2024 || Seoul, Korea || 14-19 April 2024",
+            "url": "https://cmsworkshops.com/ICASSP2024/view_paper.php?PaperNum=4038",
+            "snippet": "Session: MLSP-L2: Transfer Learning I Lecture ; Track: Machine Learning for Signal Processing ; Location: Room E3 ; Presentation Time: Tue, 16 Apr, ...",
+            "source": "web",
+            "overlap": false,
+            "reason": "The search result provides conference session and presentation details, not an implemented system involving joint pre-training, retrieval relevance labels, or a generation penalty.",
+            "evidence": "It identifies a “Track: Machine Learning for Signal Processing” and a presentation time, but describes no such mechanism."
+          }
+        ],
+        "error": null
+      }
+    }
+  ]
+}

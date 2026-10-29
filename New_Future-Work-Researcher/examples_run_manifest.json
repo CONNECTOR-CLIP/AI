@@ -1,0 +1,70 @@
+{
+  "run_id": "cot45_public_run_20261029_154552",
+  "execution": "new_live_run_not_mocked",
+  "input_candidate_count": 8,
+  "started_at_utc": "2026-10-29T06:46:00.694519+00:00",
+  "finished_at_utc": "2026-10-29T06:54:33.236377+00:00",
+  "models": {
+    "CoT4": "x-ai/grok-4.3",
+    "CoT5": "openai/gpt-6-luna"
+  },
+  "input_sha256": "76f8c2fa4747b126e443698b7d520185fac5669703991dc32aac7074bdd2c9cb",
+  "source_papers": [
+    {
+      "arxiv_id": "2005.11401",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+    },
+    {
+      "arxiv_id": "2310.11511",
+      "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+    }
+  ],
+  "results": {
+    "CoT4": "CoT4/examples/result.json",
+    "CoT5": "CoT5/examples/result.json"
+  },
+  "stage_seconds": {
+    "CoT4": 49.3,
+    "CoT5": 456.819
+  },
+  "cot5_classifications": {
+    "NOT_NOVEL": 2,
+    "NOVEL": 6
+  },
+  "source_status_counts": {
+    "web": {
+      "확인불가": 7,
+      "없음": 1
+    },
+    "paper": {
+      "겹침": 2,
+      "없음": 6
+    },
+    "patent": {
+      "없음": 7,
+      "확인불가": 1
+    }
+  },
+  "source_error_counts": {
+    "web": {
+      "SearchError: Search API request failed: TimeoutError": 3,
+      "SearchError: Search API returned HTTP 429": 4
+    },
+    "paper": {},
+    "patent": {
+      "SearchError: Search API returned HTTP 429": 1
+    }
+  },
+  "presentation": {
+    "path": "CoT5/examples/web.presentation.json",
+    "scope": "successful_web_results_only",
+    "displayed_count": 1
+  },
+  "limitations": [
+    "NOVEL is a literature-search-scope judgment, not proof of global novelty.",
+    "Some external searches failed; see raw errors and source_status_counts.",
+    "The successful-Web-only presentation file does not replace the complete raw output.",
+    "CoT4 describes required resources; it does not establish feasibility or possession of resources.",
+    "This explicit publication includes these generated results only; no private database, configuration or credentials are included."
+  ]
+}

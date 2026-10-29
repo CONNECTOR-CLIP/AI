@@ -141,3 +141,11 @@ Future-Work-Researcher/
 **확장자로 일괄 제외하지 않는다.** 필수 프롬프트·`incontext_examples`·샘플 입력 JSON은 올리고, 실제 데이터·실험 결과만 제외한다. `data/`나 `assets/` 내부에 있더라도 실행에 필요한 안전한 정적 리소스는 공개 항목으로 구분한다.
 
 DB와 비밀정보는 현재 파일뿐 아니라 공개할 Git 이력과 submodule 참조에도 포함되지 않아야 한다. 이 문서는 선별 기준이며, 파일 제외 설정이나 과거 커밋 정리가 완료되었다는 의미는 아니다.
+
+## Explicit exception: published generated result examples
+
+The user explicitly requested publication of the new 2026-10-29 CoT4/CoT5 run.
+`CoT4/examples/result.json`, `CoT5/examples/result.json`,
+`CoT5/examples/web.presentation.json`, and `examples_run_manifest.json` are
+selected public artifacts. This exception does not permit uploading databases,
+API keys, raw configuration files, or the complete local results directory.
