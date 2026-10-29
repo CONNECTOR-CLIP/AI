@@ -66,5 +66,18 @@
     "The successful-Web-only presentation file does not replace the complete raw output.",
     "CoT4 describes required resources; it does not establish feasibility or possession of resources.",
     "This explicit publication includes these generated results only; no private database, configuration or credentials are included."
-  ]
+  ],
+  "input_file": "FutureWork/examples/result.json",
+  "upstream_manifest": "examples_upstream_manifest.json",
+  "upstream_results": {
+    "CoT1": [
+      "CoT1/examples/2005.11401.json",
+      "CoT1/examples/2310.11511.json"
+    ],
+    "CoT2": [
+      "CoT2/examples/2005.11401.json",
+      "CoT2/examples/2310.11511.json"
+    ],
+    "CoT3": "CoT3/examples/result.json"
+  }
 }

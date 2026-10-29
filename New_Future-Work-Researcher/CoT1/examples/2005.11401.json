@@ -1,0 +1,56 @@
+{
+  "paper_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+  "research_problem": "Large pre-trained language models store factual knowledge in their parameters but have limited ability to access and precisely manipulate that knowledge on knowledge-intensive tasks, and they also struggle with providing provenance for decisions and updating world knowledge.",
+  "subgoals": [
+    {
+      "subgoal_id": "G1",
+      "label": "access and manipulate external knowledge",
+      "description": "Enable models to access and precisely manipulate knowledge stored outside model parameters on knowledge-intensive NLP tasks.",
+      "success_criterion": "RAG models achieve higher performance than purely parametric seq2seq models on multiple knowledge-intensive tasks including open-domain QA and language generation.",
+      "criterion_type": "measurable",
+      "status": "achieved",
+      "evaluation_present": true,
+      "rationale": "RAG models set state of the art on three open-domain QA tasks and generate more specific, diverse and factual language than a parametric-only BART baseline on generation tasks."
+    },
+    {
+      "subgoal_id": "G2",
+      "label": "provide provenance for decisions",
+      "description": "Enable models to provide provenance for their decisions by grounding generations in retrieved non-parametric memory.",
+      "success_criterion": "RAG models expose the retrieved passages used for each generation, allowing human-readable provenance.",
+      "criterion_type": "demonstrable",
+      "status": "achieved",
+      "evaluation_present": true,
+      "rationale": "The architecture returns the top-K documents retrieved for each query and conditions generation on them; human evaluation confirms higher factuality."
+    },
+    {
+      "subgoal_id": "G3",
+      "label": "update world knowledge without retraining",
+      "description": "Support updating the model's world knowledge by modifying the non-parametric memory without retraining model parameters.",
+      "success_criterion": "The retrieval index can be replaced after training and the model continues to function without parameter updates.",
+      "criterion_type": "demonstrable",
+      "status": "achieved",
+      "evaluation_present": true,
+      "rationale": "Discussion states that the retrieval index can be hot-swapped to update the model without requiring any retraining."
+    },
+    {
+      "subgoal_id": "G4",
+      "label": "joint pre-training of parametric and non-parametric components",
+      "description": "Jointly pre-train the parametric generator and non-parametric retriever from scratch rather than starting from separately pre-trained components.",
+      "success_criterion": "An end-to-end pre-training recipe (e.g., denoising objective) is shown to produce a stronger RAG model than the fine-tuning-only approach.",
+      "criterion_type": "argued",
+      "status": "not_achieved",
+      "evaluation_present": false,
+      "rationale": "Discussion explicitly states that jointly pre-training the two components from scratch is left for future work."
+    }
+  ],
+  "dropped_candidates": [
+    {
+      "label": "support arbitrary external knowledge sources",
+      "reason": "merged into G3 because hot-swapping already covers replacing the index with any new corpus"
+    },
+    {
+      "label": "handle multi-hop reasoning",
+      "reason": "specificity filter: not required by the problem framing in abstract/introduction"
+    }
+  ]
+}

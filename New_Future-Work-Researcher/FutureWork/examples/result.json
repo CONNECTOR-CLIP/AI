@@ -1,0 +1,102 @@
+{
+  "future_work_proposals": [
+    {
+      "id": 1,
+      "background_and_gap": "P1's coverage gap on joint pre-training remains unaddressed by any paper in the set and is not mitigated by P2's on-demand retrieval or self-critique capabilities.",
+      "proposed_direction": "Pre-train a unified model where retrieval modules and generation modules share parameters from initialization using a single contrastive-denoising objective.",
+      "expected_contribution": "Grounded solely in the not_achieved sub-goal P1:G4 that has no matching stated limitation in P2.",
+      "novelty_note": "CoT3 C2 / combination",
+      "reference_papers": [
+        "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+        "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+      ]
+    },
+    {
+      "id": 2,
+      "background_and_gap": "P2 explicitly excludes instances where the model predicts irrelevant or no support (P2:L1), limiting its handling of noisy or unsupported retrieval cases that P1's provenance mechanisms could potentially surface.",
+      "proposed_direction": "Extend Self-RAG's reflection tokens to explicitly model and generate explanations for irrelevant/no-support cases, training on augmented data that includes P1-style provenance signals.",
+      "expected_contribution": "Directly derived from the scope limitation stated in P2:L1.",
+      "novelty_note": "CoT3 C3 / paper_stated",
+      "reference_papers": [
+        "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+        "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+      ]
+    },
+    {
+      "id": 3,
+      "background_and_gap": "P1's unachieved joint pre-training (P1:G4) could be combined with P2's self-reflection to handle cases P2 currently excludes (P2:L1), yet no paper performs this transfer.",
+      "proposed_direction": "Jointly pre-train a retrieval-augmented model augmented with reflection tokens so that the model learns to jointly optimize retrieval, generation, and critique decisions from scratch.",
+      "expected_contribution": "Combines the coverage gap P1:G4 with the scope limitation P2:L1 across different papers.",
+      "novelty_note": "CoT3 C4 / combination",
+      "reference_papers": [
+        "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+        "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+      ]
+    },
+    {
+      "id": 4,
+      "background_and_gap": "Neither paper explores how P2's adaptive retrieval and critique could be applied to P1's goal of updating world knowledge without retraining, leaving an unstated interaction between provenance and self-reflection unexplored.",
+      "proposed_direction": "Adapt P2's self-reflection mechanism inside P1's retrieval-augmented framework to dynamically decide when to override parametric knowledge with retrieved updates.",
+      "expected_contribution": "Inferred from P1's vague future-work note P1:L2 contrasted with P2's scope limit P2:L1.",
+      "novelty_note": "CoT3 C5 / combination",
+      "reference_papers": [
+        "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+        "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+      ]
+    },
+    {
+      "id": 5,
+      "background_and_gap": "P2's exclusion of irrelevant cases (P2:L1) highlights a robustness gap that could be closed by incorporating P1's joint pre-training idea (P1:G4) to learn noise rejection end-to-end.",
+      "proposed_direction": "Pre-train both models' components together while adding an auxiliary loss that penalizes generation when retrieval is predicted irrelevant, using P2's reflection labels.",
+      "expected_contribution": "Crosses P1's joint-pretraining gap with P2's stated scope limitation.",
+      "novelty_note": "CoT3 C6 / combination",
+      "reference_papers": [
+        "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+        "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+      ]
+    },
+    {
+      "id": 6,
+      "background_and_gap": "P2's self-reflection is limited to supported cases only, leaving an unstated limitation in handling fully unsupported queries that P1's provenance capability could address but does not integrate.",
+      "proposed_direction": "Train an explicit \"unsupported\" reflection token and pair it with P1-style citation generation to produce transparent refusals or external-knowledge requests.",
+      "expected_contribution": "Derived from the coverage of P2:L1 as an unadmitted robustness gap.",
+      "novelty_note": "CoT3 C7 / combination",
+      "reference_papers": [
+        "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+        "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+      ]
+    },
+    {
+      "id": 7,
+      "background_and_gap": "P1 never jointly pre-trains its components (P1:G4) while P2 restricts its critique to supported passages (P2:L1); combining these yields an open direction for robust, jointly-trained RAG.",
+      "proposed_direction": "Implement a single training loop that alternates between denoising pre-training of retrieval/generation and self-supervised critique on both relevant and irrelevant passages.",
+      "expected_contribution": "Synthesizes the two papers' respective limitations into a transfer opportunity.",
+      "novelty_note": "CoT3 C8 / combination",
+      "reference_papers": [
+        "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+        "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+      ]
+    },
+    {
+      "id": 8,
+      "background_and_gap": "The absence of joint pre-training in P1 leaves open whether Self-RAG-style adaptive retrieval would benefit from being learned jointly rather than in separate stages.",
+      "proposed_direction": "Replace P2's separate retrieval policy with a jointly pre-trained retriever-generator that predicts retrieval necessity as part of the denoising objective.",
+      "expected_contribution": "Grounded in the sole not_achieved sub-goal P1:G4.",
+      "novelty_note": "CoT3 C9 / combination",
+      "reference_papers": [
+        "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+        "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+      ]
+    }
+  ],
+  "source_papers": [
+    {
+      "arxiv_id": "2005.11401",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+    },
+    {
+      "arxiv_id": "2310.11511",
+      "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+    }
+  ]
+}

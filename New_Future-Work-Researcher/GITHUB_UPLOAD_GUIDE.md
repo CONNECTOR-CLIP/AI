@@ -149,3 +149,12 @@ The user explicitly requested publication of the new 2026-10-29 CoT4/CoT5 run.
 `CoT5/examples/web.presentation.json`, and `examples_run_manifest.json` are
 selected public artifacts. This exception does not permit uploading databases,
 API keys, raw configuration files, or the complete local results directory.
+
+## Explicit exception: supporting upstream artifacts
+
+The user also requested the CoT1/CoT2/CoT3 results underlying the published
+CoT4/CoT5 example. The four paper-specific JSON files in `CoT1/examples/` and
+`CoT2/examples/`, `CoT3/examples/result.json`, `FutureWork/examples/result.json`,
+and `examples_upstream_manifest.json` are selected public artifacts.
+The exact downstream input hash and candidate mapping are recorded in the manifests.
+Do not publish the rest of the local experiment directory or any credentials or databases.

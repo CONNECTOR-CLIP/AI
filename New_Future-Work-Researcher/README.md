@@ -291,3 +291,24 @@ the presentation view contains only the single completed Web result.
 Do not interpret omitted presentation items as successful searches or no overlap.
 Only these explicitly selected generated examples are published; private databases,
 API keys, local settings, caches and other experiment results remain excluded.
+
+## Upstream result JSON used for the published CoT4/CoT5 run
+
+These are the original saved results, not a newly generated upstream experiment.
+
+| Stage | RAG (2005.11401) | Self-RAG (2310.11511) |
+| --- | --- | --- |
+| CoT1 | [Goal decomposition](CoT1/examples/2005.11401.json) | [Goal decomposition](CoT1/examples/2310.11511.json) |
+| CoT2 | [Limitation extraction](CoT2/examples/2005.11401.json) | [Limitation extraction](CoT2/examples/2310.11511.json) |
+
+- [CoT3 cross-comparison: 8 accepted candidates](CoT3/examples/result.json)
+- [Exact Future Work input passed to CoT4/CoT5](FutureWork/examples/result.json)
+- [Lineage, hashes and candidate-to-output mapping](examples_upstream_manifest.json)
+
+Lineage: **CoT1/CoT2 -> CoT3 -> FutureWork -> CoT4 -> CoT5**.
+CoT1/CoT2 were exported by the original CoT3 run. Its eight candidates were
+converted deterministically to the Future Work format; CoT4/CoT5 reused this
+input in the published live run. Input bytes match `input_sha256` in
+`examples_run_manifest.json`. Result array order follows the upstream candidate order.
+These selected JSON artifacts are an explicit publication exception; private
+configurations, databases, paper originals, caches, and logs remain excluded.

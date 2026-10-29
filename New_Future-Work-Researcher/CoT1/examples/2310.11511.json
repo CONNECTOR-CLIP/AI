@@ -1,0 +1,42 @@
+{
+  "paper_title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+  "research_problem": "Large language models often produce responses containing factual inaccuracies due to sole reliance on parametric knowledge; while retrieval-augmented generation can mitigate this, indiscriminately retrieving and incorporating a fixed number of passages regardless of necessity or relevance diminishes versatility or leads to unhelpful generations.",
+  "subgoals": [
+    {
+      "subgoal_id": "G1",
+      "label": "adaptive retrieval on-demand",
+      "description": "Decide when retrieval is needed instead of always retrieving a fixed number of passages.",
+      "success_criterion": "The model produces reflection tokens indicating whether retrieval is required and only retrieves passages when necessary, with empirical evaluation on tasks where retrieval decisions affect output quality.",
+      "criterion_type": "demonstrable",
+      "status": "achieved",
+      "evaluation_present": true,
+      "rationale": "Trains a single LM that generates special reflection tokens (Retrieve, IsRel, IsSup, IsUse) to decide when and how to retrieve and use passages; experiments show gains over fixed-retrieval baselines on QA, reasoning and fact verification."
+    },
+    {
+      "subgoal_id": "G2",
+      "label": "self-reflection on retrieved passages and generations",
+      "description": "Generate reflection tokens that critique relevance, support, and usefulness of retrieved content and own output.",
+      "success_criterion": "The LM emits reflection tokens during generation that allow controllable behavior and measurable improvement in factuality or citation accuracy.",
+      "criterion_type": "demonstrable",
+      "status": "achieved",
+      "evaluation_present": true,
+      "rationale": "Reflection tokens are trained and used at inference; results report significant gains in factuality and citation accuracy for long-form generation relative to ChatGPT and retrieval-augmented Llama2-chat."
+    },
+    {
+      "subgoal_id": "G3",
+      "label": "versatility across diverse task requirements",
+      "description": "Tailor retrieval and generation behavior at inference time without retraining for different tasks.",
+      "success_criterion": "Single trained model outperforms strong baselines on a diverse set of tasks (open-domain QA, reasoning, fact verification, long-form generation) via controllable reflection-token behavior.",
+      "criterion_type": "measurable",
+      "status": "achieved",
+      "evaluation_present": true,
+      "rationale": "Experiments demonstrate that the same 7B/13B models outperform ChatGPT and retrieval-augmented Llama2-chat across the listed task categories."
+    }
+  ],
+  "dropped_candidates": [
+    {
+      "label": "general robustness or scalability beyond reported model sizes",
+      "reason": "Specificity: too generic paraphrase of overall problem; no concrete success criterion tied to a distinct measurable condition was stated in the problem framing."
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "purpose": "Upstream artifacts actually used by the already-published CoT4/CoT5 run; no new upstream generation performed.",
+  "upstream_experiment_id": "five_experiments_20261028/02_adaptive_rag",
+  "downstream_run_id": "cot45_public_run_20261029_154552",
+  "papers": [
+    {
+      "id": "2005.11401",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+    },
+    {
+      "id": "2310.11511",
+      "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+    }
+  ],
+  "counts": {
+    "CoT1_papers": 2,
+    "CoT2_papers": 2,
+    "CoT3_candidates": 8,
+    "FutureWork_proposals": 8
+  },
+  "files": {
+    "CoT1/examples/2005.11401.json": {
+      "sha256": "45df2011f9a106fa3d19752812f9412bd9b275d0e564a23950df9afb203d480b"
+    },
+    "CoT1/examples/2310.11511.json": {
+      "sha256": "1f4ef434483f2b111c1203a1e0397558c9879a5627f6bdb8207856f92b3da3e1"
+    },
+    "CoT2/examples/2005.11401.json": {
+      "sha256": "42d335d46ae5b4f1f17bc224269d73bc48713165fbac45b1249d173119d82f97"
+    },
+    "CoT2/examples/2310.11511.json": {
+      "sha256": "70449916764331647fb9f08a04e7dd0d4f5436679482a33db404fc3c5c927eb4"
+    },
+    "CoT3/examples/result.json": {
+      "sha256": "1551fe7ee6e7aabc6a02de2d61fdd2bbb9f197a612a1cb4431363bef0465bcce"
+    },
+    "FutureWork/examples/result.json": {
+      "sha256": "76f8c2fa4747b126e443698b7d520185fac5669703991dc32aac7074bdd2c9cb"
+    }
+  },
+  "verification": {
+    "original_futurework_equals_downstream_input": true,
+    "reconstructed_futurework_from_cot3_equals_downstream_input": true,
+    "published_input_matches_downstream_manifest_sha256": true,
+    "upstream_cot1_cot2_cot3_results_unmodified": true
+  },
+  "candidate_mapping": [
+    {
+      "result_index_1_based": 1,
+      "cot3_candidate_id": "C2",
+      "future_work_proposal_id": 1,
+      "source_papers": [
+        "P1",
+        "P2"
+      ],
+      "source_evidence": [
+        "P1:G4"
+      ]
+    },
+    {
+      "result_index_1_based": 2,
+      "cot3_candidate_id": "C3",
+      "future_work_proposal_id": 2,
+      "source_papers": [
+        "P2",
+        "P1"
+      ],
+      "source_evidence": [
+        "P2:L1"
+      ]
+    },
+    {
+      "result_index_1_based": 3,
+      "cot3_candidate_id": "C4",
+      "future_work_proposal_id": 3,
+      "source_papers": [
+        "P1",
+        "P2"
+      ],
+      "source_evidence": [
+        "P1:G4",
+        "P2:L1"
+      ]
+    },
+    {
+      "result_index_1_based": 4,
+      "cot3_candidate_id": "C5",
+      "future_work_proposal_id": 4,
+      "source_papers": [
+        "P1",
+        "P2"
+      ],
+      "source_evidence": [
+        "P1:L2",
+        "P2:L1"
+      ]
+    },
+    {
+      "result_index_1_based": 5,
+      "cot3_candidate_id": "C6",
+      "future_work_proposal_id": 5,
+      "source_papers": [
+        "P1",
+        "P2"
+      ],
+      "source_evidence": [
+        "P1:G4",
+        "P2:L1"
+      ]
+    },
+    {
+      "result_index_1_based": 6,
+      "cot3_candidate_id": "C7",
+      "future_work_proposal_id": 6,
+      "source_papers": [
+        "P2",
+        "P1"
+      ],
+      "source_evidence": [
+        "P2:L1"
+      ]
+    },
+    {
+      "result_index_1_based": 7,
+      "cot3_candidate_id": "C8",
+      "future_work_proposal_id": 7,
+      "source_papers": [
+        "P1",
+        "P2"
+      ],
+      "source_evidence": [
+        "P1:G4",
+        "P2:L1"
+      ]
+    },
+    {
+      "result_index_1_based": 8,
+      "cot3_candidate_id": "C9",
+      "future_work_proposal_id": 8,
+      "source_papers": [
+        "P1",
+        "P2"
+      ],
+      "source_evidence": [
+        "P1:G4"
+      ]
+    }
+  ],
+  "notes": [
+    "CoT1 and CoT2 were exported from the original upstream CoT3 run.",
+    "CoT3 candidates were deterministically converted to the Future Work input format.",
+    "CoT4 and CoT5 were rerun on 2026-10-29 using those existing candidates, not freshly generated upstream results.",
+    "CoT5 external-search failures remain recorded in the downstream raw result and examples_run_manifest.json.",
+    "No API keys, private configuration files, databases, paper source files, or execution logs are published."
+  ]
+}
