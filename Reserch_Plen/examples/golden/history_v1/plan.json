@@ -1,0 +1,174 @@
+{
+  "schema_version": "0.1",
+  "meta": {
+    "run_id": "cot45_public_run_20261029_154552",
+    "input_sha256": "76f8c2fa4747b126e443698b7d520185fac5669703991dc32aac7074bdd2c9cb",
+    "candidate_index": 6,
+    "idea_title": "Train an explicit \"unsupported\" reflection token and pair it with P1-style citation generation to produce transparent...",
+    "cot5_classification": "NOVEL",
+    "generated_by": "human_golden",
+    "language": "ko",
+    "notes": "Future Work 원문(problem/proposed_method)이 공개 결과에 없어, 잘린 제목과 CoT4·CoT5 내용으로 재구성했다. 재구성한 필드는 inferred=true로 표시했다."
+  },
+  "citation_whitelist": [
+    {"arxiv_id": "2005.11401", "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks", "role": "seed"},
+    {"arxiv_id": "2310.11511", "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection", "role": "seed"},
+    {"arxiv_id": "2602.15156", "title": "Panini: Continual Learning in Token Space via Structured Memory", "role": "cot5_candidate"},
+    {"arxiv_id": "2603.18911", "title": "Progressive Training for Explainable Citation-Grounded Dialogue: Reducing Hallucination to Zero in English-Hindi LLMs", "role": "cot5_candidate"},
+    {"arxiv_id": "2602.18437", "title": "FineRef: Fine-Grained Error Reflection and Correction for Long-Form Generation with Citations", "role": "cot5_candidate"},
+    {"arxiv_id": "2504.15771", "title": "ORION Grounded in Context: Retrieval-Based Method for Hallucination Detection", "role": "cot5_candidate"},
+    {"arxiv_id": "2601.04531", "title": "Self-MedRAG: a Self-Reflective Hybrid Retrieval-Augmented Generation Framework for Reliable Medical Question Answering", "role": "cot5_candidate"},
+    {"arxiv_id": "2410.07473", "title": "Localizing Factual Inconsistencies in Attributable Text Generation", "role": "cot5_candidate"}
+  ],
+  "fields": {
+    "research_topic": {
+      "value": "검색 근거가 답을 뒷받침하지 못하는 상태를 명시적 reflection token으로 학습하고, 이를 인용 기반 거절·외부 지식 요청과 결합한 투명한 검색 증강 생성",
+      "source": ["manifest.idea_title", "cot5.review"],
+      "inferred": false
+    },
+    "research_background": {
+      "value": "RAG(2005.11401)는 검색한 문서를 조건으로 답을 생성하며, Self-RAG(2310.11511)는 reflection token으로 검색 필요성, 문서 관련성, 생성문의 근거 지지 여부를 스스로 평가해 인용 정확도를 높였다. 그러나 두 방식 모두 기본 동작은 '답을 생성하는 것'이고, 검색 근거 전체가 질문에 답하기에 부족할 때 이를 하나의 상태로 판단해 응답 방식을 바꾸는 장치는 없다.",
+      "source": ["seed:2005.11401", "seed:2310.11511", "cot5.paper.candidates[0]"],
+      "inferred": false
+    },
+    "research_problem": {
+      "value": "검색 증강 언어모델이 '주어진 근거로는 답할 수 없음'을 명시적 상태로 판별하고, 그 판단을 어떤 근거를 검토했고 무엇이 부족한지 인용과 함께 사용자에게 투명하게 전달하도록 학습시킬 수 있는가?",
+      "source": ["manifest.idea_title", "cot5.review"],
+      "inferred": true
+    },
+    "limitations_of_existing_approaches": {
+      "value": [
+        {"id": "L1", "text": "Self-RAG의 근거 지지 평가는 이미 생성된 문장 단위에 적용된다. 근거 집합 전체가 불충분하다는 응답 수준의 상태와 그에 따른 거절 정책은 정의되어 있지 않다.", "cites": ["2310.11511"]},
+        {"id": "L2", "text": "RAG는 검색 결과의 품질과 무관하게 답을 생성하므로, 근거가 부족할 때 환각이 발생할 수 있다.", "cites": ["2005.11401"]},
+        {"id": "L3", "text": "근거 없는 주장을 다루는 기존 연구는 생성 후에 탐지(ORION, 인과적 불일치 위치 탐지)하거나 교정(FineRef)한다. 생성 시점에 거절 또는 외부 지식 요청으로 전환하는 방식은 아니다.", "cites": ["2504.15771", "2410.07473", "2602.18437"]},
+        {"id": "L4", "text": "근거 부족 시 검색을 반복하는 방식(Self-MedRAG)은 근거가 끝내 없는 경우의 투명한 응답 형식을 정의하지 않는다.", "cites": ["2601.04531"]}
+      ],
+      "source": ["cot5.paper.candidates[0]", "cot5.paper.candidates[5]", "cot5.paper.candidates[6]", "cot5.paper.candidates[7]", "cot5.paper.candidates[9]"],
+      "inferred": false
+    },
+    "research_objective": {
+      "value": "응답 수준의 [Unsupported] reflection token과 이를 학습할 데이터 구성 방법을 개발하고, 이 토큰을 인용 기반 거절·외부 지식 요청 응답과 결합한다. 이를 근거 부족 질의에서의 판별 정확도, 응답 투명성, 답변 가능한 질의에서의 성능 유지로 검증한다.",
+      "source": ["cot4.requirements.implementation_steps[0]", "cot4.requirements.implementation_steps[2]", "cot4.requirements.implementation_steps[3]"],
+      "inferred": true
+    },
+    "proposed_method": {
+      "value": "Self-RAG의 reflection token 체계에 응답 수준 상태 [Unsupported]를 추가한다. 모델은 검색 근거를 읽은 뒤 이 상태를 예측하고, 상태에 따라 (a) 인용이 달린 답변, 또는 (b) 검토한 근거를 인용하며 부족한 정보를 밝히는 거절·외부 지식 요청 중 하나를 생성한다.",
+      "source": ["manifest.idea_title", "cot4.requirements.implementation_steps"],
+      "inferred": true
+    },
+    "method_components": {
+      "value": [
+        {"id": "M1", "name": "[Unsupported] reflection token", "description": "토크나이저에 추가하는 응답 수준 상태 토큰. 검색 근거 집합 전체가 질문에 답하기에 불충분한지를 예측한다.", "addresses": ["L1", "L2"]},
+        {"id": "M2", "name": "Unsupported 학습 데이터 구성", "description": "답변 가능한 질의에서 정답 근거 문서를 제거하거나 무관한 문서로 바꾸는 방식으로 근거 부족 사례를 합성하고, 원래 사례와 짝지어 라벨을 만든다.", "addresses": ["L1"]},
+        {"id": "M3", "name": "인용 결합 응답 생성", "description": "지지 상태일 때는 RAG 방식의 인용 답변을, [Unsupported] 상태일 때는 검토한 문서를 인용하고 부족한 정보를 명시하는 거절 또는 외부 지식 요청을 생성한다.", "addresses": ["L3", "L4"]},
+        {"id": "M4", "name": "상태 기반 디코딩 정책", "description": "[Unsupported] 확률에 대한 임계값으로 응답 방식을 고른다. 임계값으로 거절 비율과 답변 성능 사이의 균형을 조절한다.", "addresses": ["L2"]}
+      ],
+      "source": ["cot4.requirements.implementation_steps[0]", "cot4.requirements.implementation_steps[1]", "cot4.requirements.implementation_steps[2]", "cot4.requirements.data_requirements"],
+      "inferred": true
+    },
+    "component_relations": {
+      "value": [
+        {"from": "M2", "to": "M1", "relation": "M2가 만든 라벨로 M1 토큰 예측을 학습한다"},
+        {"from": "M1", "to": "M4", "relation": "M1의 예측 확률이 M4의 입력 신호가 된다"},
+        {"from": "M4", "to": "M3", "relation": "M4가 고른 응답 방식에 따라 M3가 답변 또는 거절을 생성한다"}
+      ],
+      "source": ["cot4.requirements.implementation_steps"],
+      "inferred": true
+    },
+    "data_and_subjects": {
+      "value": [
+        {"name": "Self-RAG 학습 데이터 및 체크포인트", "use": "기반 모델과 기존 reflection token 라벨", "status": "확인 필요", "source_hint": "cot4.requirements.external_dependencies[0]"},
+        {"name": "M2로 합성한 근거 부족 질의 세트", "use": "M1 학습 및 평가", "status": "구축 필요", "source_hint": "cot4.requirements.data_requirements"},
+        {"name": "Self-RAG 평가에 쓰인 단답·장문 QA 벤치마크", "use": "답변 가능한 질의의 성능 유지 및 인용 품질 평가", "status": "[TBD: 데이터셋 목록 확정 필요]", "source_hint": "seed:2310.11511"}
+      ],
+      "source": ["cot4.requirements.data_requirements", "cot4.requirements.external_dependencies"],
+      "inferred": false
+    },
+    "baselines": {
+      "value": [
+        {"id": "B1", "name": "RAG", "arxiv_id": "2005.11401", "why": "거절 장치가 없는 기본 검색 증강 생성"},
+        {"id": "B2", "name": "Self-RAG", "arxiv_id": "2310.11511", "why": "reflection token 기반 직접 선행연구"},
+        {"id": "B3", "name": "Self-RAG + 기존 지지 평가 임계값 거절", "arxiv_id": "2310.11511", "why": "새 토큰 없이 기존 reflection token만으로 거절할 때와 비교하는 핵심 ablation. 새 토큰의 필요성을 보이는 기준"},
+        {"id": "B4", "name": "생성 후 탐지·교정 (FineRef)", "arxiv_id": "2602.18437", "why": "생성 후 교정과 생성 시점 판별을 비교"}
+      ],
+      "source": ["seed:2005.11401", "seed:2310.11511", "cot5.paper.candidates[5]"],
+      "inferred": false
+    },
+    "validation_targets": {
+      "value": [
+        {"id": "V1", "question": "M1은 근거 부족 질의를 정확히 판별하는가?", "components": ["M1", "M2"]},
+        {"id": "V2", "question": "[Unsupported] 상태에서 생성된 응답은 검토한 근거와 부족한 정보를 정확히 밝히는가?", "components": ["M3"]},
+        {"id": "V3", "question": "답변 가능한 질의에서 답변 성능과 인용 품질이 유지되는가?", "components": ["M4", "M3"]},
+        {"id": "V4", "question": "효과가 새 토큰 때문인가, 아니면 기존 reflection token 임계값만으로도 충분한가?", "components": ["M1"]}
+      ],
+      "source": ["cot4.requirements.implementation_steps[3]"],
+      "inferred": true
+    },
+    "experimental_design": {
+      "value": [
+        {"id": "E1", "validates": ["V1"], "setup": "합성 근거 부족 세트와 원래 사례를 섞은 평가 세트에서 상태 판별", "metrics": ["판별 precision/recall/F1", "AUROC"], "baselines": ["B1", "B2", "B3"], "success_criterion": "B3 대비 F1 개선 [TBD: 목표 폭은 파일럿 후 결정], paired bootstrap 유의", "failure_interpretation": "B3와 차이가 없으면 응답 수준 상태가 기존 지지 평가로 대체 가능함을 뜻하므로 기여를 M3(응답 형식)로 좁힌다"},
+        {"id": "E2", "validates": ["V2"], "setup": "[Unsupported] 판정 응답을 대상으로 인용 정확도 자동 평가와 사람 평가", "metrics": ["인용 precision/recall", "결핍 정보 명시 여부(사람 평가)", "평가자 간 일치도"], "baselines": ["B2", "B4"], "success_criterion": "사람 평가 투명성 점수가 B2, B4보다 높음 [TBD: 평가 척도 확정]", "failure_interpretation": "판별은 되지만 설명이 부정확하면 M3 응답 형식 설계 또는 학습 데이터를 재검토한다"},
+        {"id": "E3", "validates": ["V3"], "setup": "답변 가능한 질의 벤치마크에서 M4 임계값을 바꿔 가며 측정", "metrics": ["정답 정확도", "인용 precision/recall", "거절률-정확도 곡선"], "baselines": ["B1", "B2"], "success_criterion": "B2 대비 정확도 하락이 [TBD: 허용 폭] 이내인 임계값이 존재", "failure_interpretation": "과도한 거절이 발생하면 M2의 음성 사례 비율이나 M4 보정을 조정한다"},
+        {"id": "E4", "validates": ["V4"], "setup": "동일 데이터로 M1 학습 여부만 바꾼 ablation", "metrics": ["E1과 동일"], "baselines": ["B3"], "success_criterion": "M1 포함 모델이 B3보다 일관되게 우수", "failure_interpretation": "E1의 실패 해석과 동일"}
+      ],
+      "source": ["cot4.requirements.implementation_steps[3]", "cot4.resource_guidance.unknowns_to_confirm"],
+      "inferred": true
+    },
+    "target_claims": {
+      "value": [
+        {"id": "C1", "claim": "응답 수준 [Unsupported] 토큰은 기존 reflection token 임계값보다 근거 부족 질의를 더 정확히 판별한다.", "falsifiable_condition": "E1·E4에서 B3 대비 유의한 차이가 없으면 기각", "validated_by": ["V1", "V4"]},
+        {"id": "C2", "claim": "인용 결합 거절은 사용자가 무엇이 부족한지 파악할 수 있는 투명한 응답을 만든다.", "falsifiable_condition": "E2 사람 평가에서 B2, B4 대비 우위가 없으면 기각", "validated_by": ["V2"]},
+        {"id": "C3", "claim": "적절한 임계값에서 답변 가능한 질의의 성능은 유지된다.", "falsifiable_condition": "E3에서 허용 폭 이내의 임계값이 없으면 기각", "validated_by": ["V3"]}
+      ],
+      "source": [],
+      "inferred": true
+    },
+    "expected_novelty": {
+      "value": [
+        {"text": "Self-RAG의 문장 단위 지지 평가와 달리, 근거 집합 전체에 대한 응답 수준 상태를 학습한다.", "vs": ["2310.11511"]},
+        {"text": "생성 후 탐지·교정(ORION, FineRef)과 달리, 생성 시점에 응답 방식을 바꾼다.", "vs": ["2504.15771", "2602.18437"]},
+        {"text": "인용 기반 대화 학습(2603.18911)이나 메모리 기반 접근(Panini)과 달리, 근거 부족 상태를 인용으로 설명하는 거절을 결합한다.", "vs": ["2603.18911", "2602.15156"]}
+      ],
+      "source": ["cot5.review", "cot5.paper.candidates[0]", "cot5.paper.candidates[1]", "cot5.paper.candidates[2]", "cot5.paper.candidates[5]", "cot5.paper.candidates[6]"],
+      "inferred": false
+    },
+    "expected_contribution": {
+      "value": [
+        {"type": "method", "text": "응답 수준 [Unsupported] reflection token과 인용 결합 응답 생성 방법"},
+        {"type": "resource", "text": "근거 부족 사례 합성 절차와 그 결과 데이터셋"},
+        {"type": "analysis", "text": "거절률과 답변 성능 사이의 균형, 그리고 기존 reflection token과의 비교 분석"}
+      ],
+      "source": [],
+      "inferred": true
+    },
+    "risks_and_fallbacks": {
+      "value": [
+        {"id": "R1", "risk": "심사자가 Self-RAG의 기존 '근거 없음' 평가와 같은 것으로 볼 수 있음", "fallback": "E4 ablation을 핵심 실험으로 두고, 차이가 없으면 기여를 응답 형식(M3)으로 재정의", "source": "cot5.paper.candidates[0]"},
+        {"id": "R2", "risk": "토큰 학습 목적함수와 손실 가중치가 정해지지 않음", "fallback": "지도학습 단일 목적부터 시작하고 가중치는 검증 세트로 탐색", "source": "cot4.requirements.vague_or_unspecified_steps[0]"},
+        {"id": "R3", "risk": "합성한 근거 부족 사례가 실제 분포와 다를 수 있음", "fallback": "실제 답변 불가 질의 일부를 사람이 라벨링해 별도 평가", "source": "cot4.requirements.vague_or_unspecified_steps[2]"},
+        {"id": "R4", "risk": "거절 응답에 인용을 어떻게 다는지 정해지지 않음", "fallback": "'검토한 문서 + 부족한 정보' 두 칸 형식을 먼저 고정하고 사람 평가로 개선", "source": "cot4.requirements.vague_or_unspecified_steps[1]"},
+        {"id": "R5", "risk": "GPU 8장 이상의 미세조정 자원이 필요함", "fallback": "소형 모델과 LoRA로 파일럿을 먼저 수행", "source": "cot4.requirements.compute_requirements"}
+      ],
+      "source": ["cot4.requirements.vague_or_unspecified_steps", "cot4.requirements.compute_requirements"],
+      "inferred": false
+    },
+    "success_criteria_milestones": {
+      "value": [
+        {"id": "S1", "milestone": "중간: 근거 부족 데이터 구축 및 소형 모델 파일럿", "criterion": "E1 파일럿에서 B3 대비 개선 경향이 보이고, 남은 [TBD] 값이 확정됨"},
+        {"id": "S2", "milestone": "최종: 전체 실험(E1~E4)", "criterion": "C1~C3 각각에 대해 채택 또는 기각 판단이 가능"}
+      ],
+      "source": [],
+      "inferred": true
+    },
+    "novelty_search_scope": {
+      "value": {
+        "paper": {"status": "없음", "checked_count": 10, "error": null},
+        "web": {"status": "확인불가", "checked_count": 0, "error": "SearchError: Search API request failed: TimeoutError"},
+        "patent": {"status": "없음", "checked_count": 0, "error": null},
+        "statement": "NOVEL 판정은 로컬 문헌 DB(논문 10건 검토) 검색 범위 안의 판단이며, 전 세계적 신규성을 증명하지 않는다. 웹 검색은 시간 초과로 수행되지 않았고, 특허 검색은 검토 대상 0건이었다."
+      },
+      "source": ["cot5.paper", "cot5.web", "cot5.patent", "manifest.limitations"],
+      "inferred": false
+    }
+  }
+}

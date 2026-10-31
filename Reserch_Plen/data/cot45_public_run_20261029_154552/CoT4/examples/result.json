@@ -1,0 +1,447 @@
+{
+  "results": [
+    {
+      "idea_title": "Pre-train a unified model where retrieval modules and generation modules share parameters from initialization using a...",
+      "requirements": {
+        "compute_requirements": "Large-scale distributed training infrastructure (e.g., multi-node GPU/TPU clusters with hundreds of accelerators) for pre-training a unified model with shared parameters from scratch using a contrastive-denoising objective.",
+        "data_requirements": "Massive unlabeled text corpora combined with knowledge-intensive retrieval datasets (e.g., Wikipedia-scale passages and query-document pairs) suitable for joint contrastive and denoising pre-training.",
+        "implementation_steps": [
+          "Design a single architecture where retrieval encoder and generation decoder share all or most parameters from random initialization.",
+          "Implement a unified contrastive-denoising loss that trains both retrieval and generation capabilities simultaneously.",
+          "Pre-train the model end-to-end on the combined data mixture for a large number of steps.",
+          "Evaluate the resulting model on downstream retrieval-augmented generation tasks."
+        ],
+        "external_dependencies": [
+          "Reference implementations or checkpoints from Retrieval-Augmented Generation (RAG) and Self-RAG papers",
+          "Large-scale data processing pipelines for contrastive pairs and denoising examples",
+          "Distributed training frameworks supporting shared-parameter models"
+        ],
+        "vague_or_unspecified_steps": [
+          "Exact architectural details for sharing parameters between retrieval and generation modules",
+          "Formulation and weighting of the single contrastive-denoising objective",
+          "Data sampling strategy and mixture ratios for pre-training",
+          "Initialization scheme and any auxiliary losses"
+        ]
+      },
+      "resource_guidance": {
+        "compute_resources": "Large-scale distributed training infrastructure (e.g., multi-node GPU/TPU clusters with hundreds of accelerators) for pre-training a unified model with shared parameters from scratch using a contrastive-denoising objective.",
+        "data_resources": "Massive unlabeled text corpora combined with knowledge-intensive retrieval datasets (e.g., Wikipedia-scale passages and query-document pairs) suitable for joint contrastive and denoising pre-training.",
+        "tools_and_dependencies": [
+          "Reference implementations or checkpoints from Retrieval-Augmented Generation (RAG) and Self-RAG papers",
+          "Large-scale data processing pipelines for contrastive pairs and denoising examples",
+          "Distributed training frameworks supporting shared-parameter models"
+        ],
+        "team_skills": [
+          "Expertise in designing shared-parameter architectures for retrieval and generation modules",
+          "Experience implementing unified contrastive-denoising losses",
+          "Proficiency with large-scale end-to-end pre-training on combined data mixtures"
+        ],
+        "time_and_effort": "Determined by the number of pre-training steps on the combined data mixture and the scale of the distributed training infrastructure.",
+        "prerequisites": [
+          "Access to reference implementations or checkpoints from RAG and Self-RAG",
+          "Large-scale data processing pipelines",
+          "Distributed training frameworks for shared-parameter models"
+        ],
+        "unknowns_to_confirm": [
+          "Exact architectural details for sharing parameters between retrieval and generation modules",
+          "Formulation and weighting of the single contrastive-denoising objective",
+          "Data sampling strategy and mixture ratios for pre-training",
+          "Initialization scheme and any auxiliary losses",
+          "Any performance thresholds or evaluation metrics for downstream tasks"
+        ],
+        "required_performance_conditions": [],
+        "proposed_performance_targets": []
+      },
+      "checked_at": "2026-10-29T06:46:28.371744+00:00"
+    },
+    {
+      "idea_title": "Extend Self-RAG's reflection tokens to explicitly model and generate explanations for irrelevant/no-support cases, tr...",
+      "requirements": {
+        "compute_requirements": "Multi-GPU or TPU cluster for fine-tuning LLM with extended reflection tokens; estimated 8+ A100 GPUs for training on augmented retrieval-augmented datasets similar to Self-RAG scale.",
+        "data_requirements": "Augmented training corpus extending Self-RAG data with instances labeled as irrelevant or no-support, incorporating P1-style provenance signals for explanations.",
+        "implementation_steps": [
+          "Extend Self-RAG reflection token vocabulary to include new tokens for irrelevant/no-support cases and associated explanations.",
+          "Augment existing Self-RAG training data using P1 provenance mechanisms to generate labels and explanations for unsupported retrievals.",
+          "Modify model architecture or output head to predict and generate explanations for the new reflection tokens.",
+          "Fine-tune the model on the augmented dataset with updated loss terms for the new token types.",
+          "Evaluate on held-out sets containing noisy or unsupported retrieval cases."
+        ],
+        "external_dependencies": [
+          "Self-RAG codebase and pre-trained checkpoints",
+          "Datasets from Self-RAG and Retrieval-Augmented Generation papers",
+          "P1 provenance signal generation code or annotations"
+        ],
+        "vague_or_unspecified_steps": [
+          "How to specifically augment data with P1-style provenance signals",
+          "Details on loss function modifications for new tokens",
+          "Evaluation metrics for explanation quality in no-support cases",
+          "Exact scale of augmented data required"
+        ]
+      },
+      "resource_guidance": {
+        "compute_resources": "Multi-GPU or TPU cluster for fine-tuning LLM with extended reflection tokens; estimated 8+ A100 GPUs for training on augmented retrieval-augmented datasets similar to Self-RAG scale.",
+        "data_resources": "Augmented training corpus extending Self-RAG data with instances labeled as irrelevant or no-support, incorporating P1-style provenance signals for explanations.",
+        "tools_and_dependencies": [
+          "Self-RAG codebase and pre-trained checkpoints",
+          "Datasets from Self-RAG and Retrieval-Augmented Generation papers",
+          "P1 provenance signal generation code or annotations"
+        ],
+        "team_skills": [
+          "Expertise in fine-tuning large language models and extending reflection token mechanisms, as required by the implementation steps for vocabulary extension, architecture modification, and loss updates"
+        ],
+        "time_and_effort": "Determined by the scale of the augmented dataset and the complexity of integrating P1 provenance signals, based on the vague_or_unspecified_steps listed in the extracted requirements.",
+        "prerequisites": [
+          "Self-RAG codebase and pre-trained checkpoints",
+          "Datasets from Self-RAG and Retrieval-Augmented Generation papers",
+          "P1 provenance signal generation code or annotations"
+        ],
+        "unknowns_to_confirm": [
+          "How to specifically augment data with P1-style provenance signals",
+          "Details on loss function modifications for new tokens",
+          "Evaluation metrics for explanation quality in no-support cases",
+          "Exact scale of augmented data required"
+        ],
+        "required_performance_conditions": [],
+        "proposed_performance_targets": []
+      },
+      "checked_at": "2026-10-29T06:46:31.429715+00:00"
+    },
+    {
+      "idea_title": "Jointly pre-train a retrieval-augmented model augmented with reflection tokens so that the model learns to jointly op...",
+      "requirements": {
+        "compute_requirements": "Large-scale distributed training infrastructure with hundreds of GPUs or TPUs, high memory bandwidth, and weeks to months of continuous compute time for pre-training a retrieval-augmented LLM from scratch.",
+        "data_requirements": "Massive unlabeled text corpora (e.g., Common Crawl, Wikipedia dumps), knowledge-intensive QA/retrieval datasets from RAG, and self-reflection/critique annotated examples from Self-RAG, combined into a single joint pre-training mixture.",
+        "implementation_steps": [
+          "Extend base LLM architecture with special reflection tokens for critique signals.",
+          "Integrate retrieval module (e.g., dense retriever) into the model for end-to-end differentiability.",
+          "Design joint pre-training objective that optimizes retrieval, generation, and reflection token prediction simultaneously.",
+          "Prepare and tokenize mixed training data batches containing retrieval contexts, generation targets, and reflection labels.",
+          "Implement custom training loop with multi-task loss balancing retrieval, generation, and critique components.",
+          "Run pre-training from scratch followed by any necessary fine-tuning on downstream tasks."
+        ],
+        "external_dependencies": [
+          "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks paper and associated datasets/code",
+          "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection paper and datasets",
+          "Hugging Face Transformers or equivalent LLM framework",
+          "FAISS or other vector database for retrieval indexing",
+          "PyTorch or JAX for distributed training"
+        ],
+        "vague_or_unspecified_steps": [
+          "Exact method for augmenting the model with reflection tokens and integrating them into the retrieval-generation loop",
+          "Specific data mixing ratios and sampling strategy for joint optimization of retrieval, generation, and critique",
+          "Details on loss function formulation for simultaneous optimization from scratch",
+          "Hardware scaling strategy and training hyperparameters for the joint pre-training run",
+          "Evaluation protocol to verify handling of cases excluded by prior work"
+        ]
+      },
+      "resource_guidance": {
+        "compute_resources": "Large-scale distributed training infrastructure with hundreds of GPUs or TPUs, high memory bandwidth, and weeks to months of continuous compute time for pre-training a retrieval-augmented LLM from scratch.",
+        "data_resources": "Massive unlabeled text corpora (e.g., Common Crawl, Wikipedia dumps), knowledge-intensive QA/retrieval datasets from RAG, and self-reflection/critique annotated examples from Self-RAG, combined into a single joint pre-training mixture.",
+        "tools_and_dependencies": [
+          "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks paper and associated datasets/code",
+          "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection paper and datasets",
+          "Hugging Face Transformers or equivalent LLM framework",
+          "FAISS or other vector database for retrieval indexing",
+          "PyTorch or JAX for distributed training"
+        ],
+        "team_skills": [
+          "Expertise in extending LLM architectures with special tokens",
+          "Experience implementing end-to-end differentiable retrieval modules",
+          "Proficiency in designing multi-task pre-training objectives and custom training loops",
+          "Skills in preparing mixed tokenized datasets and balancing loss components"
+        ],
+        "time_and_effort": "Weeks to months of continuous compute time for pre-training from scratch, plus effort for architecture extensions, data preparation, and any downstream fine-tuning.",
+        "prerequisites": [
+          "Access to reference papers, datasets, and code from RAG and Self-RAG",
+          "Hugging Face Transformers or equivalent LLM framework",
+          "FAISS or other vector database",
+          "PyTorch or JAX for distributed training"
+        ],
+        "unknowns_to_confirm": [
+          "Exact method for augmenting the model with reflection tokens and integrating them into the retrieval-generation loop",
+          "Specific data mixing ratios and sampling strategy for joint optimization of retrieval, generation, and critique",
+          "Details on loss function formulation for simultaneous optimization from scratch",
+          "Hardware scaling strategy and training hyperparameters for the joint pre-training run",
+          "Evaluation protocol to verify handling of cases excluded by prior work"
+        ],
+        "required_performance_conditions": [],
+        "proposed_performance_targets": []
+      },
+      "checked_at": "2026-10-29T06:46:34.103317+00:00"
+    },
+    {
+      "idea_title": "Adapt P2's self-reflection mechanism inside P1's retrieval-augmented framework to dynamically decide when to override...",
+      "requirements": {
+        "compute_requirements": "Access to GPU clusters for fine-tuning or inference on large language models (e.g., 8+ A100 GPUs for training reflection tokens and retrieval modules), high-memory servers for handling retrieval indexes over large corpora, and distributed training frameworks for scaling RAG pipelines.",
+        "data_requirements": "Knowledge-intensive NLP datasets from RAG paper (e.g., Natural Questions, TriviaQA, HotpotQA), Self-RAG training data with reflection annotations (critique labels for retrieval/ generation decisions), and domain-specific corpora for world knowledge updates without retraining.",
+        "implementation_steps": [
+          "Integrate RAG retrieval module with parametric LM backbone.",
+          "Implement Self-RAG style reflection tokens and critique heads on top of RAG generator.",
+          "Train or adapt reflection mechanism to output decisions on overriding parametric knowledge vs. using retrieved passages.",
+          "Modify RAG inference loop to condition generation on reflection outputs for dynamic knowledge updates.",
+          "Evaluate on knowledge-update benchmarks measuring factual accuracy and provenance tracking."
+        ],
+        "external_dependencies": [
+          "Hugging Face Transformers and Datasets libraries",
+          "FAISS or DPR for retrieval indexes",
+          "Pre-trained models from RAG and Self-RAG papers (e.g., BART/RoBERTa variants with reflection fine-tunes)",
+          "PyTorch or JAX for model adaptation"
+        ],
+        "vague_or_unspecified_steps": [
+          "Exact architecture for combining reflection tokens with RAG's retrieved context encoding",
+          "Training objective or loss function for deciding parametric override",
+          "Specific metrics or datasets for validating knowledge update without retraining",
+          "Handling of provenance tracking integration with self-critique"
+        ]
+      },
+      "resource_guidance": {
+        "compute_resources": "Access to GPU clusters for fine-tuning or inference on large language models (e.g., 8+ A100 GPUs for training reflection tokens and retrieval modules), high-memory servers for handling retrieval indexes over large corpora, and distributed training frameworks for scaling RAG pipelines.",
+        "data_resources": "Knowledge-intensive NLP datasets from RAG paper (e.g., Natural Questions, TriviaQA, HotpotQA), Self-RAG training data with reflection annotations (critique labels for retrieval/ generation decisions), and domain-specific corpora for world knowledge updates without retraining.",
+        "tools_and_dependencies": [
+          "Hugging Face Transformers and Datasets libraries",
+          "FAISS or DPR for retrieval indexes",
+          "Pre-trained models from RAG and Self-RAG papers (e.g., BART/RoBERTa variants with reflection fine-tunes)",
+          "PyTorch or JAX for model adaptation"
+        ],
+        "team_skills": [
+          "Proficiency in adapting LLMs with reflection mechanisms and retrieval modules",
+          "Experience implementing and training RAG-style pipelines"
+        ],
+        "time_and_effort": "Determined by the scale of integrating reflection tokens, training or adapting critique heads, and evaluating on knowledge-update benchmarks.",
+        "prerequisites": [
+          "Pre-trained models from RAG and Self-RAG papers",
+          "Knowledge-intensive NLP datasets and Self-RAG training data with reflection annotations"
+        ],
+        "unknowns_to_confirm": [
+          "Exact architecture for combining reflection tokens with RAG's retrieved context encoding",
+          "Training objective or loss function for deciding parametric override",
+          "Specific metrics or datasets for validating knowledge update without retraining",
+          "Handling of provenance tracking integration with self-critique"
+        ],
+        "required_performance_conditions": [],
+        "proposed_performance_targets": []
+      },
+      "checked_at": "2026-10-29T06:46:39.702347+00:00"
+    },
+    {
+      "idea_title": "Pre-train both models' components together while adding an auxiliary loss that penalizes generation when retrieval is...",
+      "requirements": {
+        "compute_requirements": "Large-scale distributed training infrastructure (multiple high-end GPUs or TPUs) for joint pre-training of retrieval and generation model components over extended periods",
+        "data_requirements": "Knowledge-intensive NLP datasets from referenced RAG and Self-RAG papers, including Self-RAG reflection labels for irrelevant retrieval cases",
+        "implementation_steps": [
+          "Load and initialize components from both RAG and Self-RAG models",
+          "Implement joint pre-training procedure for all components together",
+          "Define and integrate auxiliary loss term that penalizes generation outputs when retrieval is predicted irrelevant",
+          "Incorporate P2 reflection labels to supervise the auxiliary loss during training",
+          "Run end-to-end pre-training loop combining primary and auxiliary objectives"
+        ],
+        "external_dependencies": [
+          "Referenced papers: Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks and Self-RAG",
+          "Self-RAG reflection label annotations",
+          "Deep learning framework (e.g., PyTorch)",
+          "Model loading and training libraries (e.g., Hugging Face Transformers)"
+        ],
+        "vague_or_unspecified_steps": [
+          "Exact method for combining P1 joint-pretraining with P2 components",
+          "Precise mathematical formulation and weighting of the auxiliary loss",
+          "Specific training hyperparameters, batch sizes, and optimization details",
+          "Evaluation protocol for measuring robustness improvement on irrelevant cases"
+        ]
+      },
+      "resource_guidance": {
+        "compute_resources": "Large-scale distributed training infrastructure (multiple high-end GPUs or TPUs) for joint pre-training of retrieval and generation model components over extended periods",
+        "data_resources": "Knowledge-intensive NLP datasets from referenced RAG and Self-RAG papers, including Self-RAG reflection labels for irrelevant retrieval cases",
+        "tools_and_dependencies": [
+          "Referenced papers: Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks and Self-RAG",
+          "Self-RAG reflection label annotations",
+          "Deep learning framework (e.g., PyTorch)",
+          "Model loading and training libraries (e.g., Hugging Face Transformers)"
+        ],
+        "team_skills": [
+          "Expertise in loading and initializing RAG and Self-RAG model components",
+          "Implementation of joint pre-training procedures and custom auxiliary losses",
+          "Integration of reflection labels for supervising training objectives"
+        ],
+        "time_and_effort": "Determined by the scale of joint pre-training over extended periods and unspecified training hyperparameters",
+        "prerequisites": [
+          "Access to referenced papers and Self-RAG reflection label annotations",
+          "Deep learning framework such as PyTorch and Hugging Face Transformers"
+        ],
+        "unknowns_to_confirm": [
+          "Exact method for combining P1 joint-pretraining with P2 components",
+          "Precise mathematical formulation and weighting of the auxiliary loss",
+          "Specific training hyperparameters, batch sizes, and optimization details",
+          "Evaluation protocol for measuring robustness improvement on irrelevant cases"
+        ],
+        "required_performance_conditions": [],
+        "proposed_performance_targets": []
+      },
+      "checked_at": "2026-10-29T06:46:40.695571+00:00"
+    },
+    {
+      "idea_title": "Train an explicit \"unsupported\" reflection token and pair it with P1-style citation generation to produce transparent...",
+      "requirements": {
+        "compute_requirements": "GPU cluster for fine-tuning a large language model (e.g., 8+ A100/H100 GPUs) to train a new reflection token via supervised or RL-based self-reflection objectives, plus inference-time compute for citation-augmented generation.",
+        "data_requirements": "Labeled datasets of queries with explicit 'unsupported' labels, paired with citation examples from retrieval-augmented sources; synthetic unsupported query sets derived from Self-RAG and RAG paper corpora.",
+        "implementation_steps": [
+          "Extend tokenizer and model vocabulary with a new 'unsupported' reflection token.",
+          "Fine-tune the reflection module on datasets containing unsupported queries using the proposed token as target output.",
+          "Integrate P1-style citation generation logic to trigger on the new token for producing refusals or external-knowledge requests.",
+          "Evaluate on held-out unsupported query benchmarks for transparency metrics."
+        ],
+        "external_dependencies": [
+          "Self-RAG codebase and checkpoints",
+          "RAG paper datasets and retrieval pipelines",
+          "Hugging Face Transformers for token extension and training",
+          "Citation generation modules from P1 reference implementation"
+        ],
+        "vague_or_unspecified_steps": [
+          "Exact training objective and loss weighting for the unsupported token",
+          "How P1-style citations are adapted for refusal cases",
+          "Data generation process for unsupported query examples",
+          "Integration points between reflection token and citation output"
+        ]
+      },
+      "resource_guidance": {
+        "compute_resources": "GPU cluster for fine-tuning a large language model (e.g., 8+ A100/H100 GPUs) to train a new reflection token via supervised or RL-based self-reflection objectives, plus inference-time compute for citation-augmented generation.",
+        "data_resources": "Labeled datasets of queries with explicit 'unsupported' labels, paired with citation examples from retrieval-augmented sources; synthetic unsupported query sets derived from Self-RAG and RAG paper corpora.",
+        "tools_and_dependencies": [
+          "Self-RAG codebase and checkpoints",
+          "RAG paper datasets and retrieval pipelines",
+          "Hugging Face Transformers for token extension and training",
+          "Citation generation modules from P1 reference implementation"
+        ],
+        "team_skills": [
+          "ML engineering expertise for extending tokenizer and fine-tuning LLMs",
+          "Familiarity with Self-RAG and RAG implementations for integration"
+        ],
+        "time_and_effort": "Determined by the scale of fine-tuning on the GPU cluster, data preparation from synthetic sets, and evaluation on held-out benchmarks.",
+        "prerequisites": [
+          "Access to Self-RAG codebase and checkpoints",
+          "RAG paper datasets and retrieval pipelines",
+          "Hugging Face Transformers library"
+        ],
+        "unknowns_to_confirm": [
+          "Exact training objective and loss weighting for the unsupported token",
+          "How P1-style citations are adapted for refusal cases",
+          "Data generation process for unsupported query examples",
+          "Integration points between reflection token and citation output"
+        ],
+        "required_performance_conditions": [],
+        "proposed_performance_targets": []
+      },
+      "checked_at": "2026-10-29T06:46:41.397729+00:00"
+    },
+    {
+      "idea_title": "Implement a single training loop that alternates between denoising pre-training of retrieval/generation and self-supe...",
+      "requirements": {
+        "compute_requirements": "Multi-GPU or TPU cluster for training large retrieval and generation models (e.g., 8+ A100 GPUs) with sufficient VRAM for joint RAG components; distributed training support for alternating denoising and critique phases over multiple epochs.",
+        "data_requirements": "Large-scale text corpora such as Wikipedia dumps or Common Crawl for denoising pre-training; collections of query-passage pairs including both relevant (supported) and irrelevant (unsupported) passages for self-supervised critique training; formatted datasets compatible with RAG and Self-RAG pipelines.",
+        "implementation_steps": [
+          "Load base retrieval and generation models from reference papers (RAG and Self-RAG).",
+          "Implement denoising pre-training objective on retrieval/generation components.",
+          "Implement self-supervised critique module that processes both relevant and irrelevant passages.",
+          "Create a single training loop that alternates between the two phases (denoising and critique).",
+          "Define loss functions and optimization schedule for joint training.",
+          "Add evaluation hooks for RAG-style knowledge-intensive tasks."
+        ],
+        "external_dependencies": [
+          "Hugging Face Transformers and Datasets libraries",
+          "FAISS or similar vector store for retrieval",
+          "PyTorch or JAX for model training",
+          "Reference implementations or checkpoints from 'Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks' and 'Self-RAG' papers"
+        ],
+        "vague_or_unspecified_steps": [
+          "Exact alternation schedule or ratio between denoising and critique phases",
+          "Specific model architectures, sizes, or initialization details beyond referencing the two papers",
+          "How to generate or sample irrelevant passages for critique",
+          "Hyperparameters, batch sizes, learning rates, or convergence criteria",
+          "Hardware scaling strategy or distributed training configuration"
+        ]
+      },
+      "resource_guidance": {
+        "compute_resources": "Multi-GPU or TPU cluster for training large retrieval and generation models (e.g., 8+ A100 GPUs) with sufficient VRAM for joint RAG components; distributed training support for alternating denoising and critique phases over multiple epochs.",
+        "data_resources": "Large-scale text corpora such as Wikipedia dumps or Common Crawl for denoising pre-training; collections of query-passage pairs including both relevant (supported) and irrelevant (unsupported) passages for self-supervised critique training; formatted datasets compatible with RAG and Self-RAG pipelines.",
+        "tools_and_dependencies": [
+          "Hugging Face Transformers and Datasets libraries",
+          "FAISS or similar vector store for retrieval",
+          "PyTorch or JAX for model training",
+          "Reference implementations or checkpoints from 'Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks' and 'Self-RAG' papers"
+        ],
+        "team_skills": [
+          "Proficiency with PyTorch or JAX distributed training",
+          "Experience implementing alternating training loops for retrieval and generation models",
+          "Familiarity with Hugging Face and FAISS for RAG pipelines"
+        ],
+        "time_and_effort": "Effort determined by number of epochs, alternation schedule, and model sizes as specified in vague_or_unspecified_steps",
+        "prerequisites": [
+          "Access to base retrieval and generation model checkpoints from the two reference papers",
+          "Formatted datasets for denoising and critique phases"
+        ],
+        "unknowns_to_confirm": [
+          "Exact alternation schedule or ratio between denoising and critique phases",
+          "Specific model architectures, sizes, or initialization details beyond referencing the two papers",
+          "How to generate or sample irrelevant passages for critique",
+          "Hyperparameters, batch sizes, learning rates, or convergence criteria",
+          "Hardware scaling strategy or distributed training configuration"
+        ],
+        "required_performance_conditions": [],
+        "proposed_performance_targets": []
+      },
+      "checked_at": "2026-10-29T06:46:49.993984+00:00"
+    },
+    {
+      "idea_title": "Replace P2's separate retrieval policy with a jointly pre-trained retriever-generator that predicts retrieval necessi...",
+      "requirements": {
+        "compute_requirements": "Large-scale pre-training compute (multiple high-end GPUs or TPUs) for joint retriever-generator training over extended epochs, including forward/backward passes through retrieval and denoising components.",
+        "data_requirements": "Large text corpora suitable for denoising objectives (e.g., corrupted documents or spans) augmented with retrieval necessity signals or pseudo-labels derived from knowledge-intensive tasks.",
+        "implementation_steps": [
+          "Modify the base model architecture to integrate retriever and generator parameters into a single jointly trainable network.",
+          "Alter the pre-training denoising objective to include an auxiliary prediction head or token for retrieval necessity decisions.",
+          "Implement joint optimization where retrieval necessity is predicted and conditioned on during the denoising process.",
+          "Replace any existing separate retrieval policy module from P2 with the new jointly pre-trained component.",
+          "Train the combined model end-to-end on the modified objective."
+        ],
+        "external_dependencies": [
+          "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks paper and associated code/models",
+          "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection paper and associated code/models",
+          "Denoising pre-training frameworks (e.g., similar to T5 or BART implementations)"
+        ],
+        "vague_or_unspecified_steps": [
+          "How to generate or annotate retrieval necessity labels within the denoising data pipeline",
+          "Exact integration mechanism between retriever scores and generator denoising loss",
+          "Evaluation protocol to measure benefit over separate-stage Self-RAG adaptive retrieval",
+          "Hyperparameter choices for balancing retrieval prediction and denoising objectives"
+        ]
+      },
+      "resource_guidance": {
+        "compute_resources": "Large-scale pre-training compute (multiple high-end GPUs or TPUs) for joint retriever-generator training over extended epochs, including forward/backward passes through retrieval and denoising components.",
+        "data_resources": "Large text corpora suitable for denoising objectives (e.g., corrupted documents or spans) augmented with retrieval necessity signals or pseudo-labels derived from knowledge-intensive tasks.",
+        "tools_and_dependencies": [
+          "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks paper and associated code/models",
+          "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection paper and associated code/models",
+          "Denoising pre-training frameworks (e.g., similar to T5 or BART implementations)"
+        ],
+        "team_skills": [
+          "Expertise in modifying base model architectures for joint retriever-generator training",
+          "Experience implementing auxiliary prediction heads in denoising objectives",
+          "Proficiency in end-to-end joint optimization of retrieval and generation components"
+        ],
+        "time_and_effort": "Determined by the scale of large-scale pre-training over extended epochs on the specified compute infrastructure.",
+        "prerequisites": [
+          "Access to reference papers and associated code/models for RAG and Self-RAG",
+          "Denoising pre-training frameworks such as T5 or BART implementations"
+        ],
+        "unknowns_to_confirm": [
+          "How to generate or annotate retrieval necessity labels within the denoising data pipeline",
+          "Exact integration mechanism between retriever scores and generator denoising loss",
+          "Evaluation protocol to measure benefit over separate-stage Self-RAG adaptive retrieval",
+          "Hyperparameter choices for balancing retrieval prediction and denoising objectives"
+        ],
+        "required_performance_conditions": [],
+        "proposed_performance_targets": []
+      },
+      "checked_at": "2026-10-29T06:46:46.125792+00:00"
+    }
+  ]
+}

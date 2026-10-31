@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "research-plan-generator"
+version = "0.1.0"
+description = "Research plan and paper skeleton generation from CoT4/CoT5 results (CoT outputs to research plan and paper skeleton)"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+research-plan-validate = "research_plan.validate:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

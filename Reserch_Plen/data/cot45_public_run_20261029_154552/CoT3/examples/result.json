@@ -1,0 +1,236 @@
+[
+  {
+    "candidate_id": "C2",
+    "source_type": "combination",
+    "source_papers": [
+      "P1",
+      "P2"
+    ],
+    "source_evidence": [
+      "P1:G4"
+    ],
+    "gap_statement": "P1's coverage gap on joint pre-training remains unaddressed by any paper in the set and is not mitigated by P2's on-demand retrieval or self-critique capabilities.",
+    "proposed_direction": "Pre-train a unified model where retrieval modules and generation modules share parameters from initialization using a single contrastive-denoising objective.",
+    "rationale": "Grounded solely in the not_achieved sub-goal P1:G4 that has no matching stated limitation in P2.",
+    "judge_verdict": {
+      "grounding": "PASS",
+      "validity": "PASS",
+      "validity_reason": "The proposed direction directly addresses the unaddressed joint pre-training gap."
+    },
+    "judge_subclaims": [
+      {
+        "claim": "P1's coverage gap on joint pre-training remains unaddressed by any paper in the set",
+        "verdict": "entail",
+        "quote": "Discussion explicitly states that jointly pre-training the two components from scratch is left for future work."
+      }
+    ],
+    "repair": [
+      "P2 added from prose (anchorless: no evidence id)",
+      "source_type: synthesized → combination"
+    ]
+  },
+  {
+    "candidate_id": "C3",
+    "source_type": "paper_stated",
+    "source_papers": [
+      "P2",
+      "P1"
+    ],
+    "source_evidence": [
+      "P2:L1"
+    ],
+    "gap_statement": "P2 explicitly excludes instances where the model predicts irrelevant or no support (P2:L1), limiting its handling of noisy or unsupported retrieval cases that P1's provenance mechanisms could potentially surface.",
+    "proposed_direction": "Extend Self-RAG's reflection tokens to explicitly model and generate explanations for irrelevant/no-support cases, training on augmented data that includes P1-style provenance signals.",
+    "rationale": "Directly derived from the scope limitation stated in P2:L1.",
+    "judge_verdict": {
+      "grounding": "PASS",
+      "validity": "PASS",
+      "validity_reason": "The proposed direction directly addresses the gap by extending reflection tokens to handle irrelevant/no-support cases."
+    },
+    "judge_subclaims": [
+      {
+        "claim": "P2 explicitly excludes instances where the model predicts irrelevant or no support",
+        "verdict": "entail",
+        "quote": "For {S\\&P}, we do not consider the instances where \\model predicts \\texttt{irrelevant} or \\texttt{no support}."
+      }
+    ],
+    "repair": [
+      "P1 added from prose (anchorless: no evidence id)"
+    ]
+  },
+  {
+    "candidate_id": "C4",
+    "source_type": "combination",
+    "source_papers": [
+      "P1",
+      "P2"
+    ],
+    "source_evidence": [
+      "P1:G4",
+      "P2:L1"
+    ],
+    "gap_statement": "P1's unachieved joint pre-training (P1:G4) could be combined with P2's self-reflection to handle cases P2 currently excludes (P2:L1), yet no paper performs this transfer.",
+    "proposed_direction": "Jointly pre-train a retrieval-augmented model augmented with reflection tokens so that the model learns to jointly optimize retrieval, generation, and critique decisions from scratch.",
+    "rationale": "Combines the coverage gap P1:G4 with the scope limitation P2:L1 across different papers.",
+    "judge_verdict": {
+      "grounding": "PASS",
+      "validity": "PASS",
+      "validity_reason": "The proposed direction of jointly pre-training a retrieval-augmented model with reflection tokens aligns with the gap of combining joint pre-training and self-reflection to handle excluded cases."
+    },
+    "judge_subclaims": [
+      {
+        "claim": "P1 does not achieve joint pre-training of parametric and non-parametric components",
+        "verdict": "entail",
+        "quote": "Jointly pre-train the parametric generator and non-parametric retriever from scratch rather than starting from separately pre-trained components. (evidence: Discussion explicitly states that jointly pre-training the two components from scratch is left for future work.)"
+      }
+    ]
+  },
+  {
+    "candidate_id": "C5",
+    "source_type": "combination",
+    "source_papers": [
+      "P1",
+      "P2"
+    ],
+    "source_evidence": [
+      "P1:L2",
+      "P2:L1"
+    ],
+    "gap_statement": "Neither paper explores how P2's adaptive retrieval and critique could be applied to P1's goal of updating world knowledge without retraining, leaving an unstated interaction between provenance and self-reflection unexplored.",
+    "proposed_direction": "Adapt P2's self-reflection mechanism inside P1's retrieval-augmented framework to dynamically decide when to override parametric knowledge with retrieved updates.",
+    "rationale": "Inferred from P1's vague future-work note P1:L2 contrasted with P2's scope limit P2:L1.",
+    "judge_verdict": {
+      "grounding": "UNSURE",
+      "validity": "PASS",
+      "validity_reason": "The proposed direction directly addresses the gap by integrating P2's self-reflection mechanism into P1's framework to dynamically update world knowledge."
+    },
+    "judge_subclaims": [],
+    "repair": [
+      "source_type: synthesized → combination"
+    ]
+  },
+  {
+    "candidate_id": "C6",
+    "source_type": "combination",
+    "source_papers": [
+      "P1",
+      "P2"
+    ],
+    "source_evidence": [
+      "P1:G4",
+      "P2:L1"
+    ],
+    "gap_statement": "P2's exclusion of irrelevant cases (P2:L1) highlights a robustness gap that could be closed by incorporating P1's joint pre-training idea (P1:G4) to learn noise rejection end-to-end.",
+    "proposed_direction": "Pre-train both models' components together while adding an auxiliary loss that penalizes generation when retrieval is predicted irrelevant, using P2's reflection labels.",
+    "rationale": "Crosses P1's joint-pretraining gap with P2's stated scope limitation.",
+    "judge_verdict": {
+      "grounding": "PASS",
+      "validity": "PASS",
+      "validity_reason": "The proposed direction addresses the gap by integrating joint pre-training and an auxiliary loss to handle irrelevant cases."
+    },
+    "judge_subclaims": [
+      {
+        "claim": "P2 does not consider instances where the model predicts irrelevant or no support",
+        "verdict": "entail",
+        "quote": "For {S\\&P}, we do not consider the instances where \\model predicts \\texttt{irrelevant} or \\texttt{no support}."
+      },
+      {
+        "claim": "P1 does not achieve joint pre-training of parametric and non-parametric components",
+        "verdict": "entail",
+        "quote": "Jointly pre-train the parametric generator and non-parametric retriever from scratch rather than starting from separately pre-trained components. (evidence: Discussion explicitly states that jointly pre-training the two components from scratch is left for future work.)"
+      }
+    ]
+  },
+  {
+    "candidate_id": "C7",
+    "source_type": "combination",
+    "source_papers": [
+      "P2",
+      "P1"
+    ],
+    "source_evidence": [
+      "P2:L1"
+    ],
+    "gap_statement": "P2's self-reflection is limited to supported cases only, leaving an unstated limitation in handling fully unsupported queries that P1's provenance capability could address but does not integrate.",
+    "proposed_direction": "Train an explicit \"unsupported\" reflection token and pair it with P1-style citation generation to produce transparent refusals or external-knowledge requests.",
+    "rationale": "Derived from the coverage of P2:L1 as an unadmitted robustness gap.",
+    "judge_verdict": {
+      "grounding": "PASS",
+      "validity": "PASS",
+      "validity_reason": "The proposed direction directly addresses the gap by introducing an explicit 'unsupported' reflection token."
+    },
+    "judge_subclaims": [
+      {
+        "claim": "P2's self-reflection is limited to supported cases only",
+        "verdict": "entail",
+        "quote": "For {S\\&P}, we do not consider the instances where \\model predicts \\texttt{irrelevant} or \\texttt{no support}."
+      }
+    ],
+    "repair": [
+      "P1 added from prose (anchorless: no evidence id)",
+      "source_type: synthesized → combination"
+    ]
+  },
+  {
+    "candidate_id": "C8",
+    "source_type": "combination",
+    "source_papers": [
+      "P1",
+      "P2"
+    ],
+    "source_evidence": [
+      "P1:G4",
+      "P2:L1"
+    ],
+    "gap_statement": "P1 never jointly pre-trains its components (P1:G4) while P2 restricts its critique to supported passages (P2:L1); combining these yields an open direction for robust, jointly-trained RAG.",
+    "proposed_direction": "Implement a single training loop that alternates between denoising pre-training of retrieval/generation and self-supervised critique on both relevant and irrelevant passages.",
+    "rationale": "Synthesizes the two papers' respective limitations into a transfer opportunity.",
+    "judge_verdict": {
+      "grounding": "PASS",
+      "validity": "PASS",
+      "validity_reason": "The proposed direction addresses the specific gaps mentioned by combining joint pre-training and critique on both relevant and irrelevant passages."
+    },
+    "judge_subclaims": [
+      {
+        "claim": "P1 never jointly pre-trains its components",
+        "verdict": "entail",
+        "quote": "Jointly pre-train the parametric generator and non-parametric retriever from scratch rather than starting from separately pre-trained components. (evidence: Discussion explicitly states that jointly pre-training the two components from scratch is left for future work.)"
+      },
+      {
+        "claim": "P2 restricts its critique to supported passages",
+        "verdict": "entail",
+        "quote": "For {S\\&P}, we do not consider the instances where \\model predicts \\texttt{irrelevant} or \\texttt{no support}."
+      }
+    ]
+  },
+  {
+    "candidate_id": "C9",
+    "source_type": "combination",
+    "source_papers": [
+      "P1",
+      "P2"
+    ],
+    "source_evidence": [
+      "P1:G4"
+    ],
+    "gap_statement": "The absence of joint pre-training in P1 leaves open whether Self-RAG-style adaptive retrieval would benefit from being learned jointly rather than in separate stages.",
+    "proposed_direction": "Replace P2's separate retrieval policy with a jointly pre-trained retriever-generator that predicts retrieval necessity as part of the denoising objective.",
+    "rationale": "Grounded in the sole not_achieved sub-goal P1:G4.",
+    "judge_verdict": {
+      "grounding": "PASS",
+      "validity": "PASS",
+      "validity_reason": "The proposed direction of jointly pre-training the retriever-generator aligns with the identified gap in P1."
+    },
+    "judge_subclaims": [
+      {
+        "claim": "P1 does not achieve joint pre-training of parametric and non-parametric components",
+        "verdict": "entail",
+        "quote": "Jointly pre-train the parametric generator and non-parametric retriever from scratch rather than starting from separately pre-trained components. (evidence: Discussion explicitly states that jointly pre-training the two components from scratch is left for future work.)"
+      }
+    ],
+    "repair": [
+      "P2 added from prose (anchorless: no evidence id)",
+      "source_type: synthesized → combination"
+    ]
+  }
+]

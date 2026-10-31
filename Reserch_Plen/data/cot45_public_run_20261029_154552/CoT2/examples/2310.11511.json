@@ -1,0 +1,13 @@
+{
+  "candidates": [
+    {
+      "quote": "For {S\\&P}, we do not consider the instances where \\model predicts \\texttt{irrelevant} or \\texttt{no support}.",
+      "location": "Analysis",
+      "context": "Following \\citet{menick2022teaching}, human annotators evaluate {\\it S\\&P}, which indicates whether the model output is plausible (i.e., the output is a reasonable and on-topic response to the question as if it were occurring in a conversation) and supported (i.e., the provided evidence is sufficient to verify\nthe validity of the answer). For {S\\&P}, we do not consider the instances where \\model predicts \\texttt{irrelevant} or \\texttt{no support}. \nWe then ask our annotators whether the model-predicted reflection tokens about \\crel and \\cgr match their inspections (e.g., whether the {\\it fully supported} output is supported by the cited evidence).  \n% In the Appendix, we provide model predictions.",
+      "limitation_type": "Scope_Limitation",
+      "matched_signal": "we do not consider",
+      "evidence_status": "grounded"
+    }
+  ],
+  "warnings": []
+}

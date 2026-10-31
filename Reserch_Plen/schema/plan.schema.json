@@ -1,0 +1,901 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Research plan (Stage 1 output)",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "meta",
+    "citation_whitelist",
+    "fields"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.2"
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "candidate_index",
+        "cot5_classification",
+        "generated_by"
+      ]
+    },
+    "citation_whitelist": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "arxiv_id",
+          "title",
+          "role"
+        ],
+        "properties": {
+          "arxiv_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "seed",
+              "cot5_candidate"
+            ]
+          }
+        }
+      }
+    },
+    "fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "research_topic",
+        "research_background",
+        "research_problem",
+        "limitations_of_existing_approaches",
+        "research_objective",
+        "proposed_method",
+        "method_components",
+        "component_relations",
+        "data_and_subjects",
+        "baselines",
+        "validation_targets",
+        "experimental_design",
+        "target_claims",
+        "expected_novelty",
+        "expected_contribution",
+        "risks_and_fallbacks",
+        "success_criteria_milestones",
+        "novelty_search_scope"
+      ],
+      "properties": {
+        "research_topic": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "research_background": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "research_problem": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "limitations_of_existing_approaches": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "text",
+                  "cites"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "cites": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "research_objective": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "proposed_method": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "method_components": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "description",
+                  "addresses"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "addresses": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "component_relations": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "from",
+                  "to",
+                  "relation"
+                ],
+                "properties": {
+                  "from": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "relation": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "data_and_subjects": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "use",
+                  "status"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "use": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "source_hint": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "baselines": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "why"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "arxiv_id": {
+                    "type": "string"
+                  },
+                  "why": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "validation_targets": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "question",
+                  "components"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "question": {
+                    "type": "string"
+                  },
+                  "components": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "experimental_design": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "validates",
+                  "setup",
+                  "metrics",
+                  "baselines",
+                  "success_criterion",
+                  "failure_interpretation"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "validates": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "setup": {
+                    "type": "string"
+                  },
+                  "metrics": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "baselines": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "success_criterion": {
+                    "type": "string"
+                  },
+                  "failure_interpretation": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "target_claims": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "claim",
+                  "falsifiable_condition",
+                  "validated_by"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "claim": {
+                    "type": "string"
+                  },
+                  "falsifiable_condition": {
+                    "type": "string"
+                  },
+                  "validated_by": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "expected_novelty": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "text",
+                  "vs",
+                  "existing_mechanism",
+                  "difference_axis",
+                  "tested_by"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "vs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "existing_mechanism": {
+                    "type": "string"
+                  },
+                  "difference_axis": {
+                    "type": "string",
+                    "enum": [
+                      "적용 단위",
+                      "적용 시점",
+                      "판단 대상",
+                      "판단 이후 동작",
+                      "학습 방식",
+                      "기타"
+                    ]
+                  },
+                  "tested_by": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "expected_contribution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "text"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "method",
+                      "resource",
+                      "analysis",
+                      "other"
+                    ]
+                  },
+                  "text": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "risks_and_fallbacks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "risk",
+                  "fallback"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "risk": {
+                    "type": "string"
+                  },
+                  "fallback": {
+                    "type": "string"
+                  },
+                  "source": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "success_criteria_milestones": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "milestone",
+                  "criterion"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "milestone": {
+                    "type": "string"
+                  },
+                  "criterion": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        },
+        "novelty_search_scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "source",
+            "inferred"
+          ],
+          "properties": {
+            "value": {
+              "type": "object",
+              "required": [
+                "paper",
+                "web",
+                "patent",
+                "statement"
+              ],
+              "properties": {
+                "paper": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "checked_count",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "checked_count": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "error": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "web": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "checked_count",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "checked_count": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "error": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "patent": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "checked_count",
+                    "error"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "checked_count": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "error": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "statement": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "source": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "inferred": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    }
+  }
+}

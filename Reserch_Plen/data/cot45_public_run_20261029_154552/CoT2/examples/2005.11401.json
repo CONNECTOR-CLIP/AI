@@ -1,0 +1,21 @@
+{
+  "candidates": [
+    {
+      "quote": "In future work, it may be fruitful to investigate if the two components can be jointly pre-trained from scratch, either with a denoising objective similar to BART or some another objective.",
+      "location": "Discussion",
+      "context": "We conducted an thorough investigation of the learned retrieval component, validating its effectiveness, and we illustrated how the retrieval index can be hot-swapped to update the model without requiring any retraining.\nIn future work, it may be fruitful to investigate if the two components can be jointly pre-trained from scratch, either with a denoising objective similar to BART or some another objective. \nOur work opens up new research directions on how parametric and non-parametric memories interact and how to most effectively combine them, showing promise in being applied to a wide variety of NLP tasks.\n\n% What goes here? The promise of pretraining end-to-end? The problem of posterior collapse?\n\n% \\TODO{why not wizard of wikipedia?}\n% \\douwe{because that's just learning tf-idf, right?}\n% \\patrick{yep, but we might want to state that somewhere}\n\n% \\ethan{Should we discuss posterior collapse here?}\n\n% \\TODO{discuss numbers of parameters}\n% \\TODO{make interpretability arguments explicit}\n% \\TODO{ensure we qualitatively discuss generations}\n% \\patrick{multihop things?}\n% \\patrick{mention the null doc things?}\n\n\n%%% NOTE: FINALIZE AND REINSERT FOR NEURIPS SUBMISSION -- not included in arxiv submission",
+      "limitation_type": "Future_Work",
+      "matched_signal": "future work",
+      "evidence_status": "grounded"
+    },
+    {
+      "quote": "We hope to address this in future work.",
+      "location": "Further Details on FEVER",
+      "context": "As FEVER uses a different Wikipedia dump to us, directly tackling this task is not straightforward. We hope to address this in future work.",
+      "limitation_type": "Future_Work",
+      "matched_signal": "future work",
+      "evidence_status": "grounded"
+    }
+  ],
+  "warnings": []
+}

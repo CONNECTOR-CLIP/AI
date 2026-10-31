@@ -1,0 +1,47 @@
+{
+  "2005.11401": {
+    "checked": "2026-10-30",
+    "found": true,
+    "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+  },
+  "2310.11511": {
+    "checked": "2026-10-30",
+    "found": true,
+    "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+  },
+  "2410.07473": {
+    "checked": "2026-10-30",
+    "found": true,
+    "title": "Localizing Factual Inconsistencies in Attributable Text Generation"
+  },
+  "2504.15771": {
+    "checked": "2026-10-30",
+    "found": true,
+    "title": "ORION Grounded in Context: Retrieval-Based Method for Hallucination Detection"
+  },
+  "2507.15863": {
+    "checked": "2026-10-30",
+    "found": true,
+    "title": "eSapiens's DEREK Module: Deep Extraction & Reasoning Engine for Knowledge with LLMs"
+  },
+  "2601.04531": {
+    "checked": "2026-10-30",
+    "found": true,
+    "title": "Self-MedRAG: a Self-Reflective Hybrid Retrieval-Augmented Generation Framework for Reliable Medical Question Answering"
+  },
+  "2602.15156": {
+    "checked": "2026-10-30",
+    "found": true,
+    "title": "Panini: Continual Learning in Token Space via Structured Memory"
+  },
+  "2602.18437": {
+    "checked": "2026-10-30",
+    "found": true,
+    "title": "FineRef: Fine-Grained Error Reflection and Correction for Long-Form Generation with Citations"
+  },
+  "2603.18911": {
+    "checked": "2026-10-30",
+    "found": true,
+    "title": "Progressive Training for Explainable Citation-Grounded Dialogue: Reducing Hallucination to Zero in English-Hindi LLMs"
+  }
+}

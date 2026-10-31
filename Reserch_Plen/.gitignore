@@ -1,0 +1,10 @@
+# API 키. 절대 커밋하지 않는다.
+.env
+
+# 실행 결과. 비용을 들여 다시 만들 수 있고 history 백업이 쌓인다.
+out/
+out_test/
+eval/
+
+__pycache__/
+*.pyc
