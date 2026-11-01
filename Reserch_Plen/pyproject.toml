@@ -9,6 +9,10 @@ description = "Research plan and paper skeleton generation from CoT4/CoT5 result
 requires-python = ">=3.11"
 dependencies = []
 
+[project.optional-dependencies]
+api = ["fastapi>=0.110", "uvicorn>=0.29"]
+dev = ["httpx>=0.27"]
+
 [project.scripts]
 research-plan-validate = "research_plan.validate:main"
 

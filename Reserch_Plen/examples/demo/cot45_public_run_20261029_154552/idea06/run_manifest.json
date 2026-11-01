@@ -1,0 +1,139 @@
+{
+  "pipeline_version": "0.6",
+  "command": [
+    "run",
+    "--run-dir",
+    "data/cot45_public_run_20261029_154552",
+    "--idea",
+    "6"
+  ],
+  "run_id": "cot45_public_run_20261029_154552",
+  "candidate_index": 6,
+  "folder": "out/cot45_public_run_20261029_154552/idea06",
+  "started_at": "2026-10-30T20:32:41+09:00",
+  "from_stage": "select",
+  "backup": "out/cot45_public_run_20261029_154552/idea06/history/20261030-203241",
+  "models": {
+    "writer": "기본값(RESEARCH_PLAN_MODEL)",
+    "judge": "기본값"
+  },
+  "prompts_sha256": {
+    "prompts/baseline_free.md": "f18abe09c4dee1336b4fcd6eea154ee7b32f16e5be6961482c78554630554ca9",
+    "prompts/baseline_template.md": "3a5214d79f7fe3f101817cdbd14eaf01715798dbd3e1015ffe00159e08682419",
+    "prompts/eval_judge.md": "1d249837b36c4f69256edad3a3c4a8994fbf5ccf8323020774efa0866160b059",
+    "prompts/judge.md": "077a220a52b6dc7c5c55db6007cb7d64d8c00f61d53f18604131d9c7d6b0fe0a",
+    "prompts/method.md": "f47a2cebcd8d5239c991c8c97859eafd0b8713898b748864b57335c590c91655",
+    "prompts/problem.md": "80a057accdf7a81e798b02af8d09352d33785b3ea1d4c30c173df4276c2e74a7",
+    "prompts/system.md": "d6e248d5a76b315e53ade767e2cbb03e4ed4214692760cf999e17aa84ad97bfc",
+    "prompts/validation.md": "f2d57c9d2e2a0c38fce78e8c4cb3857585bf8a66bc4d9b158c16e8a9b97f1c59",
+    "prompts/write_plan.md": "9983eff9eecd024b3828fccf21688e1f6c5bbe2f842aa936b3dadd7bc9d87aff",
+    "prompts/write_skeleton.md": "465de405f0fd348ecf8cf297e51099333a14a9d4302dd55af52d3a126768b703",
+    "docs/field_definitions.md": "d2530a6dbd0bd7db5393c3599a776d6f1ef79955d164add4559074de85bbecfc"
+  },
+  "inputs": {
+    "manifest": {
+      "path": "examples_run_manifest.json",
+      "sha256": "7c04247337998a2d56864fc606e176f5402162b568c3635b5944f24415195506"
+    },
+    "future_work": {
+      "path": "FutureWork/examples/result.json",
+      "sha256": "2acd1ff305502ba8aa44f00b7eade8c8dfac252e52b5ca197b4ef05d8eb892be",
+      "matches_manifest_sha256": true
+    },
+    "cot3": {
+      "path": "CoT3/examples/result.json",
+      "sha256": "e614f3611f298df0be6270c590a5ebde3316dce02b41db36e4f9fd7a586081e2"
+    },
+    "cot4": {
+      "path": "CoT4/examples/result.json",
+      "sha256": "e5b9b74bab445bcb8b77b78c0df3e1135d5f5f4d9ceaef75ec75b5b2f9dc9242"
+    },
+    "cot5": {
+      "path": "CoT5/examples/result.json",
+      "sha256": "dc7fd3d8a8894ba6079a6f0bb4151f0f5cbc47762f0dc15deb0f0ca2203c18bb"
+    }
+  },
+  "stages": [
+    {
+      "stage": "select",
+      "status": "pass",
+      "seconds": 0.0,
+      "llm_calls": 0,
+      "cost_usd": 0,
+      "summary": {
+        "title": "Train an explicit \"unsupported\" reflection token and pair it with P1-style citation generation to produce transparent refusals or external-knowledge requests.",
+        "cot5_classification": "NOVEL",
+        "cot3_candidate_id": "C7"
+      },
+      "outputs_sha256": {
+        "evidence.json": "e9b7ce603935d39b5058341246c2944dd3f6109b57d2cc2d0239962f639b40e1"
+      }
+    },
+    {
+      "stage": "extract",
+      "status": "pass",
+      "seconds": 89.7,
+      "llm_calls": 3,
+      "cost_usd": 0.009062,
+      "summary": {
+        "rounds": 1,
+        "model": "openai/gpt-6-luna"
+      },
+      "outputs_sha256": {
+        "plan.json": "0eac0f5dc3a21fb18a03360a03bc8b901b55efe0f0baf0e48a3453a8e318a59e",
+        "extract_log.json": "226749f468cbb2ca77a6cabf6417e9dfbcea651bd07602842ab00f4aab4cf6f5"
+      }
+    },
+    {
+      "stage": "review",
+      "status": "needs_review",
+      "seconds": 180.6,
+      "llm_calls": 5,
+      "cost_usd": 0.030064,
+      "summary": {
+        "rounds": 2,
+        "mean_score": 4.06,
+        "major_issues": 1,
+        "judge_model": "openai/gpt-6-luna-pro"
+      },
+      "outputs_sha256": {
+        "plan.reviewed.json": "6c215755ac3185122a90c0251a9d0964d5bf0ce3fcee50609d78796a8be2fc5d",
+        "review.json": "e377b5a4618f18434e8dc76c154050751da02659f64d2f1f93645591486ebca6"
+      }
+    },
+    {
+      "stage": "write",
+      "status": "pass",
+      "seconds": 33.9,
+      "llm_calls": 2,
+      "cost_usd": 0.004075,
+      "summary": {
+        "research_plan": 1,
+        "paper_skeleton": 1
+      },
+      "outputs_sha256": {
+        "research_plan.md": "f2d29cdfb9a0ecfe715a5504b5a6f2a0367143d5a73dfa7d7ee73328c9e4d1df",
+        "paper_skeleton.md": "7b88f7b18263e6066ee477ac92935de4c79d12757e0080aaf51db8db01119260",
+        "write_log.json": "ed351b5745576067f65d23313b4496cf379679a683ac72512e540de22ee25e91"
+      }
+    },
+    {
+      "stage": "verify",
+      "status": "pass",
+      "seconds": 0.1,
+      "llm_calls": 0,
+      "cost_usd": 0,
+      "summary": {
+        "errors": 0,
+        "warnings": 0,
+        "citations": 3
+      },
+      "outputs_sha256": {
+        "verify_report.json": "5b034216de582b62d8901ba3c4f0ed3f8765f0c17bce81fe23f38edf711bb865"
+      }
+    }
+  ],
+  "finished_at": "2026-10-30T20:37:45+09:00",
+  "final_status": "needs_review",
+  "total_cost_usd": 0.043201
+}

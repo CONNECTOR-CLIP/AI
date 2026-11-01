@@ -1,0 +1,30 @@
+{
+  "status": "pass",
+  "errors": [],
+  "warnings": [],
+  "citations": [
+    {
+      "arxiv_id": "2005.11401",
+      "whitelist_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "arxiv_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "similarity": 1.0,
+      "status": "확인"
+    },
+    {
+      "arxiv_id": "2310.11511",
+      "whitelist_title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+      "arxiv_title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+      "similarity": 1.0,
+      "status": "확인"
+    },
+    {
+      "arxiv_id": "2602.18437",
+      "whitelist_title": "FineRef: Fine-Grained Error Reflection and Correction for Long-Form Generation with Citations",
+      "arxiv_title": "FineRef: Fine-Grained Error Reflection and Correction for Long-Form Generation with Citations",
+      "similarity": 1.0,
+      "status": "확인"
+    }
+  ],
+  "offline": false,
+  "plan_file": "plan.reviewed.json"
+}

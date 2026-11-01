@@ -38,9 +38,20 @@ python -m research_plan run  --run-dir data/cot45_public_run_20261029_154552 --i
 | 인용·날조 검사 | `src/research_plan/verify.py` | arXiv 실재·제목 확인, plan에 없는 숫자·이름, 결과 단정 표현 (LLM 없음) |
 | 한 줄 실행 | `src/research_plan/pipeline.py` | 1~5단계 연결, `--from` 재시작, 자동 백업, `run_manifest.json` |
 | 평가 | `src/research_plan/evaluate.py`, `prompts/baseline_*.md`, `prompts/eval_judge.md` | free·template·pipeline을 같은 근거로 비교. 자동 지표, 눈가림 LLM 판정(여러 회사 모델), 사람 평가지 |
-| 테스트 | `tests/` | 136개 (가짜 모델·가짜 arXiv, 네트워크 없음) |
+| HTTP API | `src/research_plan/api.py`, `docs/api.md`, `examples/demo/` | 후보 조회, 작업 시작, 상태·결과 조회. 기본은 비용 없는 mock 모드 |
+| 테스트 | `tests/` | 149개 (가짜 모델·가짜 arXiv, 네트워크 없음. API 테스트 12개는 fastapi·httpx가 있을 때만 실행) |
 
-외부 패키지가 필요 없다(Python 3.11 이상, 표준 라이브러리만 사용).
+외부 패키지가 필요 없다(Python 3.11 이상, 표준 라이브러리만 사용). HTTP API를 쓸 때만 `fastapi`, `uvicorn`이 필요하다.
+
+## HTTP API
+
+```powershell
+pip install fastapi uvicorn
+$env:PYTHONPATH = "src"
+python -m uvicorn research_plan.api:app --port 8002
+```
+
+기본은 `mock` 모드라 LLM을 부르지 않아 비용이 없고, `examples/demo`의 6번 결과를 돌려준다. 실제 실행은 `$env:RESEARCH_PLAN_API_MODE = "live"`로 켜며 비용이 든다. 형식은 `docs/api.md`, 자동 문서는 http://localhost:8002/docs 에 있다.
 
 ## 실행 방법
 

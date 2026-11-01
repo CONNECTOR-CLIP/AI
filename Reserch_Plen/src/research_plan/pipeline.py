@@ -140,6 +140,7 @@ def run_pipeline(
     max_rounds: int = 3,
     providers: dict | None = None,
     argv: list[str] | None = None,
+    on_stage=None,
 ) -> int:
     """종료 코드: 0 = 모두 통과, 1 = 사람 확인 필요(needs_review 또는 검사 실패), 2 = 실행 오류."""
     from . import cli  # cli가 이 모듈을 쓰므로 순환을 피하려고 함수 안에서 가져온다
@@ -182,6 +183,8 @@ def run_pipeline(
     ran: set[str] = set()
     for stage in stages:
         print(f"\n=== {stage} ===")
+        if on_stage:
+            on_stage(stage)
         if stage != "select":
             _remove_outputs(folder, stage)
         started = time.monotonic()
